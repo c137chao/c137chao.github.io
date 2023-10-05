@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Summer Blog Space</title>
+    <link>http://c137chao.github.io/</link>
+    <description>Recent content on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tinykv project2A raft</title>
+      <link>http://c137chao.github.io/posts/tinykv-p2a/</link>
+      <pubDate>Sun, 10 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/posts/tinykv-p2a/</guid>
+      <description>指导书传送门 Raft小论文传送门
+Raft 被分为 3 个部分 rawnode.go，raft.go，log.go
+ log.go: 底层日志的管理、存储、压缩 raft.go: 一个 FSM, 推进节点状态的改变 rawnode.go: 与上层的接口，peer 通过 rawnode 驱动 raft 的工作  1. Part-A Raft-Basic(2aa) 1.1 raft election 简介 节点最开始都是Follower，某个或者某些节点发生 election timeout，该节点将发起选举投票 关于 election 详细描述在Raft小论文5.2节和5.4节
+选举过程： 除论文中描述的选举过程，Tinykv 中规定 Candidate 需要额外再做一件事：收到半数拒绝则恢复为 Follower，而不是维持 Candidate，原因暂时不详。
+来自6.824的经验：如果消息是并行处理，那RaftPeer在发送消息的过程中可能因为接收到其他消息改变了自身的 State，Term 等信息（往往是发现因自己任期过旧或者日志落后而出现降级 Leader -&amp;gt; Follower，Candidate -&amp;gt; Follower），这时该节点无论是在发起选举还是发送 Log Entries，都应及时察觉到自己的状态已经发生改变，而不是把旧状态选举的结果应用到新的任期中去。
+投票规则 关于 up-to-date 在 论文5.4.1最后有提到：
+ If the logs have last entries with different terms, then the log with the later term is more up-to-date.</description>
+    </item>
+    
+  </channel>
+</rss>
