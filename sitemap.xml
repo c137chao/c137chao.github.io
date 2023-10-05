@@ -2,37 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://c137chao.github.io/categories.html</loc>
+    <loc>http://c137chao.github.io/blog/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/categories/cs162.html</loc>
+    <loc>http://c137chao.github.io/categories/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/cs162/cs162-proj1.html</loc>
+    <loc>http://c137chao.github.io/categories/cs162/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/cs162.html</loc>
+    <loc>http://c137chao.github.io/blog/cs162-proj1/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/tags/distribute-storage.html</loc>
+    <loc>http://c137chao.github.io/tags/distribute-storage/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/tags/operating-system.html</loc>
+    <loc>http://c137chao.github.io/tags/operating-system/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/tags.html</loc>
+    <loc>http://c137chao.github.io/tags/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/categories/tinykv.html</loc>
+    <loc>http://c137chao.github.io/categories/tinykv/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/tinykv/tinykv-lab2a.html</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://c137chao.github.io/tinykv.html</loc>
+    <loc>http://c137chao.github.io/blog/tinykv-lab2a/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url>
 </urlset>

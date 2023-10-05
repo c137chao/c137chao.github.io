@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Summer Blog Space</title>
-    <link>http://c137chao.github.io/categories.html</link>
+    <link>http://c137chao.github.io/categories/</link>
     <description>Recent content in Categories on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Aug 2017 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>CS162</title>
-      <link>http://c137chao.github.io/categories/cs162.html</link>
+      <title>cs162</title>
+      <link>http://c137chao.github.io/categories/cs162/</link>
       <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://c137chao.github.io/categories/cs162.html</guid>
+      <guid>http://c137chao.github.io/categories/cs162/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tinykv</title>
-      <link>http://c137chao.github.io/categories/tinykv.html</link>
+      <link>http://c137chao.github.io/categories/tinykv/</link>
       <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://c137chao.github.io/categories/tinykv.html</guid>
+      <guid>http://c137chao.github.io/categories/tinykv/</guid>
       <description></description>
     </item>
     

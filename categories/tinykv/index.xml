@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tinykv on Summer Blog Space</title>
-    <link>http://c137chao.github.io/categories/tinykv.html</link>
+    <link>http://c137chao.github.io/categories/tinykv/</link>
     <description>Recent content in tinykv on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Aug 2017 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/tinykv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>tinykv lab2aa raft</title>
-      <link>http://c137chao.github.io/tinykv/tinykv-lab2a.html</link>
+      <link>http://c137chao.github.io/blog/tinykv-lab2a/</link>
       <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://c137chao.github.io/tinykv/tinykv-lab2a.html</guid>
+      <guid>http://c137chao.github.io/blog/tinykv-lab2a/</guid>
       <description>指导书传送门Raft小论文传送门
 Raft 被分为 3 个部分 rawnode.go，raft.go，log.go
  log.go: 底层日志的管理、存储、压缩 raft.go: 一个 FSM, 推进节点状态的改变 rawnode.go: 与上层的接口，peer 通过 rawnode 驱动 raft 的工作  1. Part-A Raft-Basic(2aa) 1.1 raft election 简介 节点最开始都是Follower，某个或者某些节点发生 election timeout，该节点将发起选举投票 关于 election 详细描述在Raft小论文5.2节和5.4节
