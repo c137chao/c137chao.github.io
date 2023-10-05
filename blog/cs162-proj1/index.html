@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CS162 Project1 Userprograme - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs162 proj1">
+		<meta property="og:title" content="CS162 Project1 Userprograme" />
+<meta property="og:description" content="notebook on cs162 proj1" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/blog/cs162-proj1/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-08-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2017-08-21T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="CS162 Project1 Userprograme">
+<meta itemprop="description" content="notebook on cs162 proj1"><meta itemprop="datePublished" content="2017-08-21T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-08-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1717">
+<meta itemprop="keywords" content="Operating System," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2aa raft</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">CS162 Project1 Userprograme</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-08-21T00:00:00Z">August 21, 2017</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs162/" rel="category">cs162</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e6d81c458853aef2aee76.jpg" alt="CS162 Project1 Userprograme">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-argument-passing">1. Argument Passing</a></li>
+        <li><a href="#2-syscall---memory-check">2. Syscall - Memory Check</a></li>
+        <li><a href="#3-syscall">3. Syscall</a></li>
+        <li><a href="#4-file-syscall">4. File Syscall</a></li>
+        <li><a href="#5-floating-point">5. Floating Point</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h3 id="1-argument-passing">1. Argument Passing</h3>
+<p>Before you starting to code, please reading <a href="https://cs162.org/static/proj/proj-userprog/docs/tasks/argument-passing/">Argument Passing | CS 162 Project 1</a>and <a href="https://cs162.org/static/proj/pintos-docs/docs/userprog/program-startup/">Program startup details</a> carefully.</p>
+<p><strong>Target Describe</strong>
+In general mordern Operating System, we interact with system using shell(hw2), but in PintOS, the System can&rsquo;t execute user programe because it doesn&rsquo;t implement exec and fork syscall.</p>
+<p>In P0, we know system executes user prog through <code>process_execute</code> called by user or system <code>run_task</code>. However, PintOS kernel doen&rsquo;t set function arguements stack for user and we can found args and argv are all 0 in <code>_start</code>.
+For example : when you type <code>/bin/ls -l foo bar</code>, you want system execute executable file <code>/bin/ls</code> with arguements <code>-l foo bar</code>,
+but pintos user programe  can&rsquo;t acquire arguements <code>[-l]</code>, <code>[foo]</code> , <code>[bar]</code>.
+<code>int main(int argc, char* argv[])</code>, argc will be 0, argv will be point to <strong>PHYS_BASE(0xc000 0000)</strong>，and when programe try to acquire arguements, it will access Kernel space and trig page fault.(You have seen it in proj0)</p>
+<p>You must push arguments to user stack as below.</p>
+<pre tabindex="0"><code> Address         Name         Data        Type
+0xbffffffc   argv[3][...]    bar\0       char[4]
+0xbffffff8   argv[2][...]    foo\0       char[4]
+0xbffffff5   argv[1][...]    -l\0        char[3]
+0xbfffffed   argv[0][...]    /bin/ls\0   char[8]
+0xbfffffec   stack-align       0         uint8_t
+0xbfffffe8   argv[4]           0         char *
+0xbfffffe4   argv[3]        0xbffffffc   char *
+0xbfffffe0   argv[2]        0xbffffff8   char *
+0xbfffffdc   argv[1]        0xbffffff5   char *
+0xbfffffd8   argv[0]        0xbfffffed   char *
+0xbfffffd4   argv           0xbfffffd8   char **
+0xbfffffd0   argc              4         int
+0xbfffffcc   return address    0         void (*) ()
+</code></pre><h4 id="design">Design</h4>
+<p>Design a data structure for thread_create</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> execute_entry {
+    <span style="color:#66d9ef">bool</span> load_success;
+    <span style="color:#66d9ef">struct</span> semaphore sema;
+    <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[<span style="color:#ae81ff">0</span>];
+}
+</code></pre></div><p>In <code>process_execute</code> function, we will parse <strong>command line</strong>(such as <code>/bin/ls -l foo bar</code>) to <code>[/bin/ls]</code> <code>[-l]</code> <code>[foo]</code> <code>[bar]</code> and store to variable argv.
+(Here, I use elastic arrays tech for take advantage of page space, intead of char** ).</p>
+<h5 id="parse-argument">Parse argument</h5>
+<p><code>strtok_r</code> will helpful for parsing args.
+You can find how to use it in (<code>lib/string.c line: 211 strtok_r</code>)</p>
+<p>So the real filename will be <code>argv[0]</code>, you can easly pass correct file to create a thread and pass entry to <code>start_process</code>.
+(1) Create Entry</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">pid_t <span style="color:#a6e22e">process_execute</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> cmd_line) {
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// allocate a page for entry
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> args_entry<span style="color:#f92672">*</span> entry <span style="color:#f92672">=</span> palloc_get_page(<span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">if</span> (entry <span style="color:#f92672">==</span> NULL) {
+    palloc_free_page(fn_copy);
+    <span style="color:#66d9ef">return</span> TID_ERROR;
+  }
+</code></pre></div><p>(2) Init Entry</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">  <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> token, <span style="color:#f92672">*</span>save_ptr;
+  <span style="color:#66d9ef">int</span> argc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+ 
+  entry<span style="color:#f92672">-&gt;</span>load_failed <span style="color:#f92672">=</span> false;
+  sema_init(<span style="color:#f92672">&amp;</span>entry<span style="color:#f92672">-&gt;</span>sema, <span style="color:#ae81ff">0</span>);
+
+  <span style="color:#66d9ef">for</span> (token <span style="color:#f92672">=</span> strtok_r(fn_copy, <span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#f92672">&amp;</span>save_ptr);
+       token <span style="color:#f92672">!=</span> NULL;
+       token <span style="color:#f92672">=</span> strtok_r(NULL, <span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#f92672">&amp;</span>save_ptr)) {
+      entry<span style="color:#f92672">-&gt;</span>args[argc<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> token;
+  }
+
+  entry<span style="color:#f92672">-&gt;</span>args[argc] <span style="color:#f92672">=</span> NULL;
+</code></pre></div><p>(3) Pass filename and entry to <strong>thread_create</strong> and <strong>start_process</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">  <span style="color:#75715e">/* Create a new thread to execute FILE_NAME. */</span>
+  tid <span style="color:#f92672">=</span> thread_create
+      (entry<span style="color:#f92672">-&gt;</span>args[<span style="color:#ae81ff">0</span>], PRI_DEFAULT, start_process, entry);
+
+  <span style="color:#66d9ef">if</span> (tid <span style="color:#f92672">!=</span> TID_ERROR) {
+    <span style="color:#75715e">// wait start process success, you can ignore it now
+</span><span style="color:#75715e"></span>    sema_down(<span style="color:#f92672">&amp;</span>entry<span style="color:#f92672">-&gt;</span>sema);
+    
+  <span style="color:#66d9ef">if</span> (entry<span style="color:#f92672">-&gt;</span>load_failed) {
+      tid <span style="color:#f92672">=</span> TID_ERROR;
+    }
+  }
+  
+  palloc_free_page(fn_copy);
+  palloc_free_page(entry);
+
+}
+</code></pre></div><h5 id="passing-arguements-set-stack">Passing Arguements (set stack)</h5>
+<ul>
+<li>add 2 helper functions to push and set memory</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">/* Push n byte data from buf to at user-stack esp */</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">push_user_stack</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">**</span> esp, <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> buf, <span style="color:#66d9ef">int</span> n) {
+    (<span style="color:#f92672">*</span>esp) <span style="color:#f92672">-=</span> n;
+    memcpy((<span style="color:#f92672">*</span>esp), buf, n);
+}
+
+<span style="color:#75715e">/* Reset n byte data to value at user stack */</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rset_user_stack</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">**</span> esp, <span style="color:#66d9ef">int</span> value, <span style="color:#66d9ef">int</span> n) {
+    (<span style="color:#f92672">*</span>esp) <span style="color:#f92672">-=</span> n;
+    memset((<span style="color:#f92672">*</span>esp), value, n);
+}
+</code></pre></div><ul>
+<li>Push stack</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* A thread function that loads a user process and starts it
+</span><span style="color:#75715e">   running. */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start_process</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> exec_entry) {
+
+  <span style="color:#66d9ef">struct</span> args_entry<span style="color:#f92672">*</span> entry <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> args_entry<span style="color:#f92672">*</span>)exec_entry;
+  <span style="color:#66d9ef">char</span><span style="color:#f92672">**</span> args <span style="color:#f92672">=</span> entry<span style="color:#f92672">-&gt;</span>args;
+
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>success) {
+    entry<span style="color:#f92672">-&gt;</span>load_failed <span style="color:#f92672">=</span> true;
+  }
+  sema_up(<span style="color:#f92672">&amp;</span>entry<span style="color:#f92672">-&gt;</span>sema);
+  
+  <span style="color:#66d9ef">if</span> (success) {
+    <span style="color:#75715e">// setup user stack
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> argc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">while</span> (args[argc] <span style="color:#f92672">!=</span> NULL) {
+      size_t n <span style="color:#f92672">=</span> strlen(args[argc]) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+      user_stack_push(<span style="color:#f92672">&amp;</span>if_.esp, args[argc], n);
+      args[argc<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> if_.esp;
+    }
+
+    <span style="color:#75715e">// paddle for stack align
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> paddle_size <span style="color:#f92672">=</span> 
+        ((<span style="color:#66d9ef">int</span>)(if_.esp) <span style="color:#f92672">-</span> argc <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x1c</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">16</span>;
+    if_.esp <span style="color:#f92672">-=</span> paddle_size;
+
+    <span style="color:#75715e">// argv[argc] is NULL
+</span><span style="color:#75715e"></span>    user_stack_set(<span style="color:#f92672">&amp;</span>if_.esp, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>));
+    
+    <span style="color:#75715e">// push &amp;argv[argc-1] ... &amp;argv[0]
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> argc <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>; i<span style="color:#f92672">--</span>) {
+      user_stack_push(<span style="color:#f92672">&amp;</span>if_.esp, <span style="color:#f92672">&amp;</span>args[i], <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>));
+    }
+    <span style="color:#75715e">// push argv
+</span><span style="color:#75715e"></span>    if_.esp <span style="color:#f92672">-=</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span><span style="color:#f92672">**</span>);
+    <span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span><span style="color:#f92672">**</span>)if_.esp <span style="color:#f92672">=</span> if_.esp <span style="color:#f92672">+</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span><span style="color:#f92672">**</span>);
+    <span style="color:#75715e">// push argc
+</span><span style="color:#75715e"></span>    user_stack_push(<span style="color:#f92672">&amp;</span>if_.esp, <span style="color:#f92672">&amp;</span>argc, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>));
+    <span style="color:#75715e">// push return address(0)
+</span><span style="color:#75715e"></span>    user_stack_set(<span style="color:#f92672">&amp;</span>if_.esp, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>)()));
+  }
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="2-syscall---memory-check">2. Syscall - Memory Check</h3>
+<p><strong>Target Describe</strong>
+User maybe pass un-valid arg to syscall, and if kernel doesn&rsquo;t handle it correctly, the system will be panic and can&rsquo;t work.
+For example:
+<code>exec(const char* cmdline)</code> : exec(NULL), exec(0xc1012023)</p>
+<p>There are three type bad address:</p>
+<ul>
+<li>user access un-exist address</li>
+<li>user access kernel space</li>
+<li>user access NULL pointer</li>
+</ul>
+<p>In documentation, two ways of memory check are given:
+<a href="https://cs162.org/static/proj/pintos-docs/docs/userprog/accessing-user-mem/">Accessing user memory | Pintos Documentation (cs162.org)</a></p>
+<p><strong>I choose the second method:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get_user</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>uaddr);
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">put_user</span>(<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>udst, <span style="color:#66d9ef">uint8_t</span> byte);
+</code></pre></div><p><strong>Page Fault handle</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">page_fault</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> f) {
+ <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>user) {
+      f<span style="color:#f92672">-&gt;</span>eip <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span>(<span style="color:#f92672">*</span>)(<span style="color:#66d9ef">void</span>))f<span style="color:#f92672">-&gt;</span>eax;
+      f<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xffffffff</span>;
+      <span style="color:#66d9ef">return</span>;
+  }
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>I also add some helper functions to simplify logical. You can decide checking methord as you can feel comfortable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">/** 
+</span><span style="color:#75715e"> * return true if can read a valid string（end with &#39;/0&#39;) 
+</span><span style="color:#75715e"> * from vaddr, false otherwise 
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">read_str_ok</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>vaddr);
+
+<span style="color:#75715e">/** 
+</span><span style="color:#75715e"> * return true if can read n bytes from vaddr 
+</span><span style="color:#75715e"> *        false otherwise 
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">read_buf_ok</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> vaddr, <span style="color:#66d9ef">uint32_t</span> size);
+
+<span style="color:#75715e">/** 
+</span><span style="color:#75715e"> * return true if can write n bytes from vaddr 
+</span><span style="color:#75715e"> *        false otherwise 
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">write_buf_ok</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> vaddr, <span style="color:#66d9ef">uint32_t</span> size);
+
+<span style="color:#75715e">/**
+</span><span style="color:#75715e"> * if address is unvalid, execute process exit
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check_args_valid</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> args, <span style="color:#66d9ef">int</span> argc);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check_file_name</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> filename);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check_buff_read</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> buf, <span style="color:#66d9ef">int</span> n);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">check_buff_write</span>(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> buf, <span style="color:#66d9ef">int</span> n);
+</code></pre></div><h3 id="3-syscall">3. Syscall</h3>
+<p>For thread can maintain exit status itself, I add a member to thread, so that I can trace thread status in different funtion</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">thread</span>{
+    <span style="color:#66d9ef">int</span> exit_status;
+};
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// An array mapping syscall numbers from syscall.h
+</span><span style="color:#75715e">// to the function that handles the system call.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#a6e22e">void</span> (<span style="color:#f92672">*</span>syscalls[])(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> UNUSED) <span style="color:#f92672">=</span> {
+    [SYS_HALT]      sys_halt,
+    [SYS_EXIT]      sys_exit,
+    [SYS_EXEC]      sys_exec,
+    [SYS_WAIT]      sys_wait,
+    [SYS_CREATE]    sys_create,
+    [SYS_REMOVE]    sys_remove,          
+    [SYS_OPEN]      sys_open ,      
+    [SYS_FILESIZE]  sys_filesize,            
+    [SYS_READ]      sys_read,      
+    [SYS_WRITE]     sys_write,                
+    [SYS_SEEK]      sys_seek,          
+    [SYS_TELL]      sys_tell,      
+    [SYS_CLOSE]     sys_close,
+    [SYS_PRACTICE]  sys_practice,
+    [SYS_COMPUTE_E] sys_compute_e
+};
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">syscall_handler</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> f UNUSED) {
+  <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span> args <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)f<span style="color:#f92672">-&gt;</span>esp);
+  
+  check_args_valid(args, <span style="color:#ae81ff">1</span>);
+  <span style="color:#66d9ef">if</span> (args[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> MAX_SYSNO) {
+      f<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+      thread_current()<span style="color:#f92672">-&gt;</span>exit_status <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+      process_exit();
+  }
+  syscalls[args[<span style="color:#ae81ff">0</span>]](f);
+
+}
+</code></pre></div><p>(1) <strong>practice</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sys_practice</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> if_ UNUSED) {
+  <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span> args <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)if_<span style="color:#f92672">-&gt;</span>esp);
+  <span style="color:#75715e">// check args valid
+</span><span style="color:#75715e"></span>  if_<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> args[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+};
+</code></pre></div><p>(2) <strong>halt</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sys_halt</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> if_ UNUSED) {
+  shutdown_power_off();
+}
+</code></pre></div><p>(3) <strong>exit</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sys_exit</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> if_ UNUSED) {
+  <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span> args <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)if_<span style="color:#f92672">-&gt;</span>esp);
+  if_<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+  <span style="color:#75715e">// if user doesn&#39;t pass any argument to exit, exit(-1)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (read_buf_ok(args <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>)) {
+    if_<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> args[<span style="color:#ae81ff">1</span>];
+  }
+
+  thread_current()<span style="color:#f92672">-&gt;</span>exit_status <span style="color:#f92672">=</span> if_<span style="color:#f92672">-&gt;</span>eax;
+  <span style="color:#75715e">// print exit info in process-exit
+</span><span style="color:#75715e"></span>  process_exit();
+}
+</code></pre></div><p>(4) <strong>exec</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sys_exec</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> if_ UNUSED) {
+  <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span> args <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)if_<span style="color:#f92672">-&gt;</span>esp);
+  
+  <span style="color:#75715e">// check args valid
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  
+  if_<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> process_execute(args[<span style="color:#ae81ff">1</span>]);
+}
+</code></pre></div><p>(5) <strong>wait</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sys_wait</span>(<span style="color:#66d9ef">struct</span> intr_frame<span style="color:#f92672">*</span> if_ UNUSED) {
+  <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span> args <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)if_<span style="color:#f92672">-&gt;</span>esp);
+  
+  <span style="color:#75715e">// check args valid
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  
+  if_<span style="color:#f92672">-&gt;</span>eax <span style="color:#f92672">=</span> process_wait(args[<span style="color:#ae81ff">1</span>]);
+}<span style="color:#960050;background-color:#1e0010">```</span>
+but we know, process_wait doesn<span style="color:#960050;background-color:#1e0010">&#39;</span>t implement now, and current system doesn<span style="color:#960050;background-color:#1e0010">&#39;</span>t maintain relation about parent and child process.
+
+In kernel, each <span style="color:#66d9ef">thread</span> represent a process (main <span style="color:#66d9ef">thread</span> of process)<span style="color:#960050;background-color:#1e0010">，</span>so in fact, process A create sub process B in <span style="color:#960050;background-color:#1e0010">`</span>thread_create<span style="color:#960050;background-color:#1e0010">`</span>, so I add child_list <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">thread</span>, the reason <span style="color:#66d9ef">for</span> define <span style="color:#66d9ef">struct</span> child_item rather than add member <span style="color:#960050;background-color:#1e0010">`</span><span style="color:#66d9ef">struct</span> list_elem child_elem<span style="color:#960050;background-color:#1e0010">`</span> <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">thread</span> is parent <span style="color:#66d9ef">thread</span> may collect exit code of exited <span style="color:#66d9ef">thread</span> and when a <span style="color:#66d9ef">thread</span> exit, the mem alloc <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">thread</span> will be free.
+<span style="color:#960050;background-color:#1e0010">```</span>c
+<span style="color:#66d9ef">struct</span> child_item {
+  tid_t tid;
+  <span style="color:#66d9ef">int</span>   exit_code;
+  <span style="color:#66d9ef">struct</span> semaphore sema;
+  <span style="color:#66d9ef">struct</span> list_elem elem;
+};
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">thread</span> {
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> exit_code;
+  <span style="color:#66d9ef">struct</span> list children;     <span style="color:#75715e">// list of child thread
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> child_item <span style="color:#f92672">*</span>entry; <span style="color:#75715e">// Info of this thread as child
+</span><span style="color:#75715e"></span>};
+</code></pre></div><p>So I <strong>Init child list</strong> in <code>init_thread</code> , <strong>add a thread to parent &rsquo;s child_list</strong> in <code>thread_create</code>, remember don&rsquo;t <strong>remove child</strong> at <code>thread exit</code>.
+Imagining such a scenario</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> children[<span style="color:#ae81ff">8</span>];
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>) {
+    pid_t cid <span style="color:#f92672">=</span>  exec(<span style="color:#e6db74">&#34;...&#34;</span>);
+    children[i] <span style="color:#f92672">=</span> cid;
+}
+
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>) {
+    wait(children[i]);
+}
+</code></pre></div><p>When parent wait for child 4, child 5,6,7&hellip; may be complete, but I also need collect exit_status of child, so we can only remove child from child list when wait complete or parent process complete.</p>
+<p>I won&rsquo;t show all detail about create, alter, remove ops of child list and chilt item here. Below is implement of <code>process_wait</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">process_wait</span>(pid_t child_pid UNUSED) {
+	<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">thread</span> <span style="color:#f92672">*</span>t <span style="color:#f92672">=</span> thread_current();
+	<span style="color:#66d9ef">struct</span> list_elem <span style="color:#f92672">*</span>e <span style="color:#f92672">=</span> list_begin (<span style="color:#f92672">&amp;</span>t<span style="color:#f92672">-&gt;</span>childs);	
+  
+	<span style="color:#66d9ef">for</span> (e <span style="color:#f92672">=</span> list_begin (<span style="color:#f92672">&amp;</span>t<span style="color:#f92672">-&gt;</span>childs); e <span style="color:#f92672">!=</span> list_end (<span style="color:#f92672">&amp;</span>t<span style="color:#f92672">-&gt;</span>childs); e <span style="color:#f92672">=</span> list_next (e)) {
+  		<span style="color:#66d9ef">struct</span> child_item<span style="color:#f92672">*</span> child <span style="color:#f92672">=</span> list_entry(e, <span style="color:#66d9ef">struct</span> child_item, elem);
+    
+    	<span style="color:#66d9ef">if</span> (child<span style="color:#f92672">-&gt;</span>tid <span style="color:#f92672">==</span> child_pid) {
+			sema_down(<span style="color:#f92672">&amp;</span>child<span style="color:#f92672">-&gt;</span>sema);
+			list_remove(<span style="color:#f92672">&amp;</span>child<span style="color:#f92672">-&gt;</span>elem);
+			<span style="color:#66d9ef">int</span> exit_status <span style="color:#f92672">=</span> child<span style="color:#f92672">-&gt;</span>exit_status;
+			free(child);
+			<span style="color:#66d9ef">return</span> exit_status;
+		}
+	}
+  
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+}
+</code></pre></div><p>Additional question is memory safe, if a parent doesn&rsquo;t wait some child(for example: parent tid is 7, child tid is 10), who free chile_item for thread 10?</p>
+<h3 id="4-file-syscall">4. File Syscall</h3>
+<p>A relatively straightforward task
+Here is some hints:</p>
+<ul>
+<li>Acquire a global lock when useing api in <code>file.h</code> and <code>filesys.h</code>. Don&rsquo;t forget <code>load</code> will call <code>open</code></li>
+<li>When load a executable file, other process can&rsquo;t write it, so I let process keep file open and deny write until exit.</li>
+<li>Add map from fd to struct file, array or list will be ok, 128 is a suitable array size.</li>
+</ul>
+<h3 id="5-floating-point">5. Floating Point</h3>
+<p>Read the fucking document Please
+<a href="https://cs162.org/static/proj/pintos-docs/docs/floating-point/">https://cs162.org/static/proj/pintos-docs/docs/floating-point/</a></p>
+<p>I encounter a strange problem in fp-syscall, I can&rsquo;t make sure the reason of this bug.
+Even though I can&rsquo;t pass the bochs test( <code>FORCE_SIMULATOR=--bochs</code>), I can pass qemu test(<code>FORCE_SIMULATOR=--qemu</code>). WTF ???</p>
+<p>The question is when syscall called by test programe, the fpu value changes, I can&rsquo;t figure out what happend (bochs simulate).
+<img src="https://pic.imgdb.cn/item/649263831ddac507cc56a1fd.jpg" alt="">
+before step into syscall intrupt, fpu value like above
+<img src="https://pic.imgdb.cn/item/649263d81ddac507cc571a38.jpg" alt=""></p>
+<p><img src="https://pic.imgdb.cn/item/6412a4dfebf10e5d534d4133.jpg" alt=""></p>
+<p>My implement step is:</p>
+<ul>
+<li>clear init CR0_EM bit in Start.s and use <code>fninit</code> to init fpu</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">    <span style="color:#a6e22e">movl</span> %cr0, %eax
+    <span style="color:#a6e22e">orl</span> <span style="color:#66d9ef">$CR0_PE</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#66d9ef">CR0_PG</span> <span style="color:#960050;background-color:#1e0010">|</span> <span style="color:#66d9ef">CR0_WP</span>, %eax
+    <span style="color:#a6e22e">movl</span> %eax, %cr0
+
+    <span style="color:#a6e22e">finit</span>
+</code></pre></div><ul>
+<li>add fpu part in <code>switch_threads_frame</code> and <code>intr_frame</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">struct</span> switch_threads_frame {
+  <span style="color:#66d9ef">uint8_t</span> fpu[<span style="color:#ae81ff">108</span>];
+};
+
+<span style="color:#75715e">/* Offsets used by switch.S. */</span>
+<span style="color:#75715e">#define SWITCH_CUR 128
+</span><span style="color:#75715e">#define SWITCH_NEXT 132
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">------------------------------------------------------------</span>
+<span style="color:#66d9ef">struct</span> intr_frame {
+  <span style="color:#66d9ef">uint8_t</span> fpu[<span style="color:#ae81ff">108</span>];
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>};
+</code></pre></div><ul>
+<li>save and restore fpu when interupt_entry/exit and swith threads</li>
+</ul>
+<pre tabindex="0"><code>   # save
+   // ...
+   subl $108, %esp
+   fsave (%esp)
+   
+   # restore
+   frstor (%esp)
+   addl $108, %esp
+   // ...
+</code></pre><ul>
+<li>save and init fpu in <code>thread_create</code> and <code>start_process</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e"># start_process
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">asm</span> <span style="color:#66d9ef">volatile</span>(<span style="color:#e6db74">&#34;fninit; fsave (%0)&#34;</span> <span style="color:#f92672">:</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;g&#34;</span>(<span style="color:#f92672">&amp;</span>if_.fpu) <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;memory&#34;</span>);
+<span style="color:#f92672">--------------------------------------------------------------</span>
+<span style="color:#75715e"># thread_create
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">asm</span> <span style="color:#66d9ef">volatile</span>(<span style="color:#e6db74">&#34;fsave (%0); fninit; fsave (%1); frstor (%2)&#34;</span> <span style="color:#f92672">:</span> <span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;r&#34;</span>(tmp_fpu), <span style="color:#e6db74">&#34;r&#34;</span>(sf<span style="color:#f92672">-&gt;</span>fpu), <span style="color:#e6db74">&#34;r&#34;</span>(tmp_fpu));
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/operating-system/" rel="tag">Operating System</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/tinykv-lab2a/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">tinykv lab2aa raft</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2aa raft</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
