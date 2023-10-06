@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>tinykv lab2b kvraft - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on tinykv lab2b">
+		<meta property="og:title" content="tinykv lab2b kvraft" />
+<meta property="og:description" content="notebook on tinykv lab2b" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/blog/tinykv-lab2b/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-09-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-13T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="tinykv lab2b kvraft">
+<meta itemprop="description" content="notebook on tinykv lab2b"><meta itemprop="datePublished" content="2023-09-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-09-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1297">
+<meta itemprop="keywords" content="distribute storage," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">tinykv lab2b kvraft</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-13T00:00:00Z">September 13, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2b kvraft">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1peerstorage">1.PeerStorage</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#2raft-ready-process">2.Raft ready process</a>
+      <ul>
+        <li><a href="#proposeraftcommand">proposeRaftCommand</a></li>
+        <li><a href="#handleraftready">HandleRaftReady</a></li>
+      </ul>
+    </li>
+    <li><a href="#about-test">About Test</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><a href="https://github.com/talent-plan/tinykv/blob/course/doc/project2-RaftKV.md">指导书传送门</a>
+涉及代码比较多，结合源码系列食用效果更佳 <a href="https://pingcap.com/blog-cn/the-design-and-implementation-of-multi-raft/#raftstore">TiKV 源码解析系列 - multi-raft 设计与实现</a> </p>
+<p><strong>总览</strong>
+存储大文件时会将该文件切分成小的Shard分别存储，为了保证高可用性，每个Shard会存储到多个节点(节点是一个逻辑概念，一台服务器可对应多个节点)上，通过 Raft 协议保证数据的一致，节点对应指导书中的 Peer，这样一组节点称为 Raft Group 或者 Region。</p>
+<p>数据切片应选择对应的 Region 存放，最粗暴的方法是使用 Hash Sharding (在6.824的lab4中使用的方法)，但 Hash 方法在数据规模增长，服务器扩充以后产生大量的数据迁移， tinykv 使用 range sharding，每个 region 维护一个区间[start_key, end_key]，上层请求根据携带的 Key 到对应的 Region 中去执行 。
+<img src="https://www.mongodb.com/docs/rapid/images/sharding-range-based.bakedsvg.svg" alt=""></p>
+<p><strong>请求执行过程</strong>
+收到上层发送的请求以后(Put/Delete/Get/Scan)，Cluster 首先会根据 key 通过找到其所在的 Region，然后找到该 Region 的 Leader，将请求发送给 Leader 等待对方回复。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// cluster:Request
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">region</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">GetRegion</span>(<span style="color:#a6e22e">key</span>)
+<span style="color:#a6e22e">regionID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetId</span>()
+<span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewRequest</span>(<span style="color:#a6e22e">regionID</span>, <span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">RegionEpoch</span>, <span style="color:#a6e22e">reqs</span>)
+<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">txn</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">CallCommandOnLeader</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">timeout</span>)
+<span style="color:#75715e">// ....
+</span><span style="color:#75715e"></span>
+</code></pre></div><p>所有的 Region 存储在BTree上，根据 StartKey 来排序，<code>GetRegion(key)</code> 最终会调用 <code>findRegion(key)</code>，找到最后一个<code>StartKey &lt;= key</code> 的 Region</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">regionItem</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">region</span> <span style="color:#a6e22e">metapb</span>.<span style="color:#a6e22e">Region</span>
+}
+
+<span style="color:#75715e">// Less returns true if the region start key is less than the other.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span>) <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">other</span> <span style="color:#a6e22e">btree</span>.<span style="color:#a6e22e">Item</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#a6e22e">left</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetStartKey</span>()
+    <span style="color:#a6e22e">right</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">other</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span>).<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetStartKey</span>()
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Compare</span>(<span style="color:#a6e22e">left</span>, <span style="color:#a6e22e">right</span>) &lt; <span style="color:#ae81ff">0</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span>) <span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">key</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">bool</span> {
+    <span style="color:#a6e22e">start</span>, <span style="color:#a6e22e">end</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetStartKey</span>(), <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetEndKey</span>()
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Compare</span>(<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">start</span>) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> (len(<span style="color:#a6e22e">end</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">Compare</span>(<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">end</span>) &lt; <span style="color:#ae81ff">0</span>)
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">m</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MockSchedulerClient</span>) <span style="color:#a6e22e">findRegion</span>(<span style="color:#a6e22e">key</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span> {
+    <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">regionItem</span>{<span style="color:#a6e22e">region</span>: <span style="color:#a6e22e">metapb</span>.<span style="color:#a6e22e">Region</span>{<span style="color:#a6e22e">StartKey</span>: <span style="color:#a6e22e">key</span>}}
+
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span>
+    <span style="color:#a6e22e">m</span>.<span style="color:#a6e22e">regionsRange</span>.<span style="color:#a6e22e">DescendLessOrEqual</span>(<span style="color:#a6e22e">item</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">btree</span>.<span style="color:#a6e22e">Item</span>) <span style="color:#66d9ef">bool</span> {
+        <span style="color:#a6e22e">result</span> = <span style="color:#a6e22e">i</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">regionItem</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+    })
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">||</span> !<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">key</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+    }
+    
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+}
+</code></pre></div><p>请求最终根据目标 <code>StoreId</code> 通过 <code>router</code> 转发给其所在的 raftstore (使用 channel)，对方调用 CallBack.Done 表示请求处理完成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NodeSimulator</span>) <span style="color:#a6e22e">CallCommandOnStore</span>(<span style="color:#a6e22e">storeID</span> <span style="color:#66d9ef">uint64</span>, <span style="color:#a6e22e">request</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft_cmdpb</span>.<span style="color:#a6e22e">RaftCmdRequest</span>, <span style="color:#a6e22e">timeout</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">raft_cmdpb</span>.<span style="color:#a6e22e">RaftCmdResponse</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">badger</span>.<span style="color:#a6e22e">Txn</span>) {
+
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RLock</span>()
+    <span style="color:#a6e22e">router</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">trans</span>.<span style="color:#a6e22e">routers</span>[<span style="color:#a6e22e">storeID</span>]
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">router</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Can not find node %d&#34;</span>, <span style="color:#a6e22e">storeID</span>)
+    }
+    <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RUnlock</span>()
+  
+    <span style="color:#a6e22e">cb</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">message</span>.<span style="color:#a6e22e">NewCallback</span>()
+    <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">SendRaftCommand</span>(<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">cb</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>
+    }
+    <span style="color:#a6e22e">resp</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">WaitRespWithTimeout</span>(<span style="color:#a6e22e">timeout</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">Txn</span>
+}
+</code></pre></div><p><code>RaftStore</code> 创建一个RaftWorker 负责接收 Raft Message，<code>Cluster</code> 发过来的的请求会被 Raft Worker 接收然后调用 <code>HandleMsg</code> 和 <code>HandleRaftReady</code> 来处理。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// raftWorker is responsible for run raft commands and apply raft logs.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">raftWorker</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">pr</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">router</span>
+    <span style="color:#75715e">// receiver of messages should sent to raft, including:
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// * raft command from `raftStorage`
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// * raft inner messages from other peers sent by network
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">raftCh</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">message</span>.<span style="color:#a6e22e">Msg</span>
+    <span style="color:#a6e22e">ctx</span>    <span style="color:#f92672">*</span><span style="color:#a6e22e">GlobalContext</span>
+
+    <span style="color:#a6e22e">closeCh</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}
+}
+
+<span style="color:#75715e">// run runs raft commands.
+</span><span style="color:#75715e">// On each loop, raft commands are batched by channel buffer.
+</span><span style="color:#75715e">// After commands are handled, we collect apply messages by peers, make a applyBatch, send it to apply channel.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">rw</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raftWorker</span>) <span style="color:#a6e22e">run</span>(<span style="color:#a6e22e">closeCh</span> <span style="color:#f92672">&lt;-</span><span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#a6e22e">wg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>) {
+    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">msgs</span> []<span style="color:#a6e22e">message</span>.<span style="color:#a6e22e">Msg</span>
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#a6e22e">msgs</span> = <span style="color:#a6e22e">msgs</span>[:<span style="color:#ae81ff">0</span>]
+        <span style="color:#66d9ef">select</span> {
+        <span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">closeCh</span>:
+            <span style="color:#66d9ef">return</span>
+        <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">raftCh</span>:
+            <span style="color:#a6e22e">msgs</span> = append(<span style="color:#a6e22e">msgs</span>, <span style="color:#a6e22e">msg</span>)
+        }
+        <span style="color:#a6e22e">pending</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">raftCh</span>)
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">pending</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+            <span style="color:#a6e22e">msgs</span> = append(<span style="color:#a6e22e">msgs</span>, <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">raftCh</span>)
+        }
+        <span style="color:#a6e22e">peerStateMap</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">uint64</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">peerState</span>)
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">msgs</span> {
+            <span style="color:#a6e22e">peerState</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">getPeerState</span>(<span style="color:#a6e22e">peerStateMap</span>, <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">RegionID</span>)
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">peerState</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+                <span style="color:#66d9ef">continue</span>
+            }
+            <span style="color:#a6e22e">newPeerMsgHandler</span>(<span style="color:#a6e22e">peerState</span>.<span style="color:#a6e22e">peer</span>, <span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">HandleMsg</span>(<span style="color:#a6e22e">msg</span>)
+        }
+
+        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">peerState</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">peerStateMap</span> {
+            <span style="color:#a6e22e">newPeerMsgHandler</span>(<span style="color:#a6e22e">peerState</span>.<span style="color:#a6e22e">peer</span>, <span style="color:#a6e22e">rw</span>.<span style="color:#a6e22e">ctx</span>).<span style="color:#a6e22e">HandleRaftReady</span>()
+        }
+    }
+}
+</code></pre></div><h2 id="1peerstorage">1.PeerStorage</h2>
+<blockquote>
+<p>The code you need to implement in this part is only one function: <code>PeerStorage.SaveReadyState</code>, what this function does is to save the data in <code>raft.Ready</code> to badger, including append log entries and save the Raft hard state.</p>
+</blockquote>
+<p><code>SaveReadyState(read)</code> 将 Ready 中有效的内容写入到 Storage Engine 中去 (Engine 如有不清楚请回顾 P1)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">en</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Engines</span>) <span style="color:#a6e22e">WriteKV</span>(<span style="color:#a6e22e">wb</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteBatch</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">wb</span>.<span style="color:#a6e22e">WriteToDB</span>(<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">Kv</span>)
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">en</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Engines</span>) <span style="color:#a6e22e">WriteRaft</span>(<span style="color:#a6e22e">wb</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteBatch</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">wb</span>.<span style="color:#a6e22e">WriteToDB</span>(<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">Raft</span>)
+}
+</code></pre></div><p>便捷起见，也可以使用 <code>WriteBatch.MustWriteToDB</code>，如某佬年度总结所说，golang哪里都爽，就是error判断很不爽</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Key</th>
+<th style="text-align:left">KeyFormat</th>
+<th style="text-align:left">Value</th>
+<th style="text-align:left">DB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">raft_log_key</td>
+<td style="text-align:left">0x01 0x02 region_id 0x01 log_idx</td>
+<td style="text-align:left">Entry</td>
+<td style="text-align:left">raft</td>
+</tr>
+<tr>
+<td style="text-align:left">raft_state_key</td>
+<td style="text-align:left">0x01 0x02 region_id 0x02</td>
+<td style="text-align:left">RaftLocalState</td>
+<td style="text-align:left">raft</td>
+</tr>
+<tr>
+<td style="text-align:left">apply_state_key</td>
+<td style="text-align:left">0x01 0x02 region_id 0x03</td>
+<td style="text-align:left">RaftApplyState</td>
+<td style="text-align:left">kv</td>
+</tr>
+<tr>
+<td style="text-align:left">region_state_key</td>
+<td style="text-align:left">0x01 0x03 region_id 0x01</td>
+<td style="text-align:left">RegionLocalState</td>
+<td style="text-align:left">kv</td>
+</tr>
+</tbody>
+</table>
+<p>以上四种数据需要持久化，使用 <code>SetMeta(key, val)</code> 将 Entry append 到 WriteBatch 中去，再通过 Engine 将 WriteBatch 写回到对应 DB，但 engine_util 提供的接口并不提供原子性保证，最好用 <code>WriteBatch</code>，指导书中也推荐使用<code>WriteBatch</code>.</p>
+<h4 id="savereadystate">SaveReadyState</h4>
+<p><code>SaveReadyState</code> 需要注意 <code>ApplyIndex</code>，可以直接更新到 storage，也可以在数据真正的 apply 持久化到 storage 之后再去更新，即使先更新了applyIndex，但数据并没有被 apply，也可以通过 replay 日志来解决。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Save memory states to disk.
+</span><span style="color:#75715e">// Do not modify ready in this function, this is a requirement to advance the ready object properly later.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ps</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PeerStorage</span>) <span style="color:#a6e22e">SaveReadyState</span>(<span style="color:#a6e22e">ready</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">Ready</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">ApplySnapResult</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#75715e">// Hint: you may call `Append()` and `ApplySnapshot()` in this function
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// Your Code Here (2B/2C).
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">raftwb</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>{}
+    <span style="color:#a6e22e">kvwb</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>{}
+    
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">IsEmptySnap</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ready</span>.<span style="color:#a6e22e">Snapshot</span>) {
+        <span style="color:#75715e">// apply snapshot
+</span><span style="color:#75715e"></span>    }
+    
+    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">ready</span>.<span style="color:#a6e22e">Entries</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#75715e">// append entries
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// append will update raft state(lastindex, lasrterm)
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">IsEmptyHardState</span>(<span style="color:#a6e22e">ready</span>.<span style="color:#a6e22e">HardState</span>) {
+        <span style="color:#75715e">// update hardstate
+</span><span style="color:#75715e"></span>    }
+    
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h4 id="append">Append</h4>
+<p>Follower 收到 entries 以后如果发现冲突，会将冲突之后的所有log entries截断，PeerStorage也需要将多余的部分清理掉</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Append the given entries to the raft log and update ps.raftState also delete log entries that will
+</span><span style="color:#75715e">// never be committed
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ps</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PeerStorage</span>) <span style="color:#a6e22e">Append</span>(<span style="color:#a6e22e">entries</span> []<span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#a6e22e">raftWB</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>) <span style="color:#66d9ef">error</span> {
+    <span style="color:#75715e">// Your Code Here (2B).
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">lastTerm</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">entries</span>[len(<span style="color:#a6e22e">entries</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">Term</span>
+    <span style="color:#a6e22e">lastIndex</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">entries</span>[len(<span style="color:#a6e22e">entries</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">Index</span>
+    
+    <span style="color:#a6e22e">oldlastIndex</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">LastIndex</span>()
+    
+    <span style="color:#75715e">// append all entries to raft write batch
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">entry</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">entries</span> {
+        <span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">meta</span>.<span style="color:#a6e22e">RaftLogKey</span>(<span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetId</span>(), <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Index</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">raftWB</span>.<span style="color:#a6e22e">SetMeta</span>(<span style="color:#a6e22e">key</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">entry</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+        }
+    }
+   
+    <span style="color:#75715e">// remove all entries never commit(conflict), don&#39;t care about order
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">idx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lastIndex</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">idx</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">oldlastIndex</span>; <span style="color:#a6e22e">idx</span><span style="color:#f92672">++</span> {
+        <span style="color:#a6e22e">raftWB</span>.<span style="color:#a6e22e">DeleteMeta</span>(<span style="color:#a6e22e">meta</span>.<span style="color:#a6e22e">RaftLogKey</span>(<span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetId</span>(), <span style="color:#a6e22e">idx</span>))
+    }
+
+    <span style="color:#75715e">// update raft state 
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">Engines</span>.<span style="color:#a6e22e">WriteRaft</span>(<span style="color:#a6e22e">raftWB</span>)
+    
+    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">raftState</span>.<span style="color:#a6e22e">LastIndex</span> = <span style="color:#a6e22e">lastIndex</span>
+    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">raftState</span>.<span style="color:#a6e22e">LastTerm</span> = <span style="color:#a6e22e">lastTerm</span>
+ 
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><h2 id="2raft-ready-process">2.Raft ready process</h2>
+<h3 id="proposeraftcommand">proposeRaftCommand</h3>
+<p>不管是 Get/Put/Delete/Snap 都通过调用<code>Marshal</code>序列化成字节，propose 到 rawNode 中去(然后 rawNode 会封装成 proose msg，传给 Raft 层)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">proposeRaftCommand</span>(<span style="color:#a6e22e">msg</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft_cmdpb</span>.<span style="color:#a6e22e">RaftCmdRequest</span>, <span style="color:#a6e22e">cb</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">message</span>.<span style="color:#a6e22e">Callback</span>) {
+    <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">preProposeRaftCommand</span>(<span style="color:#a6e22e">msg</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">Done</span>(<span style="color:#a6e22e">ErrResp</span>(<span style="color:#a6e22e">err</span>))
+        <span style="color:#66d9ef">return</span>
+    }
+    <span style="color:#75715e">// Your Code Here (2B).
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// now d.peer must be leader
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">// TODO : handle msg.AdminRequest
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">proposal</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">proposal</span>{
+        <span style="color:#a6e22e">index</span>: <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">nextProposalIndex</span>(),
+        <span style="color:#a6e22e">term</span>:  <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Term</span>(),
+        <span style="color:#a6e22e">cb</span>:    <span style="color:#a6e22e">cb</span>,
+    }
+    <span style="color:#75715e">// don&#39;t forget
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span> = append(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>, <span style="color:#a6e22e">proposal</span>)
+
+    <span style="color:#a6e22e">command</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Marshal</span>()
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;propose raft cmd err: %v\n&#34;</span>, <span style="color:#a6e22e">err</span>)
+    }
+
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">Propose</span>(<span style="color:#a6e22e">command</span>)
+}
+</code></pre></div><h3 id="handleraftready">HandleRaftReady</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">HandleRaftReady</span>() {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">stopped</span> {
+        <span style="color:#66d9ef">return</span>
+    }
+
+    <span style="color:#75715e">// Your Code Here (2B).
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">HasReady</span>() {
+        <span style="color:#a6e22e">rd</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">Ready</span>()
+        <span style="color:#75715e">// sync command to other peer
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">trans</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">Ready</span>().<span style="color:#a6e22e">Messages</span>)
+        
+        <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">SaveReadyState</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">rd</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#75715e">// err preocess releated
+</span><span style="color:#75715e"></span>            panic(<span style="color:#e6db74">&#34;HandleRaftReady: err not nil&#34;</span>)
+        }
+  
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            <span style="color:#75715e">// snapshot preocess releated
+</span><span style="color:#75715e"></span>            panic(<span style="color:#e6db74">&#34;HandleRaftReady: applysnap result not nil&#34;</span>)
+        }
+
+        <span style="color:#75715e">// apply command to storage()
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">rd</span>.<span style="color:#a6e22e">CommittedEntries</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#75715e">// apply request to kvdb and wakeup client 
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">kvWB</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>{}
+            <span style="color:#a6e22e">applyKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">meta</span>.<span style="color:#a6e22e">ApplyStateKey</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">regionId</span>)
+
+            <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">entry</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">rd</span>.<span style="color:#a6e22e">CommittedEntries</span>[<span style="color:#a6e22e">start</span>:] {
+                <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">applyRaftEntry</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">entry</span>, <span style="color:#a6e22e">kvWB</span>)
+                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">stopped</span> {
+                    <span style="color:#66d9ef">return</span>
+                }
+            }
+            <span style="color:#a6e22e">kvWB</span>.<span style="color:#a6e22e">SetMeta</span>(<span style="color:#a6e22e">applyKey</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">applyState</span>)
+            <span style="color:#a6e22e">kvWB</span>.<span style="color:#a6e22e">MustWriteToDB</span>(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">Engines</span>.<span style="color:#a6e22e">Kv</span>)
+        }
+
+        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">Advance</span>(<span style="color:#a6e22e">rd</span>)
+    }
+}
+</code></pre></div><p>Get/Put/Delete/Snap 操作 apply 后会修改底层Engine，比如 put (key, value) 先作为log entry 经由 Leader 发给其他 peer，收到半数确认并且leader将其apply后再将key，value写入底层的存储去。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// apply raft entry and new state to kvdb and raftdb
+</span><span style="color:#75715e">// entry canbe:
+</span><span style="color:#75715e">//    (1) confChange: change region member
+</span><span style="color:#75715e">//    (2) adminRequest: compact log or split regions
+</span><span style="color:#75715e">//    (3) normal opertions: put, get, delete, scan
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">applyRaftEntry</span>(<span style="color:#a6e22e">entry</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#a6e22e">kvWB</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>) {
+    <span style="color:#75715e">// 1. conf change  ...
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 2. adminRequest ...
+</span><span style="color:#75715e"></span>  
+    <span style="color:#75715e">// 3. normall operation
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">reqs</span>.<span style="color:#a6e22e">Requests</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">applyRequests</span>(<span style="color:#a6e22e">entry</span>, <span style="color:#a6e22e">reqs</span>)
+    }
+}
+</code></pre></div><p>唤醒entry对应的propose时，注意要匹配到index和term都相同的propose，即使不是leader也没问题，这可能是因为上个leader apply了当时他作为 leader 时收到的 raftcommand，这代表真正的 leader 也必然已经apply了这条日志</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// wakeup callback of proposal which term and index equal enty&#39;s term and index
+</span><span style="color:#75715e">// during apply this request, leader maybe change, so function should skip all old proposals before
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">CallBackPropose</span>(<span style="color:#a6e22e">entry</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#a6e22e">resp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft_cmdpb</span>.<span style="color:#a6e22e">RaftCmdResponse</span>, <span style="color:#a6e22e">scan</span> <span style="color:#66d9ef">bool</span>) {
+    <span style="color:#66d9ef">for</span> len(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>) &gt; <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">term</span> &lt; <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Term</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">index</span> &lt; <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Index</span>) {
+        <span style="color:#75715e">// log.Warnf(&#34;[T%v] Peer %v Skip Stale Propose in T%v%v &#34;, d.Term(), d.PeerId(), d.proposals[0].index, d.proposals[0].term)
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">Done</span>(<span style="color:#a6e22e">ErrResp</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">ErrStaleCommand</span>{}))
+        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">1</span>:]
+    }
+
+    <span style="color:#75715e">// non-leader may be wake up client, it&#39;s ok
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>) &gt; <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">term</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Term</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">index</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Index</span> {
+        <span style="color:#75715e">// log.Infof(&#34;[%v] Peer %v Wakeup Propose %v for %v resps: %v&#34;, d.Term(), d.PeerId(), d.proposals[0].index, len(resps.Responses), resps.Responses[0])
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">scan</span> {
+            <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">Txn</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">engine</span>.<span style="color:#a6e22e">Kv</span>.<span style="color:#a6e22e">NewTransaction</span>(<span style="color:#66d9ef">false</span>)
+        }
+        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">cb</span>.<span style="color:#a6e22e">Done</span>(<span style="color:#a6e22e">resp</span>)
+        <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span> = <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposals</span>[<span style="color:#ae81ff">1</span>:]
+    }
+}
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/64eee7c0661c6c8e54a85ef5.jpg" alt=""></p>
+<h2 id="about-test">About Test</h2>
+<p>1.若出现：<code>panic: find no region for 30203030303030303030</code> 之类的错误是因为 peer 创建 raft 时 config 中的 peers 是 nil，可以从 config state 中获取 region 节点信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#a6e22e">hardstate</span>, <span style="color:#a6e22e">confstate</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rflog</span>.<span style="color:#a6e22e">storage</span>.<span style="color:#a6e22e">InitialState</span>()
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    
+    <span style="color:#a6e22e">peers</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">peers</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">peers</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">peers</span> = <span style="color:#a6e22e">confstate</span>.<span style="color:#a6e22e">Nodes</span>
+    }
+
+    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">peer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rangepeers</span> {
+        <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Prs</span>[<span style="color:#a6e22e">peer</span>] = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Progress</span>{<span style="color:#a6e22e">lastIndex</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>}
+    }
+</code></pre></div><ol start="2">
+<li>Project 2b Basic 中 cluster 调用 scan 命令会发送给 snap 给 peer，所以虽然暂时不用实现 snapshot，但需要我们给对方回复。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Cluster</span>) <span style="color:#a6e22e">Scan</span>(<span style="color:#a6e22e">start</span>, <span style="color:#a6e22e">end</span> []<span style="color:#66d9ef">byte</span>) [][]<span style="color:#66d9ef">byte</span> {
+    <span style="color:#a6e22e">req</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NewSnapCmd</span>()
+    <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>    
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">values</span>
+}
+</code></pre></div><ol start="3">
+<li>callback 创建时 txn 为 nil，需要回复方根据自己的 Storage BadgerDB 绑定 txn，RegionReader 是根据 txn 创建迭代器的，这样 cluter 就能在正确的 badgerDB 上迭代。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewCallback</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">Callback</span> {
+    <span style="color:#a6e22e">done</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}, <span style="color:#ae81ff">1</span>)
+    <span style="color:#a6e22e">cb</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Callback</span>{<span style="color:#a6e22e">done</span>: <span style="color:#a6e22e">done</span>}
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cb</span>
+}
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/distribute-storage/" rel="tag">distribute storage</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/cs61c-cpu/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">CS61C-CPU-fall21</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

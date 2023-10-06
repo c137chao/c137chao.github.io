@@ -66,7 +66,14 @@
 		<li class="menu__item">
 			<a class="menu__link" href="/blog/tinykv-lab2a/">
 				
-				<span class="menu__text">tinykv lab2aa raft</span>
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
 				
 			</a>
 		</li>
@@ -80,6 +87,32 @@
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/blog/tinykv-lab2b/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2b kvraft">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/blog/tinykv-lab2b/" rel="bookmark">
+			tinykv lab2b kvraft
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-13T00:00:00Z">September 13, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		指导书传送门 涉及代码比较多，结合源码系列食用效果更佳 TiKV 源码解析系列 - multi-raft 设计与实现 总览 存储大文件时会将该文件切分成小的Shard分别存储，为了保证高可用性，每个Shard会存储到多个节点(节点是一个逻辑概念，一台服务器可对应多个节点)上，通过 Raft 协议保证数据的一致，节点对应指导书中的 Peer，这样一组节点称为 Raft Group 或者 Region。
+数据切片应选择对应的 Region 存放，最粗暴的方法是使用 Hash Sharding (在6.824的lab4中使用的方法)，但 Hash 方法在数据规模增长，服务器扩充以后产生大量的数据迁移， tinykv 使用 range sharding，每个 region 维护一个区间[start_key, end_key]，上层请求根据携带的 Key 到对应的 Region 中去执行 。 请求执行过程 收到上层发送的请求以后(Put/Delete/Get/Scan)，Cluster 首先会根据 key 通过找到其所在的 Region，然后找到该 Region 的 Leader，将请求发送给 Leader 等待对方回复。
+// cluster:Request region := c.GetRegion(key) regionID := region.GetId() req := NewRequest(regionID, region.RegionEpoch, reqs) resp, txn := c.CallCommandOnLeader(&amp;req, timeout) // ....  所有的 Region 存储在BTree上，根据 StartKey 来排序，GetRegion(key) 最终会调用 findRegion(key)，找到最后一个StartKey &lt;= key 的 Region
+	</div>
+</article><article class="list__item post">
 	
 	<figure class="list__thumbnail thumbnail">
 		<a class="thumbnail__link" href="/blog/cs61c-cpu/">
@@ -134,16 +167,15 @@ In P0, we know system executes user prog through process_execute called by user 
 	
 	<figure class="list__thumbnail thumbnail">
 		<a class="thumbnail__link" href="/blog/tinykv-lab2a/">
-		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2aa raft">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2a raft">
 		</a>
 	</figure>
 	<header class="list__header">
 		<h2 class="list__title post__title">
 			<a href="/blog/tinykv-lab2a/" rel="bookmark">
-			tinykv lab2aa raft
+			tinykv lab2a raft
 			</a>
 		</h2>
-		<p class="list__lead post__lead">Example lead - highlighted near the title</p>
 		<div class="list__meta meta"><div class="meta__item-author meta__item">
 	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
 </div>
@@ -179,9 +211,10 @@ Raft 被分为 3 个部分 rawnode.go，raft.go，log.go
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2aa raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
 		</ul>
 	</div>
 </div>

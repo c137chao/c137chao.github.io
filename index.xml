@@ -6,7 +6,18 @@
     <description>Recent content on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tinykv lab2b kvraft</title>
+      <link>http://c137chao.github.io/blog/tinykv-lab2b/</link>
+      <pubDate>Wed, 13 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/tinykv-lab2b/</guid>
+      <description>指导书传送门 涉及代码比较多，结合源码系列食用效果更佳 TiKV 源码解析系列 - multi-raft 设计与实现 总览 存储大文件时会将该文件切分成小的Shard分别存储，为了保证高可用性，每个Shard会存储到多个节点(节点是一个逻辑概念，一台服务器可对应多个节点)上，通过 Raft 协议保证数据的一致，节点对应指导书中的 Peer，这样一组节点称为 Raft Group 或者 Region。
+数据切片应选择对应的 Region 存放，最粗暴的方法是使用 Hash Sharding (在6.824的lab4中使用的方法)，但 Hash 方法在数据规模增长，服务器扩充以后产生大量的数据迁移， tinykv 使用 range sharding，每个 region 维护一个区间[start_key, end_key]，上层请求根据携带的 Key 到对应的 Region 中去执行 。 请求执行过程 收到上层发送的请求以后(Put/Delete/Get/Scan)，Cluster 首先会根据 key 通过找到其所在的 Region，然后找到该 Region 的 Leader，将请求发送给 Leader 等待对方回复。
+// cluster:Request region := c.GetRegion(key) regionID := region.GetId() req := NewRequest(regionID, region.RegionEpoch, reqs) resp, txn := c.CallCommandOnLeader(&amp;amp;req, timeout) // ....  所有的 Region 存储在BTree上，根据 StartKey 来排序，GetRegion(key) 最终会调用 findRegion(key)，找到最后一个StartKey &amp;lt;= key 的 Region</description>
+    </item>
+    
     <item>
       <title>CS61C-CPU-fall21</title>
       <link>http://c137chao.github.io/blog/cs61c-cpu/</link>
@@ -29,7 +40,7 @@ In P0, we know system executes user prog through process_execute called by user 
     </item>
     
     <item>
-      <title>tinykv lab2aa raft</title>
+      <title>tinykv lab2a raft</title>
       <link>http://c137chao.github.io/blog/tinykv-lab2a/</link>
       <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
       
