@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>CS61C-CPU-fall21 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs61c proj3">
+		<meta property="og:title" content="CS61C-CPU-fall21" />
+<meta property="og:description" content="notebook on cs61c proj3" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/blog/cs61c-cpu/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-12-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-12-21T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="CS61C-CPU-fall21">
+<meta itemprop="description" content="notebook on cs61c proj3"><meta itemprop="datePublished" content="2022-12-21T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2022-12-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="324">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2aa raft</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">CS61C-CPU-fall21</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2022-12-21T00:00:00Z">December 21, 2022</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs61%E7%B3%BB%E5%88%97/" rel="category">CS61系列</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651f7defc458853aef8cb266.jpg" alt="CS61C-CPU-fall21">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#part-1">Part 1</a>
+      <ul>
+        <li><a href="#11-alu">1.1. ALU</a></li>
+        <li><a href="#12-register">1.2. Register</a></li>
+        <li><a href="#13-imediate-generator">1.3. Imediate Generator</a></li>
+        <li><a href="#14-cpu-for-addi-instruction">1.4. CPU for addi Instruction</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-control-logic">2.1 Control Logic</a></li>
+        <li><a href="#22-branch-compare">2.2 branch Compare</a></li>
+        <li><a href="#23-csr">2.3 CSR</a></li>
+        <li><a href="#24-2-stage-pipline">2.4 2-Stage Pipline</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><img src="https://pic.imgdb.cn/item/639aae1cb1fccdcd36098366.jpg" alt=""></p>
+<h4 id="友情提示">友情提示：</h4>
+<p>尽量做 fa22或者之后的版本，不要做fa21（fa22提供了更多的测试）
+如果像我一样做了fa21，可以clone fa22的然后把需要的测试copy过来，或者自己写测试
+<img src="https://pic.imgdb.cn/item/651f7defc458853aef8cb266.jpg" alt=""></p>
+<h2 id="part-1">Part 1</h2>
+<p>完成 part1 之前先完成 lab5</p>
+<h3 id="11-alu">1.1. ALU</h3>
+<table>
+<thead>
+<tr>
+<th>Input Name</th>
+<th>Bit Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A</code></td>
+<td>32</td>
+<td>Data to use for Input A in the ALU operation</td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>32</td>
+<td>Data to use for Input B in the ALU operation</td>
+</tr>
+<tr>
+<td><code>ALUSel</code></td>
+<td>4</td>
+<td>Selects which operation the ALU should perform</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Output Name</th>
+<th>Bit Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ALUResult</code></td>
+<td>32</td>
+<td>Result of the ALU operation</td>
+</tr>
+</tbody>
+</table>
+<p>Below is the list of ALU operations for you to implement, along with their associated ALUSel values. <code>add</code> is already made for you. You are allowed and encouraged to use built-in Logisim components to implement the arithmetic operations.</p>
+<table>
+<thead>
+<tr>
+<th>ALUSel Value</th>
+<th>Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>add: <code>Result = A + B</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>sll: <code>Result = A &lt;&lt; B</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>slt: <code>Result = (A &lt; B (signed)) ? 1 : 0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Unused</td>
+</tr>
+<tr>
+<td>4</td>
+<td>xor: <code>Result = A ^ B</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>srl: <code>Result = (unsigned) A &gt;&gt; B</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>or: `Result = A</td>
+</tr>
+<tr>
+<td>7</td>
+<td>and: <code>Result = A &amp; B</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>mul: <code>Result = (signed) (A * B)[31:0]</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>mulh: <code>Result = (signed) (A * B)[63:32]</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Unused</td>
+</tr>
+<tr>
+<td>11</td>
+<td>mulhu: <code>Result = (A * B)[63:32]</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>sub: <code>Result = A - B</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>sra: <code>Result = (signed A &gt;&gt; B</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Unused</td>
+</tr>
+<tr>
+<td>15</td>
+<td>bsel: <code>Result = B</code></td>
+</tr>
+</tbody>
+</table>
+<p>我的实现如下
+<img src="https://pic.imgdb.cn/item/639aa33fb1fccdcd36f80a3a.jpg" alt=""></p>
+<h3 id="12-register">1.2. Register</h3>
+<p>画32个寄存器太麻烦了，所以8个一组，分成了4组
+<strong>(1) 8-Register-Group</strong>
+<img src="https://pic.imgdb.cn/item/639aa701b1fccdcd36004ec5.jpg" alt="">
+<strong>(2) 4个8-register-group(画的比较丑)</strong>
+DMUX的高两位决定那在个group写数据，低三位决定在group内的寄存器编号，x0始终为0，所以 x0 设置 reset 位为1.
+<img src="https://pic.imgdb.cn/item/639aa8b9b1fccdcd36030701.jpg" alt=""></p>
+<p><strong>(3) 从寄存器中读数据作为操作数</strong>
+<img src="https://pic.imgdb.cn/item/639aa9a2b1fccdcd3604c2b7.jpg" alt=""></p>
+<p><img src="https://pic.imgdb.cn/item/639aa9fdb1fccdcd36053e81.jpg" alt=""></p>
+<h3 id="13-imediate-generator">1.3. Imediate Generator</h3>
+<p>按照各类指令的规定完成就可以了
+<img src="https://pic.imgdb.cn/item/651f7858c458853aef8a9348.jpg" alt=""></p>
+<h3 id="14-cpu-for-addi-instruction">1.4. CPU for addi Instruction</h3>
+<p>注意这里的 Control sel 都是无效的，所以先不要用 Control sel 作为 mux 的 sel，自己先设置一个常数，剩下的就是按照 lecture 中讲到的完成 CPU 即可</p>
+<h1 id="part-2">Part 2</h1>
+<p>完成 part2 之前先做完 lab6 和前面的 discussion</p>
+<p>这部分比较难的应该是 Control Logic 和 Store/Load，实现 Control Loggic 指导书里提到用 Priority Encoder</p>
+<ul>
+<li>To determine what instruction is being inputted into the control logic subcircuit, it might help to use comparators and constants to compare bits of the instruction against some fixed constant value.</li>
+<li>To map instructions to their specific input, a Priority Encoder might be helpful.
+使用比较的方式判断是哪一种指令，然后用 priority encoder具体的将指令映射到特定的地址(偏移)</li>
+</ul>
+<h3 id="21-control-logic">2.1 Control Logic</h3>
+<p>我的脑容量只允许我采用穷举的办法，填好表格后填到ROM里
+<img src="https://pic.imgdb.cn/item/651f7935c458853aef8afb0b.jpg" alt=""></p>
+<p>做一些准备
+<img src="https://pic.imgdb.cn/item/63ad28e508b683016344609a.jpg" alt="">
+宏观上
+<img src="https://pic.imgdb.cn/item/63ad292b08b683016344fc2d.jpg" alt="">
+具体实现
+<img src="https://pic.imgdb.cn/item/651f7a5ac458853aef8b42e9.jpg" alt=""></p>
+<h3 id="22-branch-compare">2.2 branch Compare</h3>
+<p><img src="https://pic.imgdb.cn/item/651f7918c458853aef8af79b.jpg" alt=""></p>
+<h3 id="23-csr">2.3 CSR</h3>
+<p><img src="https://pic.imgdb.cn/item/651f7ac2c458853aef8be89d.jpg" alt=""></p>
+<h3 id="24-2-stage-pipline">2.4 2-Stage Pipline</h3>
+<p><img src="https://pic.imgdb.cn/item/651f81d7c458853aef8e4792.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/cs162-proj1/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">CS162 Project1 Userprograme</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2aa raft</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

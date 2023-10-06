@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CS61系列 on Summer Blog Space</title>
+    <link>http://c137chao.github.io/categories/cs61%E7%B3%BB%E5%88%97/</link>
+    <description>Recent content in CS61系列 on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 21 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/cs61%E7%B3%BB%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CS61C-CPU-fall21</title>
+      <link>http://c137chao.github.io/blog/cs61c-cpu/</link>
+      <pubDate>Wed, 21 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/cs61c-cpu/</guid>
+      <description>友情提示： 尽量做 fa22或者之后的版本，不要做fa21（fa22提供了更多的测试） 如果像我一样做了fa21，可以clone fa22的然后把需要的测试copy过来，或者自己写测试 Part 1 完成 part1 之前先完成 lab5
+1.1. ALU    Input Name Bit Width Description     A 32 Data to use for Input A in the ALU operation   B 32 Data to use for Input B in the ALU operation   ALUSel 4 Selects which operation the ALU should perform       Output Name Bit Width Description     ALUResult 32 Result of the ALU operation    Below is the list of ALU operations for you to implement, along with their associated ALUSel values.</description>
+    </item>
+    
+  </channel>
+</rss>

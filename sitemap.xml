@@ -3,10 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://c137chao.github.io/blog/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-12-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/categories/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-12-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/blog/cs61c-cpu/</loc>
+    <lastmod>2022-12-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/categories/cs61%E7%B3%BB%E5%88%97/</loc>
+    <lastmod>2022-12-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/</loc>
+    <lastmod>2022-12-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/categories/cs162/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
@@ -18,9 +27,6 @@
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/tags/operating-system/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://c137chao.github.io/</loc>
     <lastmod>2017-08-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/tags/</loc>
