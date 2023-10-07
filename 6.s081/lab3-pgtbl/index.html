@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>6.s081 lab3 pgtbl - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on 6.s081 lab">
+		<meta property="og:title" content="6.s081 lab3 pgtbl" />
+<meta property="og:description" content="notebook on 6.s081 lab" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/6.s081/lab3-pgtbl/" /><meta property="article:section" content="6.s081" />
+<meta property="article:published_time" content="2021-01-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-01-13T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="6.s081 lab3 pgtbl">
+<meta itemprop="description" content="notebook on 6.s081 lab"><meta itemprop="datePublished" content="2021-01-13T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-01-13T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1091">
+<meta itemprop="keywords" content="Operating System," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">6.s081 lab3 pgtbl</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-13T00:00:00Z">January 13, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab3 pgtbl">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1print-a-page-table">1.Print a page table</a></li>
+    <li><a href="#2kernel-page-table-per-proc"><strong>2.kernel page table per proc</strong></a></li>
+    <li><a href="#3simplify-copyincopyinstr">3.Simplify copyin/copyinstr</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<blockquote>
+<p>高能提醒，这个实验非常折磨人，跟前两个实验花费的时间绝对不在一个层面上，如果花费几天的时间还没完成，也不要气馁，做完所有实验回来再看，页表实验在整个过程中也是花费时间最多，panic最多的一个，并且遇到panic完全没有头绪。所以不管怎么样，不要灰心，Fighting！</p>
+</blockquote>
+<p><a href="https://pdos.csail.mit.edu/6.S081/2020/labs/pgtbl.html">官方实验指导书传送门</a></p>
+<p>补充: 后面的Q&amp;A视频课里老师有讲页表实验；</p>
+<h2 id="1print-a-page-table">1.Print a page table</h2>
+<blockquote>
+<p>主要要完成的就是在kernel/vm.c中定义vmprint(pagetable_t), 用来打印页表，有多种方法可以实现，用多层for循环比较直观，也可以参照freewalk（CV大法好），使用递归完成，是一个热身作业。</p>
+</blockquote>
+<ul>
+<li>You can put vmprint() in kernel/vm.c.</li>
+<li>Use the macros at the end of the file kernel/riscv.h.</li>
+<li>The function freewalk may be inspirational.</li>
+<li>Define the prototype for vmprint in kernel/defs.h so that you can call it from exec.c.</li>
+<li>Use %p in your printf calls to print out full 64-bit hex PTEs and addresses as shown in the example.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">vmprint_recur</span>(pagetable_t pagetable, <span style="color:#66d9ef">int</span> level){
+<span style="color:#75715e">// 有很多方式处理.. ..的打印
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">512</span>; i<span style="color:#f92672">++</span>){
+    pte_t pte <span style="color:#f92672">=</span> pagetable[i];
+    <span style="color:#66d9ef">if</span>((pte <span style="color:#f92672">&amp;</span> PTE_V) <span style="color:#f92672">&amp;&amp;</span> (pte <span style="color:#f92672">&amp;</span> (PTE_R<span style="color:#f92672">|</span>PTE_W<span style="color:#f92672">|</span>PTE_X)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      <span style="color:#75715e">// this PTE points to a lower-level page table.
+</span><span style="color:#75715e"></span>      uint64 nextlevelPT <span style="color:#f92672">=</span> PTE2PA(pte);
+      <span style="color:#66d9ef">switch</span>(level){
+        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>   printf(<span style="color:#e6db74">&#34;..&#34;</span>);     <span style="color:#66d9ef">break</span>;
+        <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>   printf(<span style="color:#e6db74">&#34;.. ..&#34;</span>);  <span style="color:#66d9ef">break</span>;
+        <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>  <span style="color:#66d9ef">break</span>;
+      }
+      printf(<span style="color:#e6db74">&#34;%d: pte %p pa %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, pte, nextlevelPT);
+      vmprint_recur((pagetable_t)nextlevelPT, level <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+      
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(pte <span style="color:#f92672">&amp;</span> PTE_V){ 
+      <span style="color:#75715e">// this PTE points to the last level page table
+</span><span style="color:#75715e"></span>      uint64 pa <span style="color:#f92672">=</span> PTE2PA(pte);
+      printf(<span style="color:#e6db74">&#34;.. .. ..%d: pte %p pa %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i, pte, pa);
+    }
+  }
+  <span style="color:#66d9ef">return</span>;
+}
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">vmprint</span>(pagetable_t pte){  <span style="color:#75715e">// pagetable_t is uint64*
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// print pagetables
+</span><span style="color:#75715e"></span>  printf(<span style="color:#e6db74">&#34;page table %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, pte);
+  vmprint_recur(pte, <span style="color:#ae81ff">0</span>); 
+  <span style="color:#66d9ef">return</span>;   
+}
+</code></pre></div><h2 id="2kernel-page-table-per-proc"><strong>2.kernel page table per proc</strong></h2>
+<blockquote>
+<p>task2 和 task3 的难度很大，尤其是task3，我在做task3的时候被各种panic折磨崩溃</p>
+</blockquote>
+<blockquote>
+<p>task2目的是为每一个进程添加一个内核页表，原本所有进程进入内核是共用一个大页表 kernel-pagetable(看kvminit的代码就可以知道，xv6book 3.2也提到了)，这个kernel-pagetable使用直接映射(虚拟地址就是物理地址)，并且为每一个进程的内核栈都预留出了一个guard page，现在要为每个进程添加一个自己的内核页表并相应修改内核栈的申请与释放。</p>
+</blockquote>
+<blockquote>
+<p>在task3提到一个要求 (task2没有要求，不会影响task2的通过)，这里就提前剧透了：</p>
+</blockquote>
+<p><img src="https://pic.imgdb.cn/item/6222c2c15baa1a80ab0b6e86.png" alt=""></p>
+<p>为了让内核能够直接访问用户页面的虚拟地址(原本是先用户页表翻译成物理地址，然后再传给内核，这样会产生额外的开销，这里到task3我会再去解释一下)，那最好将user pagetable的内容同步到kernel pagetable中去，这样就需要保证用户空间和内核空间的虚拟地址不会重复，xv6的做法是令user spcae的虚拟地址是从0开始增长，而从PLIC(0x0c000000)开始是kernel space的地址，这样就需要限制用user space的虚拟地址不会超过PLIC，可以看到CLINT(Core Local Interruptor)比PLIC要小，并且CLINT只有在内核初始化的时候需要，所以进程内核栈不需要映射CLINT。</p>
+<p>(1)按照xv6book里所提到的，我们添加一个kvmake辅助内核页表的初始化工作，kvmmap的参数做一点修改(记得在def.h里添加/修改声明)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">pagetable_t <span style="color:#a6e22e">kvmake</span>(){
+  pagetable_t pg <span style="color:#f92672">=</span> (pagetable_t) kalloc();
+  memset(kernel_pagetable, <span style="color:#ae81ff">0</span>, PGSIZE);
+  
+  <span style="color:#75715e">// uart registers
+</span><span style="color:#75715e"></span>  kvmmap(pg, UART0, UART0, PGSIZE, PTE_R <span style="color:#f92672">|</span> PTE_W);
+  <span style="color:#75715e">// virtio mmio disk interface
+</span><span style="color:#75715e"></span>  kvmmap(pg, VIRTIO0, VIRTIO0, PGSIZE, PTE_R <span style="color:#f92672">|</span> PTE_W);
+  <span style="color:#75715e">// PLIC
+</span><span style="color:#75715e"></span>  kvmmap(pg, PLIC, PLIC, <span style="color:#ae81ff">0x400000</span>, PTE_R <span style="color:#f92672">|</span> PTE_W);
+  <span style="color:#75715e">// map kernel text executable and read-only.
+</span><span style="color:#75715e"></span>  kvmmap(pg, KERNBASE, KERNBASE, (uint64)etext<span style="color:#f92672">-</span>KERNBASE, PTE_R <span style="color:#f92672">|</span> PTE_X);
+  <span style="color:#75715e">// map kernel data and the physical RAM we&#39;ll make use of.
+</span><span style="color:#75715e"></span>  kvmmap(pg, (uint64)etext, (uint64)etext, PHYSTOP<span style="color:#f92672">-</span>(uint64)etext, PTE_R <span style="color:#f92672">|</span> PTE_W);
+  <span style="color:#75715e">// map the trampoline for trap entry/exit to
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// the highest virtual address in the kernel.
+</span><span style="color:#75715e"></span>  kvmmap(pg, TRAMPOLINE, (uint64)trampoline, PGSIZE, PTE_R <span style="color:#f92672">|</span> PTE_X);
+  
+  <span style="color:#66d9ef">return</span> pg;
+}
+
+<span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">kvminit</span>()
+{
+  kernel_pagetable <span style="color:#f92672">=</span> kvmake();
+  <span style="color:#75715e">// CLINT
+</span><span style="color:#75715e"></span>  kvmmap(kernel_pagetable, CLINT, <span style="color:#ae81ff">0x10000</span>, PTE_R <span style="color:#f92672">|</span> PTE_W);
+}
+
+<span style="color:#75715e">// add a mapping to the kernel page table.
+</span><span style="color:#75715e">// only used when booting.
+</span><span style="color:#75715e">// does not flush TLB or enable paging.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">kvmmap</span>(pagetable_t pg, uint64 va, uint64 pa, uint64 sz, <span style="color:#66d9ef">int</span> perm)
+{
+  <span style="color:#66d9ef">if</span>(mappages(pg, va, sz, pa, perm) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+    panic(<span style="color:#e6db74">&#34;kvmmap&#34;</span>);
+}
+</code></pre></div><p>(2)为struct proc增加一个kernel page table的指针, 修改allocproc增加kernel pagetable的初始化</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">// Per-process state
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> proc {
+  <span style="color:#66d9ef">struct</span> spinlock lock;
+  <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>  pagetable_t kernpgtbl;       <span style="color:#75715e">// kernel page table
+</span><span style="color:#75715e"></span>  pagetable_t pagetable;       <span style="color:#75715e">// User page table
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>};
+</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">// initialize the proc table at boot time.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">procinit</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p;
+  
+  initlock(<span style="color:#f92672">&amp;</span>pid_lock, <span style="color:#e6db74">&#34;nextpid&#34;</span>);
+  <span style="color:#66d9ef">for</span>(p <span style="color:#f92672">=</span> proc; p <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>proc[NPROC]; p<span style="color:#f92672">++</span>) {
+      initlock(<span style="color:#f92672">&amp;</span>p<span style="color:#f92672">-&gt;</span>lock, <span style="color:#e6db74">&#34;proc&#34;</span>);
+      <span style="color:#75715e">// 将内核栈的初始化工作转移到 allocproc中去，因为此时进程的内核页表还未初始化
+</span><span style="color:#75715e"></span>  }
+  <span style="color:#75715e">// kvminithart();
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> proc<span style="color:#f92672">*</span>
+<span style="color:#a6e22e">allocproc</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>found:
+  <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// An empty kernel page table
+</span><span style="color:#75715e"></span>  p<span style="color:#f92672">-&gt;</span>kernpgtbl <span style="color:#f92672">=</span> kvmmake();
+  <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>kernpgtbl <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+    freeproc(p);
+    release(<span style="color:#f92672">&amp;</span>p<span style="color:#f92672">-&gt;</span>lock);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+  }
+  <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// Allocate a page for the process&#39;s kernel stack.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Map it high in memory, followed by an invalid
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>pa <span style="color:#f92672">=</span> kalloc();
+  <span style="color:#66d9ef">if</span>(pa <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+    panic(<span style="color:#e6db74">&#34;kalloc&#34;</span>);
+  <span style="color:#75715e">// keep a page virtual addr as guard page
+</span><span style="color:#75715e"></span>  uint64 va <span style="color:#f92672">=</span> KSTACK((<span style="color:#66d9ef">int</span>) (p <span style="color:#f92672">-</span> proc)); <span style="color:#75715e">// 这里的虚拟地址也可以改其他的，如KSTACK(0)
+</span><span style="color:#75715e"></span>  kvmmap(p<span style="color:#f92672">-&gt;</span>kernpgtbl, va, (uint64)pa, PGSIZE, PTE_R <span style="color:#f92672">|</span> PTE_W);
+  p<span style="color:#f92672">-&gt;</span>kstack <span style="color:#f92672">=</span> va;
+  
+  <span style="color:#75715e">// Set up new context to start executing at forkret,
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">return</span> p;
+}
+</code></pre></div><p>(3)修改scheduler
+调度进程的时候也切换对应的内核页表，没有进程运行时使用全局kernel_pagetable</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">scheduler</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span>(;;){
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(p <span style="color:#f92672">=</span> proc; p <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>proc[NPROC]; p<span style="color:#f92672">++</span>) {
+      acquire(<span style="color:#f92672">&amp;</span>p<span style="color:#f92672">-&gt;</span>lock);
+      <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>state <span style="color:#f92672">==</span> RUNNABLE) {
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>        c<span style="color:#f92672">-&gt;</span>proc <span style="color:#f92672">=</span> p;
+        w_satp(MAKE_SATP(p<span style="color:#f92672">-&gt;</span>kernpgtbl)); <span style="color:#75715e">// set satp register 
+</span><span style="color:#75715e"></span>        sfence_vma();
+        swtch(<span style="color:#f92672">&amp;</span>c<span style="color:#f92672">-&gt;</span>context, <span style="color:#f92672">&amp;</span>p<span style="color:#f92672">-&gt;</span>context);
+
+        <span style="color:#75715e">// Process is done running for now.
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// It should have changed its p-&gt;state before coming back.
+</span><span style="color:#75715e"></span>        c<span style="color:#f92672">-&gt;</span>proc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+        kvminithart();  <span style="color:#75715e">// no process runs, use global kernel_pagetable
+</span><span style="color:#75715e"></span>        found <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+      }
+      release(<span style="color:#f92672">&amp;</span>p<span style="color:#f92672">-&gt;</span>lock);
+    }
+<span style="color:#75715e">#if !defined (LAB_FS)
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(found <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+      <span style="color:#75715e">// 不太清楚这里是不是也应该加上 kvminithart();
+</span><span style="color:#75715e"></span>      intr_on();
+      <span style="color:#66d9ef">asm</span> <span style="color:#66d9ef">volatile</span>(<span style="color:#e6db74">&#34;wfi&#34;</span>);
+    }
+<span style="color:#75715e">#else
+</span><span style="color:#75715e"></span>    ;
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>  }
+}
+</code></pre></div><p>释放内核页表，task2里比较关键的一部分，除了kernel stack之外，kernel page table里管理的其他内存应该都是公共的I/O地址(只是猜测^.^)，I/O设备内存不可以释放，这里有两种方法:</p>
+<ul>
+<li>先unmap掉kvmmake里建立的I/O映射，然后直接freewalk;</li>
+<li>也可以只释放页表，不释放leaf pagetable指向的内存，内核栈单独释放掉</li>
+</ul>
+<p>推荐第二种做法，不然到了task3，方法(1)还要额外unmap用户空间的地址, 很容易遇到问题。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">freeproc</span>(<span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p)
+{
+  <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>kstack){
+     uvmunmap(p<span style="color:#f92672">-&gt;</span>kernpgtbl, p<span style="color:#f92672">-&gt;</span>kstack, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
+     <span style="color:#75715e">// pte_t* pte = walk(p-&gt;kernpgtbl, p-&gt;kstack, 0);
+</span><span style="color:#75715e"></span>     <span style="color:#75715e">// uint64 pa = PTE2PA(*pte);
+</span><span style="color:#75715e"></span>     <span style="color:#75715e">// kfree((void*)pa);
+</span><span style="color:#75715e"></span>  }
+  p<span style="color:#f92672">-&gt;</span>kstack <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>kernpgtbl)
+    proc_freekernpgtbl(p<span style="color:#f92672">-&gt;</span>kernpgtbl, p<span style="color:#f92672">-&gt;</span>sz);
+  p<span style="color:#f92672">-&gt;</span>kernpgtbl <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#75715e">//....
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">proc_freekernpgtbl</span>(pagetable_t pagetable, uint64 sz)
+{
+  <span style="color:#75715e">// there are 2^9 = 512 PTEs in a page table.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">512</span>; i<span style="color:#f92672">++</span>){
+    pte_t pte <span style="color:#f92672">=</span> pagetable[i];
+    <span style="color:#66d9ef">if</span>((pte <span style="color:#f92672">&amp;</span> PTE_V) <span style="color:#f92672">&amp;&amp;</span> (pte <span style="color:#f92672">&amp;</span> (PTE_R<span style="color:#f92672">|</span>PTE_W<span style="color:#f92672">|</span>PTE_X)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      <span style="color:#75715e">// this PTE points to a lower-level page table.
+</span><span style="color:#75715e"></span>      uint64 child <span style="color:#f92672">=</span> PTE2PA(pte);
+      proc_freekernpgtbl((pagetable_t)child, sz);
+      pagetable[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(pte <span style="color:#f92672">&amp;</span> PTE_V){
+      pagetable[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+  }
+  kfree((<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)pagetable);
+}
+
+</code></pre></div><p>试着运行一下会panic</p>
+<p><img src="https://pic.imgdb.cn/item/6222c2c15baa1a80ab0b6e82.png" alt=""></p>
+<p>找到kvmpaqu检查错误</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;spinlock.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;proc.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+uint64
+<span style="color:#a6e22e">kvmpa</span>(uint64 va)
+{
+  uint64 off <span style="color:#f92672">=</span> va <span style="color:#f92672">%</span> PGSIZE;
+  pte_t <span style="color:#f92672">*</span>pte;
+  uint64 pa;
+  
+  pte <span style="color:#f92672">=</span> walk(myproc()<span style="color:#f92672">-&gt;</span>kernpgtbl, va, <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">if</span>(pte <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+    panic(<span style="color:#e6db74">&#34;kvmpa&#34;</span>);
+  <span style="color:#66d9ef">if</span>((<span style="color:#f92672">*</span>pte <span style="color:#f92672">&amp;</span> PTE_V) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+    panic(<span style="color:#e6db74">&#34;kvmpa&#34;</span>);
+  pa <span style="color:#f92672">=</span> PTE2PA(<span style="color:#f92672">*</span>pte);
+  <span style="color:#66d9ef">return</span> pa<span style="color:#f92672">+</span>off;
+}
+</code></pre></div><p>这次可以了</p>
+<p><img src="https://pic.imgdb.cn/item/6222c10c5baa1a80ab0a2843.jpg" alt=""></p>
+<h2 id="3simplify-copyincopyinstr">3.Simplify copyin/copyinstr</h2>
+<blockquote>
+<p>copyin是向内核空间传递地址，原本的copyin会先在进程的用户页表walk(软件的方式)到对应的页表项，获取物理地址，然后内核拿到物理地址后，再通过MMU(硬件的方式)重新翻译一次地址(内核页表虚拟地址就是物理地址)</p>
+</blockquote>
+<p>task3要求我们将用户页表的内容同步到内核页表中去，这样减小每次在内核访问用户地址的额外开销;</p>
+<p>(1)用copyin_new 和 copyinstr_new替换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">copyin</span>(pagetable_t pagetable, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dst, uint64 srcva, uint64 len)
+{
+  <span style="color:#66d9ef">return</span> copyin_new(pagetable, dst, srcva, len);
+}
+
+<span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">copyinstr</span>(pagetable_t pagetable, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dst, uint64 srcva, uint64 max)
+{
+  <span style="color:#66d9ef">return</span> copyinstr_new(pagetable, dst, srcva, max);
+}
+</code></pre></div><p>试着make qemu，panic !!!</p>
+<p><img src="https://pic.imgdb.cn/item/6222c1d85baa1a80ab0ac418.png" alt=""></p>
+<p>因为现在的内核页表不含用户页表的内容，仿照uvmcopy,增加一个用户页表复制到内核页表的函数kvmcopy，为了提高效率，这里最好不要从0开始复制，不然页表中每添加一个pte都要复制整个页表，设置要复制的内存区间[beg, end), 然后把区间内的每个页面复制到内核页表中去</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">kvmcopy</span>(pagetable_t old, pagetable_t new, uint64 beg, uint64 end){
+  pte_t <span style="color:#f92672">*</span>pte;
+  uint64 pa, i;
+  uint flags;
+
+  <span style="color:#66d9ef">for</span>(i <span style="color:#f92672">=</span> beg; i <span style="color:#f92672">&lt;</span> end; i <span style="color:#f92672">+=</span> PGSIZE){
+    <span style="color:#66d9ef">if</span>((pte <span style="color:#f92672">=</span> walk(old, i, <span style="color:#ae81ff">0</span>)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+      panic(<span style="color:#e6db74">&#34;kvmcopy: pte should exist&#34;</span>);
+    <span style="color:#66d9ef">if</span>((<span style="color:#f92672">*</span>pte <span style="color:#f92672">&amp;</span> PTE_V) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+      panic(<span style="color:#e6db74">&#34;kvmcopy: page not present&#34;</span>);
+    pa <span style="color:#f92672">=</span> PTE2PA(<span style="color:#f92672">*</span>pte);
+    flags <span style="color:#f92672">=</span> PTE_FLAGS(<span style="color:#f92672">*</span>pte) <span style="color:#f92672">&amp;</span> (<span style="color:#f92672">~</span>PTE_U); <span style="color:#75715e">// 注意不要忘记这里，否则kerntrap
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(copy_mappages(new, i, PGSIZE, pa, flags) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#75715e">// copy_mappages与mappages的唯一不同是copy_mappages会覆盖已经存在的页表项
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果还想使用原来的mappages，在exec里就要记得对原本的内核页表做清理工作，否则会remap
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">goto</span> err;
+    }
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+ err:
+  uvmunmap(new, <span style="color:#ae81ff">0</span>, i <span style="color:#f92672">/</span> PGSIZE, <span style="color:#ae81ff">1</span>);
+  <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+}
+</code></pre></div><p><strong>修改exec</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">exec</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>path, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+{
+  <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>  p <span style="color:#f92672">=</span> myproc();
+
+  <span style="color:#75715e">// do some prepare works ......
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// set user stack ......
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// clear old pagetable and update struct proc ...
+</span><span style="color:#75715e"></span>  
+  kvmcopy(p<span style="color:#f92672">-&gt;</span>pagetable, p<span style="color:#f92672">-&gt;</span>kernpgtbl, <span style="color:#ae81ff">0</span>, sz); 
+  <span style="color:#66d9ef">if</span>(p<span style="color:#f92672">-&gt;</span>pid<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>) vmprint(p<span style="color:#f92672">-&gt;</span>pagetable);
+  <span style="color:#66d9ef">return</span> argc; <span style="color:#75715e">// this ends up in a0, the first argument to main(argc, argv)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><strong>修改fork</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">fork</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#75715e">// ....
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Copy user memory from parent to child.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(uvmcopy(p<span style="color:#f92672">-&gt;</span>pagetable, np<span style="color:#f92672">-&gt;</span>pagetable, p<span style="color:#f92672">-&gt;</span>sz) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>){
+    freeproc(np);
+    release(<span style="color:#f92672">&amp;</span>np<span style="color:#f92672">-&gt;</span>lock);
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+  np<span style="color:#f92672">-&gt;</span>sz <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>sz;
+  <span style="color:#66d9ef">if</span>(kvmcopy(np<span style="color:#f92672">-&gt;</span>pagetable, np<span style="color:#f92672">-&gt;</span>kernpgtbl, <span style="color:#ae81ff">0</span>, np<span style="color:#f92672">-&gt;</span>sz) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>){
+    freeproc(np);
+    release(<span style="color:#f92672">&amp;</span>np<span style="color:#f92672">-&gt;</span>lock);
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+  np<span style="color:#f92672">-&gt;</span>parent <span style="color:#f92672">=</span> p;
+
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><strong>修改growproc</strong> (sys_sbrk调用了growproc)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">growproc</span>(<span style="color:#66d9ef">int</span> n)
+{
+  uint sz;
+  <span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> myproc();
+
+  sz <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>sz;
+  <span style="color:#66d9ef">if</span>(n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#66d9ef">if</span>(sz <span style="color:#f92672">+</span> n <span style="color:#f92672">&gt;=</span> PLIC <span style="color:#f92672">||</span> (sz <span style="color:#f92672">=</span> uvmalloc(p<span style="color:#f92672">-&gt;</span>pagetable, sz, sz <span style="color:#f92672">+</span> n)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+      <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+    kvmcopy(p<span style="color:#f92672">-&gt;</span>pagetable, p<span style="color:#f92672">-&gt;</span>kernpgtbl, PGROUNDUP(p<span style="color:#f92672">-&gt;</span>sz), sz);
+  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>){
+    sz <span style="color:#f92672">=</span> uvmdealloc(p<span style="color:#f92672">-&gt;</span>pagetable, sz, sz <span style="color:#f92672">+</span> n);
+    uvmunmap(p<span style="color:#f92672">-&gt;</span>kernpgtbl, PGROUNDUP(sz), <span style="color:#f92672">-</span>n <span style="color:#f92672">/</span> PGSIZE, <span style="color:#ae81ff">0</span>); <span style="color:#75715e">// note : n &lt; 0
+</span><span style="color:#75715e"></span>
+  }
+  p<span style="color:#f92672">-&gt;</span>sz <span style="color:#f92672">=</span> sz;
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+
+</code></pre></div><p><strong>最后userinit</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">userinit</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  uvminit(p<span style="color:#f92672">-&gt;</span>pagetable, initcode, <span style="color:#66d9ef">sizeof</span>(initcode));
+  p<span style="color:#f92672">-&gt;</span>sz <span style="color:#f92672">=</span> PGSIZE;
+  kvmcopy(p<span style="color:#f92672">-&gt;</span>pagetable, p<span style="color:#f92672">-&gt;</span>kernpgtbl, <span style="color:#ae81ff">0</span>, p<span style="color:#f92672">-&gt;</span>sz);
+  <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>大功告成(记得创建answers-pgtbl.txt 回答前面指导书里的提问，跟time.txt在一个目录下)</p>
+<p><img src="https://pic.imgdb.cn/item/6222c1d85baa1a80ab0ac41b.png" alt=""></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/operating-system/" rel="tag">Operating System</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/6.s081/lab4-trap/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">6.s081 lab4 trap</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

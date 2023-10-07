@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>6.s081 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="6.s081" />
+<meta property="og:description" content="Summer&#39;s Personal blog about everything" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://c137chao.github.io/categories/6.s081/" />
+
+
+		<meta itemprop="name" content="6.s081">
+<meta itemprop="description" content="Summer&#39;s Personal blog about everything">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="alternate" type="application/rss+xml" href="/categories/6.s081/index.xml" title="Summer Blog Space">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">6.s081</h1>
+	</header><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/6.s081/lab8-lock/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab8 lock">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/6.s081/lab8-lock/" rel="bookmark">
+			6.s081 lab8 lock
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-21T00:00:00Z">January 21, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		官方实验指导书传送门
+1.Memory allocator  原本的内存分配锁的粒度比较大，全局使用一个freelist和用来互斥访问内存申请释放的lock (kmem) 虽然能够维持互斥访问的正确性，但并发效率低，所以这个task就是修改原本的内存分配，让每个CPU都持有一个freelist和lock，自己的内存自己管理，当内存不够的时候，从其他CPU的freelist那里获取内存，从而让内存管理能够并发运行。
+ Your Job里面说了要使用原来的kmem，换而言之就是不要把freelist和lock些加到cpu的结构体里面去(估计这样要修改的内容会多到爆炸)，所以就把原来的kmem改成一个数组。​
+struct { struct spinlock lock; struct run *freelist; } kmem[NCPU]; 相应修改kmem的初始化
+void kinit() { for(uint i = 0; i &lt; NCPU; i++){ initlock(&amp;kmem[i].lock, &#34;kmem&#34;); // 暂时将所有的锁命名为kmem  } freerange(end, (void*)PHYSTOP); } 修改kfree和kalloc，注意cpuid()要关中断，或者可以尝试在内存分配时整个持有所的过程关中断(不然被锁住的那个cpu要一直等着时间片轮转回来，但这样关中断又感觉太暴力)，都可以通过
+void kfree(void *pa) { struct run *r; if(((uint64)pa % PGSIZE) != 0 || (char*)pa &lt; end || (uint64)pa &gt;= PHYSTOP) panic(&#34;kfree&#34;); // Fill with junk to catch dangling refs.
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/6.s081/lab7-multithread/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab7 multithreads">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/6.s081/lab7-multithread/" rel="bookmark">
+			6.s081 lab7 multithreads
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-20T00:00:00Z">January 20, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		官方实验指导书传送门
+1. userthread 为xv6完善用户线程的切换，完全仿照内核线程的切换去做即可，当然实际上要比内核线程切换做的事少很多。课上讲的内容对本实验非常有帮助
+(1)增加线程切换时需要的上下文信息，注意thread里增加struct tcontext，不要加指针，否则需要手动去申请释放内存
+struct tcontext { uint64 ra; uint64 sp; // callee-saved  uint64 s0; uint64 s1; uint64 s2; uint64 s3; uint64 s4; uint64 s5; uint64 s6; uint64 s7; uint64 s8; uint64 s9; uint64 s10; uint64 s11; }; struct thread { char stack[STACK_SIZE]; /* the thread&#39;s stack */ int state; /* FREE, RUNNING, RUNNABLE */ struct tcontext context; /* if you use struct tcontext*, you should alloc and dealloc by yourself */ }; (2)uthread_switch这里和内核的switch是一样的，保存旧的context，加载新的context
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/6.s081/lab6-cow/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab6 copy on write">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/6.s081/lab6-cow/" rel="bookmark">
+			6.s081 lab6 copy on write
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-18T00:00:00Z">January 18, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		lab 5 让我们对lazy allocate有了初步的了解，lab 6是针对fork进程做出优化，使得fork进程和parent进程共享只读内存，仅分配需要写的内存(使用lazy allocation技术)，提高内存的使用效率，相比lab 5而言要复杂的多，如同video里老师说的，只用真正的使用虚拟地址编程，才能发现这虚拟内存的奇妙之处。
+ 官方实验指导书传送门
+ 准备一个页面引用计数的结构体(用基本类型的全局数组会disk会报错，make不通过，不太清楚原因) 利用pte标记位判断该页面是否用于copy-on-write 发生写入错误的时候检查并处理缺页  1.引用计数结构 // kernel/proc.h struct mref { char count; }; // kernel/proc.c struct mref ref [PHYSTOP/PGSIZE]; // ...  // 准备一些ref的封装，ref_init(pa), ref_increase(pa), ref_decrease(pa)  void * kalloc(void) { struct run *r; acquire(&amp;kmem.lock); r = kmem.freelist; if(r) kmem.freelist = r-&gt;next; release(&amp;kmem.lock); if(r){ memset((char*)r, 5, PGSIZE); // fill with junk  // 新申请的内存引用计数为1  ref[((uint64)r) / PGSIZE].count = 1; // 或者封装成 ref_init((uint64);  } return (void*)r; } 2.
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/6.s081/lab5-lazy/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab5 lazy allocation">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/6.s081/lab5-lazy/" rel="bookmark">
+			6.s081 lab5 lazy allocation
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-16T00:00:00Z">January 16, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		lab 5 还是非常舒服的，video里老师直接把前两个task给做好了，task3的思路也很清晰，遇到问题也是比较容易解决的，冲！
+ 官方实验指导书传送门
+task1 和 task2 的内容在video里老师已经演示过了，所以要解决的其实只有task3，整体的思路很明确，各个部分细节有一些需要注意的地方。
+ task3
+  在原有的task2上增加虚拟地址合法性检测以及要能正确处理n&lt;0的情况 对于read和write，usertrap会跳入系统调用，经过追踪，最终调用walkaddr来获取物理地址，所以在walkaddr里也要加入像usertrap中那样的lazy allocation  uint64 sys_sbrk(void) { int addr; int n; if(argint(0, &amp;n) &lt; 0) return -1; struct proc* p = myproc(); addr = p-&gt;sz; if (n &lt; 0){ if (p-&gt;sz + n &lt; 0) return -1; else uvmdealloc(p-&gt;pagetable, p-&gt;sz, p-&gt;sz + n); } // don&#39;t use addr + n, addr is int, in memout test, p-&gt;sz maybe very large(over 32 bit)  p-&gt;sz += n; return addr; }  void usertrap(void){ //.
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/6.s081/lab4-trap/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab4 trap">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/6.s081/lab4-trap/" rel="bookmark">
+			6.s081 lab4 trap
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-15T00:00:00Z">January 15, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		其实到这个实验为止，都在帮我们在脑中搭建内核的工作机制，理解这几个实验的过程非常重要，对后面做实验是非常有帮助的。
+ 官方实验指导书传送门
+1.RISC-V assembly  问答题，没有代码
+ 1. 13 store at a2 2. main didn&#39;t call f or g, the compiler inline them 3. printf located at 0x630 4. the value of ra is 30 (0x630 - (dec)1536 = 0x30 ) 5. he110 World 6. y = value of register a2 2.Backtrace (moderate) task2 整体的思路和实现都很简单，不断的寻找调用栈的fp，打印出返回地址，问题只有一个，，循环结束的条件是什么？
+结合官方的演示和debug，正确应该是追溯三个函数 观察右边的栈帧fp（sys_sleep&lt;-syscall&lt;-usertrap），应该在fp = 0x3fffffa000时结束循环。
+0x3fffffa000和kstack刚好相距一个页面，再依据上一个页表实验，进程栈是由高地址像低地址增长，所以，此时的fp指向的是内核栈的栈顶，同时就是backtrace所在页面的页表起始位置，usertrap再返回就要返回用户空间了，这个返回地址是不打印的。
+void backtrace(void){ // uint64 kstackpage = (uint64)myproc()-&gt;kstack;  printf(&#34;backtrace:\n&#34;); uint64 fp = r_fp(); uint64 board = PGROUNDUP(fp); while(fp &lt; board){ // if over current process kernel stack  printf(&#34;%p\n&#34;, *(uint64*)(fp - 8)); fp = *(uint64*)(fp - 16); } return; } 3.
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/categories/6.s081/">«</a>
+	<span class="pagination__item pagination__item--current">2/3</span>
+	<a class="pagination__item pagination__item--next btn" href="/categories/6.s081/page/3/">»</a>
+</div>
+
+			</div>
+			
+<aside class="sidebar sidebar--left"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/6.s081/">6.s081</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/cs162/">cs162</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/cs61%E7%B3%BB%E5%88%97/">CS61系列</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/tinykv/">tinykv</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/c137chao" target="_blank">
+				<svg class="widget-social__link-icon icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:c137_zhuochao@outlook.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>c137_zhuochao@outlook.com</span>
+			</a>
+		</div>
+
+		
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Wechat"  rel="noopener noreferrer" href="https://pic.imgdb.cn/item/651e6fcec458853aef2c36a6.jpg" target="_blank">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="Wechat", fill="#ffffff">
+<path d="M21.9 22.2c-.1 0-.2 0-.2-.1l-2.9-1.5c-1 .4-2.1.5-3.2.5-4.4 0-8-2.9-8-6.4 0-3.5 3.6-6.4 8-6.4s8 2.9 8 6.4c0 1.7-.9 3.3-2.4 4.5l1.1 2.1c.1.2.1.4-.1.6 0 .3-.1.3-.3.3zm-3-2.6c.1 0 .2 0 .2.1l1.7.9-.6-1.1c-.1-.2 0-.5.2-.6 1.5-1 2.3-2.5 2.3-4 0-3-3.2-5.4-7-5.4-3.9 0-7 2.4-7 5.4 0 3 3.1 5.4 7 5.4 1.1 0 2.1-.2 3.1-.5-.1-.2 0-.2.1-.2z"></path><path d="M2.4 19c-.1 0-.3 0-.4-.1-.2-.2-.2-.4-.1-.6l1.4-2.8c-1.9-1.5-3-3.6-3-5.7 0-4.4 4.5-8 10-8s10 3.6 10 8v.1c0 .2-.1.3-.2.4-.2.1-.3.1-.5 0-1.2-.6-2.6-1-4-1-3.9 0-7 2.4-7 5.4 0 .7.2 1.4.5 2.1.1.2.1.4 0 .5-.1.2-.3.2-.5.2-.8-.1-1.6-.3-2.3-.5l-3.7 2h-.2zm8-16.2c-5 0-9 3.1-9 7 0 2 1.1 3.8 3 5.2.2.1.3.4.2.6l-.9 1.8L6 16.1c.2-.1.3-.1.4-.1.5.2 1 .3 1.4.4-.2-.5-.3-1.1-.3-1.6 0-3.5 3.6-6.4 8-6.4 1.3 0 2.5.2 3.7.7-.3-3.5-4.2-6.3-8.8-6.3z"></path><path d="M7.2 7.9c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8s.8.3.8.8c0 .4-.4.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2c-.1-.1-.1-.2-.2-.2zM13.5 7.9c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8.5 0 .8.4.8.8s-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2-.1-.2-.2-.2zM13.1 14.6c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8s.8.4.8.8c.1.4-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2 0 .2.4.2.4 0s-.1-.2-.2-.2zM18.1 14.6c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8.5 0 .8.4.8.8s-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2-.1-.2-.2-.2z"></path></svg>
+				<span>&ensp;Wechat</span>
+			</a>
+		</div>
+		
+		
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script></body>
+</html>

@@ -6,11 +6,22 @@
     <description>Recent content in tinykv on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 13 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/tinykv/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/tinykv/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tinykv lab2c snapshot</title>
+      <link>http://c137chao.github.io/blog/tinykv-lab2c/</link>
+      <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/tinykv-lab2c/</guid>
+      <description>指导书传送门 结合官方解读食用 TiKV 源码解析系列文章（十）Snapshot 的发送和接收 | PingCAP 不妨尝试调试一下 snapshot 的测试部分去理解该过程
+When SnapShot peerMsgHandler会定期进行RaftLogGC检查，收到 PeerTickRaftLogGC 以后会判断 Leader 当前日志是否可以压缩（持有一定数量的已经被apply的logEntry），如果达到需要压缩的数量会产生一个 CompactLog 请求去处理。
+func (d *peerMsgHandler) onRaftGCLogTick() { d.ticker.schedule(PeerTickRaftLogGC) if !d.IsLeader() { return } // if no enougth log -&amp;gt; return  // else compactIdx = appliedIdx - 1, why - 1 ????  // ...  term, err := d.RaftGroup.Raft.RaftLog.Term(compactIdx) // check err  // Create a compact log request and notify directly.  regionID := d.</description>
+    </item>
+    
     <item>
       <title>tinykv lab2b kvraft</title>
       <link>http://c137chao.github.io/blog/tinykv-lab2b/</link>
-      <pubDate>Wed, 13 Sep 2023 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 14 Sep 2023 00:00:00 +0000</pubDate>
       
       <guid>http://c137chao.github.io/blog/tinykv-lab2b/</guid>
       <description>指导书传送门 涉及代码比较多，结合源码系列食用效果更佳 TiKV 源码解析系列 - multi-raft 设计与实现 总览 存储大文件时会将该文件切分成小的Shard分别存储，为了保证高可用性，每个Shard会存储到多个节点(节点是一个逻辑概念，一台服务器可对应多个节点)上，通过 Raft 协议保证数据的一致，节点对应指导书中的 Peer，这样一组节点称为 Raft Group 或者 Region。
@@ -21,7 +32,7 @@
     <item>
       <title>tinykv lab2a raft</title>
       <link>http://c137chao.github.io/blog/tinykv-lab2a/</link>
-      <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 11 Sep 2023 00:00:00 +0000</pubDate>
       
       <guid>http://c137chao.github.io/blog/tinykv-lab2a/</guid>
       <description>指导书传送门Raft小论文传送门

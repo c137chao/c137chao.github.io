@@ -76,6 +76,13 @@
 				
 			</a>
 		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
 	</ul>
 </nav>
 
@@ -88,6 +95,32 @@
 	<header class="main__header">
 		<h1 class="main__title">tinykv</h1>
 	</header><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/blog/tinykv-lab2c/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2c snapshot">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/blog/tinykv-lab2c/" rel="bookmark">
+			tinykv lab2c snapshot
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-20T00:00:00Z">September 20, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		指导书传送门 结合官方解读食用 TiKV 源码解析系列文章（十）Snapshot 的发送和接收 | PingCAP 不妨尝试调试一下 snapshot 的测试部分去理解该过程
+When SnapShot peerMsgHandler会定期进行RaftLogGC检查，收到 PeerTickRaftLogGC 以后会判断 Leader 当前日志是否可以压缩（持有一定数量的已经被apply的logEntry），如果达到需要压缩的数量会产生一个 CompactLog 请求去处理。
+func (d *peerMsgHandler) onRaftGCLogTick() { d.ticker.schedule(PeerTickRaftLogGC) if !d.IsLeader() { return } // if no enougth log -&gt; return  // else compactIdx = appliedIdx - 1, why - 1 ????  // ...  term, err := d.RaftGroup.Raft.RaftLog.Term(compactIdx) // check err  // Create a compact log request and notify directly.  regionID := d.
+	</div>
+</article><article class="list__item post">
 	
 	<figure class="list__thumbnail thumbnail">
 		<a class="thumbnail__link" href="/blog/tinykv-lab2b/">
@@ -104,7 +137,7 @@
 	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
 </div>
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-13T00:00:00Z">September 13, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-14T00:00:00Z">September 14, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
 	</span>
 </div></div>
 	</header>
@@ -130,7 +163,7 @@
 	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
 </div>
 <div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-08-21T00:00:00Z">August 21, 2017</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-11T00:00:00Z">September 11, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
 	</span>
 </div></div>
 	</header>
@@ -162,10 +195,11 @@ Raft 被分为 3 个部分 rawnode.go，raft.go，log.go
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
-			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
 			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
 		</ul>
 	</div>
 </div>
@@ -173,6 +207,8 @@ Raft 被分为 3 个部分 rawnode.go，raft.go，log.go
 	<h4 class="widget__title">Categories</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/6.s081/">6.s081</a></li>
 			<li class="widget__item">
 				<a class="widget__link" href="/categories/cs162/">cs162</a></li>
 			<li class="widget__item">

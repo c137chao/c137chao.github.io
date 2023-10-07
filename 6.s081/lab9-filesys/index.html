@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>6.s081 lab9 filesys - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on 6.s081 lab">
+		<meta property="og:title" content="6.s081 lab9 filesys" />
+<meta property="og:description" content="notebook on 6.s081 lab" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/6.s081/lab9-filesys/" /><meta property="article:section" content="6.s081" />
+<meta property="article:published_time" content="2021-01-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-01-23T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="6.s081 lab9 filesys">
+<meta itemprop="description" content="notebook on 6.s081 lab"><meta itemprop="datePublished" content="2021-01-23T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-01-23T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1033">
+<meta itemprop="keywords" content="Operating System," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">6.s081 lab9 filesys</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-23T00:00:00Z">January 23, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab9 filesys">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1large-files">1.Large files</a></li>
+    <li><a href="#2symlink">2.symlink</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><a href="https://pdos.csail.mit.edu/6.S081/2020/labs/fs.html">官方实验指导书传送门</a></p>
+<p>这个实验隔了蛮久才做的（搭其他的实验环境瞎忙活了好几天），所以先复习(帮自己梳理)一下文件系统的知识。</p>
+<p><img src="https://pic.imgdb.cn/item/622248a65baa1a80abc79a20.png" alt=""></p>
+<p>纵观整体，xv6文件系统分为七层</p>
+<p><strong>(1)DISK：</strong></p>
+<p>最底层是我们实际存储数据的的disk。</p>
+<p><strong>(2)Buffer Cache：</strong></p>
+<p>因为磁盘IO操作代价是很大的，所以在内存中会分配一些缓存，存储最近使用的磁盘块的拷贝，称为buffer cache。</p>
+<p><img src="https://pic.imgdb.cn/item/622248b55baa1a80abc7a2ef.png" alt=""></p>
+<p><strong>(3)log</strong></p>
+<p>为了防止一些突发状况导致文件系统崩溃，需要做一些防范性的措施，也就是log系统，磁盘的写入以 transaction 为单位，详细可分为 ：</p>
+<ul>
+<li>log writes : 将要写入的磁盘块写入到内存里，更新内存里的log header</li>
+<li>commit ops : 更新磁盘上的 log headers,</li>
+<li>install: 将 log headers 中的块从 buffer cache 拷贝到磁盘中去</li>
+<li>clean log：清空log headers</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"> begin_op(); <span style="color:#75715e">// transaction的开始
+</span><span style="color:#75715e"></span> ...
+ bp <span style="color:#f92672">=</span> bread(...);
+ bp<span style="color:#f92672">-&gt;</span>data[...] <span style="color:#f92672">=</span> ...;
+ log_write(bp);
+ ...
+ end_op();  <span style="color:#75715e">//  transaction的结束，会调用commit()
+</span></code></pre></div><p><img src="https://pic.imgdb.cn/item/622248b55baa1a80abc7a2f2.png" alt="">
+<img src="image_2.png.md" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">commit</span>()
+{
+  <span style="color:#66d9ef">if</span> (log.lh.n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+    write_log();      <span style="color:#75715e">// Write modified blocks from cache to log
+</span><span style="color:#75715e"></span>    write_head();     <span style="color:#75715e">// Write header to disk -- the real commit
+</span><span style="color:#75715e"></span>    install_trans(<span style="color:#ae81ff">0</span>); <span style="color:#75715e">// Now install writes to home locations
+</span><span style="color:#75715e"></span>    log.lh.n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;     <span style="color:#75715e">// Erase the transaction from the log
+</span><span style="color:#75715e"></span>    write_head();     <span style="color:#75715e">// just write disk log header n = 0, no block to write
+</span><span style="color:#75715e"></span>  }
+}
+</code></pre></div><p>并且log很多时候不仅存储一个文件的transaction，而是多个文件的transaction，达到批处理的效果，为了保持log的初衷（不能出现多个文件占用日志，虽然日志满了，但是却有事务没完全放到日志里），log对事务数量会做一些限制，而这样一次提交多个文件的transaction成为group commit，另外大文件的写入要分成多个部分，每个部分看作一个transaction</p>
+<p><strong>(4)inode</strong></p>
+<p>一个文件是以inode(xv6里将存储在磁盘上的称为dnode, dnode在内存中的副本称为inode)来表示的，inode记录了文件的 type ( 0 为 unused, 文件，文件夹&hellip;&hellip;)，软链接数量nlink，文件大小size, &hellip; , 文件占用的磁盘块，0-11 是直接引索引，12是间接引用。</p>
+<p><img src="https://pic.imgdb.cn/item/622248b55baa1a80abc7a2fb.png" alt=""></p>
+<p><img src="https://pic.imgdb.cn/item/622248b55baa1a80abc7a304.png" alt=""></p>
+<p><strong>(5)目录层</strong></p>
+<ul>
+<li>目录是一种特殊的文件，在inode中用type = T_DIR表示， 是当前目录， ..上一级目录，</li>
+<li>目录的下address的内容是一个entry （struct dirent）</li>
+<li>kernel/fs.c - dirlookup在目录节点中搜索给定名称的条目</li>
+<li>kernel/fs.c - dirlink将给定inodeno和名称的文件写入目录的inode中去</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">struct</span> dirent {
+  ushort inum;
+  <span style="color:#66d9ef">char</span> name[DIRSIZ];
+};
+</code></pre></div><p>video里老师讲的一个创建文件的例子</p>
+<pre tabindex="0"><code>$ echo hi &gt; x
+write 3     write log db0 (disk block 0)
+write 4     write log db1
+write 5     write log db2
+write 2     write to header (commit)
+
+....install change....
+write 33    x inode     
+write 70    root dir
+write 32    root inode
+
+.....clear header.....
+write 2     
+write 3     
+write 4
+write 5
+write 2
+
+write 45    set bit map
+write 643   
+write 33
+write 2
+write 3
+write 4
+write 2
+write 643
+write 33
+write 2
+</code></pre><p><strong>(6)路径名</strong></p>
+<p>可以通过namex从路径找多对应的inode</p>
+<p><strong>(7)文件描述符</strong></p>
+<p>Unix中的大多数资源都表示为文件，包括控制台、管道等设备，当然还有真实文件。文件描述符层是实现这种一致性的层 每个打开的文件都由一个<code>struct file</code>（<em><strong>kernel/file.h</strong></em>）表示，它是inode或管道的封装，加上一个I/O偏移量</p>
+<p>系统中所有打开的文件都保存在全局文件表<code>ftable</code>中。文件表具有分配文件（<code>filealloc</code>）、创建重复引用（<code>filedup</code>）、释放引用（<code>fileclose</code>）以及读取和写入数据（<code>fileread</code>和<code>filewrite</code>）的函数。</p>
+<hr>
+<p>下面开始做实验</p>
+<h2 id="1large-files">1.Large files</h2>
+<p>虽然课上讲文件系统，log，看相关的代码感觉还挺难的，但是这次的实验倒是蛮简单的，很好上手</p>
+<p>按照指导书来做：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#define NDIRECT 11  </span><span style="color:#75715e">// add a 2-level indirect block
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define NINDIRECT (BSIZE / sizeof(uint))
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// 记得MAXFILE也要改，开始没改，找了半天的问题
+</span><span style="color:#75715e"></span><span style="color:#75715e">#define MAXFILE (NDIRECT + NINDIRECT + NINDIRECT * NINDIRECT)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// On-disk inode structure
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> dinode {
+  <span style="color:#66d9ef">short</span> type;           <span style="color:#75715e">// File type
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">short</span> major;          <span style="color:#75715e">// Major device number (T_DEVICE only)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">short</span> minor;          <span style="color:#75715e">// Minor device number (T_DEVICE only)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">short</span> nlink;          <span style="color:#75715e">// Number of links to inode in file system
+</span><span style="color:#75715e"></span>  uint size;            <span style="color:#75715e">// Size of file (bytes)
+</span><span style="color:#75715e"></span>  uint addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>];<span style="color:#75715e">// Data block addresses
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//uint indirect;        // 2-level indirect  
+</span><span style="color:#75715e"></span>};
+</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">// in-memory copy of an inode
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">struct</span> inode {
+  uint dev;           <span style="color:#75715e">// Device number
+</span><span style="color:#75715e"></span>  uint inum;          <span style="color:#75715e">// Inode number
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> ref;            <span style="color:#75715e">// Reference count
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> sleeplock lock; <span style="color:#75715e">// protects everything below here
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> valid;          <span style="color:#75715e">// inode has been read from disk?
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">short</span> type;         <span style="color:#75715e">// copy of disk inode
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">short</span> major;
+  <span style="color:#66d9ef">short</span> minor;
+  <span style="color:#66d9ef">short</span> nlink;
+  uint size;
+  uint addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>];
+  <span style="color:#75715e">// uint indirect;        // 2-level indirect  
+</span><span style="color:#75715e"></span>};
+</code></pre></div><p>修改bmap，增加二级地址查找</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> uint
+<span style="color:#a6e22e">bmap</span>(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>ip, uint bn)
+{
+  uint addr, <span style="color:#f92672">*</span>a;
+  <span style="color:#66d9ef">struct</span> buf <span style="color:#f92672">*</span>bp;
+
+  <span style="color:#66d9ef">if</span>(bn <span style="color:#f92672">&lt;</span> NDIRECT){
+    <span style="color:#66d9ef">if</span>((addr <span style="color:#f92672">=</span> ip<span style="color:#f92672">-&gt;</span>addrs[bn]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+      ip<span style="color:#f92672">-&gt;</span>addrs[bn] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+    <span style="color:#66d9ef">return</span> addr;
+  }
+  bn <span style="color:#f92672">-=</span> NDIRECT;
+
+  <span style="color:#66d9ef">if</span>(bn <span style="color:#f92672">&lt;</span> NINDIRECT){
+    <span style="color:#75715e">// Load indirect block, allocating if necessary.
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>((addr <span style="color:#f92672">=</span> ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+      ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+    bp <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev, addr);
+    a <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp<span style="color:#f92672">-&gt;</span>data;
+    <span style="color:#66d9ef">if</span>((addr <span style="color:#f92672">=</span> a[bn]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      a[bn] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+      log_write(bp);
+    }
+    brelse(bp);
+    <span style="color:#66d9ef">return</span> addr;
+  }
+  bn <span style="color:#f92672">-=</span> NINDIRECT;
+  <span style="color:#66d9ef">if</span>(bn <span style="color:#f92672">&lt;</span> NINDIRECT <span style="color:#f92672">*</span> NINDIRECT){
+    <span style="color:#75715e">// Load indirect block, allocating if necessary.
+</span><span style="color:#75715e"></span>    uint indexbn <span style="color:#f92672">=</span> bn <span style="color:#f92672">/</span> NINDIRECT;
+    uint ofsetbn <span style="color:#f92672">=</span> bn <span style="color:#f92672">%</span> NINDIRECT;
+    
+    <span style="color:#75715e">// level - 1
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+    }
+    bp <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);
+    a <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp<span style="color:#f92672">-&gt;</span>data;
+    <span style="color:#66d9ef">if</span>((addr <span style="color:#f92672">=</span> a[indexbn]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      a[indexbn] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+      log_write(bp);
+    }
+    brelse(bp);
+
+    <span style="color:#75715e">// level - 2
+</span><span style="color:#75715e"></span>    bp <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev,  a[indexbn]);
+    a <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp<span style="color:#f92672">-&gt;</span>data;
+    <span style="color:#66d9ef">if</span>((addr <span style="color:#f92672">=</span> a[ofsetbn]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      a[ofsetbn] <span style="color:#f92672">=</span> addr <span style="color:#f92672">=</span> balloc(ip<span style="color:#f92672">-&gt;</span>dev);
+      log_write(bp);
+    }
+    brelse(bp);
+    <span style="color:#66d9ef">return</span> addr;
+  }
+
+  panic(<span style="color:#e6db74">&#34;bmap: out of range&#34;</span>);
+}
+</code></pre></div><p>释放的时候也要修改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">itrunc</span>(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>ip)
+{
+  <span style="color:#66d9ef">int</span> i, j;
+  <span style="color:#66d9ef">struct</span> buf <span style="color:#f92672">*</span>bp;
+  <span style="color:#66d9ef">struct</span> buf <span style="color:#f92672">*</span>bp2;
+  uint <span style="color:#f92672">*</span>a, <span style="color:#f92672">*</span>b;
+
+  <span style="color:#66d9ef">for</span>(i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> NDIRECT; i<span style="color:#f92672">++</span>){
+    <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>addrs[i]){
+      bfree(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[i]);
+      ip<span style="color:#f92672">-&gt;</span>addrs[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+  }
+
+  <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT]){
+    bp <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT]);
+    a <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp<span style="color:#f92672">-&gt;</span>data;
+    <span style="color:#66d9ef">for</span>(j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> NINDIRECT; j<span style="color:#f92672">++</span>){
+      <span style="color:#66d9ef">if</span>(a[j])
+        bfree(ip<span style="color:#f92672">-&gt;</span>dev, a[j]);
+    }
+    brelse(bp);
+    bfree(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT]);
+    ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  }
+  <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]){
+    bp <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);
+    a <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp<span style="color:#f92672">-&gt;</span>data;
+    <span style="color:#66d9ef">for</span>(i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> NINDIRECT; i<span style="color:#f92672">++</span> ){
+      <span style="color:#66d9ef">if</span>(a[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">continue</span>;
+      bp2 <span style="color:#f92672">=</span> bread(ip<span style="color:#f92672">-&gt;</span>dev, a[i]);
+      b  <span style="color:#f92672">=</span> (uint<span style="color:#f92672">*</span>)bp2<span style="color:#f92672">-&gt;</span>data;
+      <span style="color:#66d9ef">for</span>(j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> NINDIRECT; j<span style="color:#f92672">++</span>) {
+        <span style="color:#66d9ef">if</span>(b[j])
+          bfree(ip<span style="color:#f92672">-&gt;</span>dev, b[j]);
+      }
+      brelse(bp2);
+      bfree(ip<span style="color:#f92672">-&gt;</span>dev, a[i]);
+    }
+    brelse(bp);
+    bfree(ip<span style="color:#f92672">-&gt;</span>dev, ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);
+    ip<span style="color:#f92672">-&gt;</span>addrs[NDIRECT<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  }
+
+  ip<span style="color:#f92672">-&gt;</span>size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  iupdate(ip);
+}
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/622248bb5baa1a80abc7a679.png" alt=""></p>
+<h2 id="2symlink">2.symlink</h2>
+<p>这个task乍一看挺没头绪的，需要多看指导书，参考link 和 ulink，结合阅读xv6book的第八章(尤其是8.14)，搞起</p>
+<p>最后做下来，主要就是看资料，把xv6book第八章inode层和目录层里面涉及的函数仔细看看</p>
+<p><code>link(char* old, char * new)</code> 和 <code>symlink(char* target, char* path)</code> 主要有几点不同(自己的理解，不一定准确):</p>
+<ul>
+<li>link 是硬链接， symlink是软链接。关于硬链接和软链接，看了别人的博客才明白软链接里面是个啥<a href="https://blog.csdn.net/lixungogogo/article/details/52176571">https://blog.csdn.net/lixungogogo/article/details/52176571</a></li>
+<li>link 为已有的inode在新目录下添加一个新entry，不创建新inode，所以 link 调用nameiparent找到目录，然后调用 dirlink 在该目录下添加新的entry, name从new中获得，inum从old的获取</li>
+<li>symlink要创建一个新的inode(类似于创建target的快捷方式)，我们这里可以调用封装好的create ，不过软链接的inode存放的是一个路径，而不像正常的文件inode中存放文件信息</li>
+<li>link 只能链接到一个文件，但symlink可以链接到目录或者另一个软链接</li>
+</ul>
+<p>另外就是需要注意锁的问题，开始出现panic都是因为重复获取锁或这没释放锁</p>
+<p>添加系统调用大家都老熟练了，这里就只放sys-symlink的实现和对sys-open的修改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">uint64
+<span style="color:#a6e22e">sys_symlink</span>(){
+  <span style="color:#66d9ef">char</span> target[MAXPATH], path[MAXPATH];
+
+  <span style="color:#75715e">// lp is inode of link file
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>lp;
+
+  <span style="color:#75715e">// get paremeter frome a0 and a1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(argstr(<span style="color:#ae81ff">0</span>, target, MAXPATH) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> argstr(<span style="color:#ae81ff">1</span>, path, MAXPATH) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+
+  begin_op();
+
+  <span style="color:#75715e">// create a new inode
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>((lp <span style="color:#f92672">=</span> create(path, T_SYMLINK, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+    end_op();
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+
+  <span style="color:#75715e">// now add block to inode
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// writei need caller hold lock, create has been lock(lp)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(writei(lp, <span style="color:#ae81ff">0</span>, (uint64)target, <span style="color:#ae81ff">0</span>, MAXPATH) <span style="color:#f92672">!=</span> MAXPATH){
+    panic(<span style="color:#e6db74">&#34;symlint : writei&#34;</span>);
+  }
+  <span style="color:#75715e">// writei doesn&#39;t unlock(lp), so we need unlock it here
+</span><span style="color:#75715e"></span>  iunlockput(lp);
+
+  end_op();
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">uint64
+<span style="color:#a6e22e">sys_open</span>(<span style="color:#66d9ef">void</span>)
+{
+  <span style="color:#66d9ef">char</span> path[MAXPATH];
+  <span style="color:#66d9ef">int</span> fd, omode;
+  <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>f;
+  <span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>ip;
+  <span style="color:#66d9ef">int</span> n;
+
+  <span style="color:#66d9ef">if</span>((n <span style="color:#f92672">=</span> argstr(<span style="color:#ae81ff">0</span>, path, MAXPATH)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> argint(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>omode) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+  begin_op();
+
+  <span style="color:#66d9ef">if</span>(omode <span style="color:#f92672">&amp;</span> O_CREATE){
+    ip <span style="color:#f92672">=</span> create(path, T_FILE, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span>(ip <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      end_op();
+      <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#66d9ef">if</span>((ip <span style="color:#f92672">=</span> namei(path)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+      end_op();
+      <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+    ilock(ip);
+    <span style="color:#75715e">//---------------------------------------------------------------------
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_SYMLINK <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>(omode <span style="color:#f92672">&amp;</span> O_NOFOLLOW)){
+      <span style="color:#66d9ef">int</span> depth <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+      <span style="color:#66d9ef">while</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_SYMLINK <span style="color:#f92672">&amp;&amp;</span> depth<span style="color:#f92672">++</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> ){
+        <span style="color:#66d9ef">if</span>( readi(ip, <span style="color:#ae81ff">0</span>, (uint64)path, <span style="color:#ae81ff">0</span>, MAXPATH) <span style="color:#f92672">!=</span> MAXPATH){
+          panic(<span style="color:#e6db74">&#34;open : readi&#34;</span>);
+        }
+        iunlockput(ip); 
+        <span style="color:#75715e">// namei -&gt; namex, namex will lock(ip);
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span>((ip <span style="color:#f92672">=</span> namei(path)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+          end_op();
+          printf(<span style="color:#e6db74">&#34;%s is doesn&#39;t exit</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, path);
+          <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+        }
+        ilock(ip);
+      }
+      <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_SYMLINK){
+        iunlockput(ip);
+        end_op();
+        printf(<span style="color:#e6db74">&#34;perhap cycle sym link</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+      }  
+    }
+    <span style="color:#75715e">//------------------------------------------------------------------------
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_DIR <span style="color:#f92672">&amp;&amp;</span> omode <span style="color:#f92672">!=</span> O_RDONLY){
+      iunlockput(ip);
+      end_op();
+      <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+    }
+  }
+
+  <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_DEVICE <span style="color:#f92672">&amp;&amp;</span> (ip<span style="color:#f92672">-&gt;</span>major <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> ip<span style="color:#f92672">-&gt;</span>major <span style="color:#f92672">&gt;=</span> NDEV)){
+    iunlockput(ip);
+    end_op();
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+
+  <span style="color:#66d9ef">if</span>((f <span style="color:#f92672">=</span> filealloc()) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> (fd <span style="color:#f92672">=</span> fdalloc(f)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#66d9ef">if</span>(f)
+      fileclose(f);
+    iunlockput(ip);
+    end_op();
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+  }
+
+  <span style="color:#66d9ef">if</span>(ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_DEVICE){
+    f<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">=</span> FD_DEVICE;
+    f<span style="color:#f92672">-&gt;</span>major <span style="color:#f92672">=</span> ip<span style="color:#f92672">-&gt;</span>major;
+  } <span style="color:#66d9ef">else</span> {
+    f<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">=</span> FD_INODE;
+    f<span style="color:#f92672">-&gt;</span>off <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  }
+  f<span style="color:#f92672">-&gt;</span>ip <span style="color:#f92672">=</span> ip;
+  f<span style="color:#f92672">-&gt;</span>readable <span style="color:#f92672">=</span> <span style="color:#f92672">!</span>(omode <span style="color:#f92672">&amp;</span> O_WRONLY);
+  f<span style="color:#f92672">-&gt;</span>writable <span style="color:#f92672">=</span> (omode <span style="color:#f92672">&amp;</span> O_WRONLY) <span style="color:#f92672">||</span> (omode <span style="color:#f92672">&amp;</span> O_RDWR);
+
+  <span style="color:#66d9ef">if</span>((omode <span style="color:#f92672">&amp;</span> O_TRUNC) <span style="color:#f92672">&amp;&amp;</span> ip<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">==</span> T_FILE){
+    itrunc(ip);
+  }
+
+  iunlock(ip);
+  end_op();
+
+  <span style="color:#66d9ef">return</span> fd;
+}
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/622248bb5baa1a80abc7a675.png" alt=""></p>
+<p>因为 time.txt 里面让我记了一些临时的笔记，所以make grade检测 time.txt 出了点问题，无伤大雅</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/operating-system/" rel="tag">Operating System</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/6.s081/lab8-lock/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">6.s081 lab8 lock</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/6.s081/lab10-mmap/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">6.s081 lab10 mmap</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

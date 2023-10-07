@@ -6,16 +6,171 @@
     <description>Recent content in Operating System on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Aug 2017 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/tags/operating-system/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Apr 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/tags/operating-system/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CS162 Project1 Userprograme</title>
       <link>http://c137chao.github.io/blog/cs162-proj1/</link>
-      <pubDate>Mon, 21 Aug 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 21 Apr 2023 00:00:00 +0000</pubDate>
       
       <guid>http://c137chao.github.io/blog/cs162-proj1/</guid>
       <description>1. Argument Passing Before you starting to code, please reading Argument Passing | CS 162 Project 1and Program startup details carefully.
 Target Describe In general mordern Operating System, we interact with system using shell(hw2), but in PintOS, the System can&amp;rsquo;t execute user programe because it doesn&amp;rsquo;t implement exec and fork syscall.
 In P0, we know system executes user prog through process_execute called by user or system run_task. However, PintOS kernel doen&amp;rsquo;t set function arguements stack for user and we can found args and argv are all 0 in _start.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab2 syscall</title>
+      <link>http://c137chao.github.io/6.s081/lab2-syscall/</link>
+      <pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab2-syscall/</guid>
+      <description>实验二就是熟悉系统调用，实验指导书给的蛮详细的，做实验之前建议先阅读xv6book的相关部分(实验指导理有说)，如果代码不知道怎么写就仔细阅读指导书和参照其他系统调用，
+ 官方实验指导书传送门
+git fetch git checkout syscall make clean 1.trace  添加一个系统调用trace, 使用一个掩码来设定要追踪的系统调用，完成这个作业需要仔细阅读实验的说明，相关代码和课程配套handbook的chapter2与chapter4的4.3,4.4. 最好按照官方给的步骤来做，里面也给了很多的提示。
+  Add $U/_trace to UPROGS in Makefile Run make qemu and you will see that the compiler cannot compile user/trace.c, because the user-space stubs for the system call don&amp;rsquo;t exist yet: add a prototype for the system call to user/user.h, a stub to user/usys.pl, and a syscall number to kernel/syscall.h. The Makefile invokes the perl script user/usys.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab1 util</title>
+      <link>http://c137chao.github.io/6.s081/lab1-util/</link>
+      <pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab1-util/</guid>
+      <description>整个lab1 的内容主要还是让我们熟悉一下unix/linux的一些系统调用，有什么不懂的可以去看xv6book的第一章，或者百度一下那个系统调用的功能
+ 官方实验指导书传送门
+1.sleep  在user目录下增加一个sleep.c，使系统休眠一段时间，具体的系统调用已经写好，只需要调用它即可 这个实验主要就是熟悉一下实验环境
+ // user/sleep.c #include &amp;#34;kernel/types.h&amp;#34; // uint typedef in this file#include &amp;#34;user/user.h&amp;#34; // contain some func declaration we need int main(int argc, char* argv[]){ if(argc != 2){ // check arguement  fprintf(2, &amp;#34;error:unvalid parameters\n&amp;#34;); exit(1); } int t = atoi(argv[1]); // convert string to interger  sleep(t); // syscall sleep  printf(&amp;#34;(nothing happens for a little while)\n&amp;#34;); exit(0); } 测试正确性
+make GRADEFLAGS=sleep grade</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab11 network</title>
+      <link>http://c137chao.github.io/6.s081/lab11-network/</link>
+      <pubDate>Tue, 09 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab11-network/</guid>
+      <description>lab 11 - networks 最后一个实验，看起来虽然很吓人，但其实只要把实验指导书仔细阅读就可以了，指导书里面给的步骤很细致。
+1.中断复习 驱动设备都映射到内存中，比如页表实验中见过的UART0，PLIC，CLINT等。
+以UART为例，看驱动设备是如何工作的。 UARTs适用于控制台交互的硬件，我们键盘的输入同坐UART硬件传递到xv6。
+UART有自己的内存和寄存器，寄存器的宽度为一字节。
+ UART有一个缓冲区uart_tx_buf，是一个循环队列。 LSR寄存器包含输入软件读取是否就绪的就绪位。 软件从RHR寄存器读取字符，向THR写入字符，每次一个字节(字符)。 等待字符在FIFO寄存器中，FIFO为空时清除LSR的就绪位。  控制台输入（read from UART） main调用consoleinit来初始化UART硬件，UART对接收到的每个字节的输入生成一个接收中断，对发送完的每个字节输出生成一个发送中断。
+usertrap查看scause寄存器，发现中断来自外部设备，就调用devinit通过PLIC硬件查看哪个设备发生中断，发现是UART中断，devintr调用uartintr.
+uartintr从UART硬件读取所有等待输入的字符，并将它们交给consoleintr；
+控制台输出 (write to UART) 软件通过调用uartputc向缓冲区写入字符，然后调用 uartstart 检查LSR寄存器是否就绪，向THR写入一个字符，如果一个进程向控制台写入多个字节，第一个字节又uartputc调用uartstart发送，剩余的缓冲字节由uartintr条用uartstart发送。
+void usertrap(void) { if(r_scause() == 8){ // system call...  } else if((which_dev = devintr()) != 0){ // ok，interrupt  } else { // ......  } // ...... 	// give up the CPU if this is a timer interrupt. 	if(which_dev == 2) // time interrupt 	yield(); usertrapret(); } int devintr() { uint64 scause = r_scause(); if((scause &amp;amp; 0x8000000000000000L) &amp;amp;&amp;amp; (scause &amp;amp; 0xff) == 9){ // this is a supervisor external interrupt, via PLIC.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab10 mmap</title>
+      <link>http://c137chao.github.io/6.s081/lab10-mmap/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab10-mmap/</guid>
+      <description>lab 10 - mmap  这个实验看的人头皮发麻，不过已经最后一个虚拟地址的实验了，实验接近尾声了，冲冲冲！！！
+ 官方实验指导书传送门
+ =================以下是完成实验时比较详细的记录===============
+其实刚开始做还是有点一头雾水的，先看一下mmap的文档
+linux中mmap与munmapd的接口格式。
+/* addr: 文件要映射到的起始地址，NULL表示内核自己选择合适的地址。 len : 是映射到调用进程地址空间的字节数，它从被映射文件开头offset个字节开始算起。 prot: 参数指定共享内存的访问权限。PROT_READ , PROT_WRITE, PROT_EXEC , PROT_NONE。 flags:决定本次映射其他进程是否可见。 MAP_SHARED,其他进程共享该文件，如果修改了要写回文件 MAP_PRIVATE, 使用完文件不用写回 MAP_SHARED_VALIDATE(linux 4.15后)，类似MAP_SHARED，只不过MAP_SHARED会忽略未知的标记，MAP_SHARED_VALIDATE会检查 fd: 文件描述符 offset:文件的偏移量，必须是页面大小的倍数，mmaptest里offset全都是0，表示从文件头开始映射。 */ // mmap将文件映射到内存，返回其在内存的区域 void *mmap(void *addr, size_t length, int prot, int flags,int fd, off_t offset); //addr 必须是页面大小的倍数，length不要求，成功返回0，失败返回-1 int munmap(void *addr, size_t length); 原本xv6读写文件都是通过磁盘块读到内存的缓冲区，然后通过缓冲区对文件进行读写操作，并且缓冲区必须通过内核来使用，而mmap将文件映射到内存，用户可以直接通过地址来访问。
+拆解一下实验
+第一部分，配置好系统调用相关(略过)
+ Start by adding _mmaptest to UPROGS, and mmap and munmap system calls, in order to get user/mmaptest.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab9 filesys</title>
+      <link>http://c137chao.github.io/6.s081/lab9-filesys/</link>
+      <pubDate>Sat, 23 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab9-filesys/</guid>
+      <description>官方实验指导书传送门
+这个实验隔了蛮久才做的（搭其他的实验环境瞎忙活了好几天），所以先复习(帮自己梳理)一下文件系统的知识。
+纵观整体，xv6文件系统分为七层
+(1)DISK：
+最底层是我们实际存储数据的的disk。
+(2)Buffer Cache：
+因为磁盘IO操作代价是很大的，所以在内存中会分配一些缓存，存储最近使用的磁盘块的拷贝，称为buffer cache。
+(3)log
+为了防止一些突发状况导致文件系统崩溃，需要做一些防范性的措施，也就是log系统，磁盘的写入以 transaction 为单位，详细可分为 ：
+ log writes : 将要写入的磁盘块写入到内存里，更新内存里的log header commit ops : 更新磁盘上的 log headers, install: 将 log headers 中的块从 buffer cache 拷贝到磁盘中去 clean log：清空log headers  begin_op(); // transaction的开始  ... bp = bread(...); bp-&amp;gt;data[...] = ...; log_write(bp); ... end_op(); // transaction的结束，会调用commit() static void commit() { if (log.lh.n &amp;gt; 0) { write_log(); // Write modified blocks from cache to log  write_head(); // Write header to disk -- the real commit  install_trans(0); // Now install writes to home locations  log.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab8 lock</title>
+      <link>http://c137chao.github.io/6.s081/lab8-lock/</link>
+      <pubDate>Thu, 21 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab8-lock/</guid>
+      <description>官方实验指导书传送门
+1.Memory allocator  原本的内存分配锁的粒度比较大，全局使用一个freelist和用来互斥访问内存申请释放的lock (kmem) 虽然能够维持互斥访问的正确性，但并发效率低，所以这个task就是修改原本的内存分配，让每个CPU都持有一个freelist和lock，自己的内存自己管理，当内存不够的时候，从其他CPU的freelist那里获取内存，从而让内存管理能够并发运行。
+ Your Job里面说了要使用原来的kmem，换而言之就是不要把freelist和lock些加到cpu的结构体里面去(估计这样要修改的内容会多到爆炸)，所以就把原来的kmem改成一个数组。​
+struct { struct spinlock lock; struct run *freelist; } kmem[NCPU]; 相应修改kmem的初始化
+void kinit() { for(uint i = 0; i &amp;lt; NCPU; i++){ initlock(&amp;amp;kmem[i].lock, &amp;#34;kmem&amp;#34;); // 暂时将所有的锁命名为kmem  } freerange(end, (void*)PHYSTOP); } 修改kfree和kalloc，注意cpuid()要关中断，或者可以尝试在内存分配时整个持有所的过程关中断(不然被锁住的那个cpu要一直等着时间片轮转回来，但这样关中断又感觉太暴力)，都可以通过
+void kfree(void *pa) { struct run *r; if(((uint64)pa % PGSIZE) != 0 || (char*)pa &amp;lt; end || (uint64)pa &amp;gt;= PHYSTOP) panic(&amp;#34;kfree&amp;#34;); // Fill with junk to catch dangling refs.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab7 multithreads</title>
+      <link>http://c137chao.github.io/6.s081/lab7-multithread/</link>
+      <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab7-multithread/</guid>
+      <description>官方实验指导书传送门
+1. userthread 为xv6完善用户线程的切换，完全仿照内核线程的切换去做即可，当然实际上要比内核线程切换做的事少很多。课上讲的内容对本实验非常有帮助
+(1)增加线程切换时需要的上下文信息，注意thread里增加struct tcontext，不要加指针，否则需要手动去申请释放内存
+struct tcontext { uint64 ra; uint64 sp; // callee-saved  uint64 s0; uint64 s1; uint64 s2; uint64 s3; uint64 s4; uint64 s5; uint64 s6; uint64 s7; uint64 s8; uint64 s9; uint64 s10; uint64 s11; }; struct thread { char stack[STACK_SIZE]; /* the thread&amp;#39;s stack */ int state; /* FREE, RUNNING, RUNNABLE */ struct tcontext context; /* if you use struct tcontext*, you should alloc and dealloc by yourself */ }; (2)uthread_switch这里和内核的switch是一样的，保存旧的context，加载新的context</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab6 copy on write</title>
+      <link>http://c137chao.github.io/6.s081/lab6-cow/</link>
+      <pubDate>Mon, 18 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab6-cow/</guid>
+      <description>lab 5 让我们对lazy allocate有了初步的了解，lab 6是针对fork进程做出优化，使得fork进程和parent进程共享只读内存，仅分配需要写的内存(使用lazy allocation技术)，提高内存的使用效率，相比lab 5而言要复杂的多，如同video里老师说的，只用真正的使用虚拟地址编程，才能发现这虚拟内存的奇妙之处。
+ 官方实验指导书传送门
+ 准备一个页面引用计数的结构体(用基本类型的全局数组会disk会报错，make不通过，不太清楚原因) 利用pte标记位判断该页面是否用于copy-on-write 发生写入错误的时候检查并处理缺页  1.引用计数结构 // kernel/proc.h struct mref { char count; }; // kernel/proc.c struct mref ref [PHYSTOP/PGSIZE]; // ...  // 准备一些ref的封装，ref_init(pa), ref_increase(pa), ref_decrease(pa)  void * kalloc(void) { struct run *r; acquire(&amp;amp;kmem.lock); r = kmem.freelist; if(r) kmem.freelist = r-&amp;gt;next; release(&amp;amp;kmem.lock); if(r){ memset((char*)r, 5, PGSIZE); // fill with junk  // 新申请的内存引用计数为1  ref[((uint64)r) / PGSIZE].count = 1; // 或者封装成 ref_init((uint64);  } return (void*)r; } 2.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab5 lazy allocation</title>
+      <link>http://c137chao.github.io/6.s081/lab5-lazy/</link>
+      <pubDate>Sat, 16 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab5-lazy/</guid>
+      <description>lab 5 还是非常舒服的，video里老师直接把前两个task给做好了，task3的思路也很清晰，遇到问题也是比较容易解决的，冲！
+ 官方实验指导书传送门
+task1 和 task2 的内容在video里老师已经演示过了，所以要解决的其实只有task3，整体的思路很明确，各个部分细节有一些需要注意的地方。
+ task3
+  在原有的task2上增加虚拟地址合法性检测以及要能正确处理n&amp;lt;0的情况 对于read和write，usertrap会跳入系统调用，经过追踪，最终调用walkaddr来获取物理地址，所以在walkaddr里也要加入像usertrap中那样的lazy allocation  uint64 sys_sbrk(void) { int addr; int n; if(argint(0, &amp;amp;n) &amp;lt; 0) return -1; struct proc* p = myproc(); addr = p-&amp;gt;sz; if (n &amp;lt; 0){ if (p-&amp;gt;sz + n &amp;lt; 0) return -1; else uvmdealloc(p-&amp;gt;pagetable, p-&amp;gt;sz, p-&amp;gt;sz + n); } // don&amp;#39;t use addr + n, addr is int, in memout test, p-&amp;gt;sz maybe very large(over 32 bit)  p-&amp;gt;sz += n; return addr; }  void usertrap(void){ //.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab4 trap</title>
+      <link>http://c137chao.github.io/6.s081/lab4-trap/</link>
+      <pubDate>Fri, 15 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab4-trap/</guid>
+      <description>其实到这个实验为止，都在帮我们在脑中搭建内核的工作机制，理解这几个实验的过程非常重要，对后面做实验是非常有帮助的。
+ 官方实验指导书传送门
+1.RISC-V assembly  问答题，没有代码
+ 1. 13 store at a2 2. main didn&amp;#39;t call f or g, the compiler inline them 3. printf located at 0x630 4. the value of ra is 30 (0x630 - (dec)1536 = 0x30 ) 5. he110 World 6. y = value of register a2 2.Backtrace (moderate) task2 整体的思路和实现都很简单，不断的寻找调用栈的fp，打印出返回地址，问题只有一个，，循环结束的条件是什么？
+结合官方的演示和debug，正确应该是追溯三个函数 观察右边的栈帧fp（sys_sleep&amp;lt;-syscall&amp;lt;-usertrap），应该在fp = 0x3fffffa000时结束循环。
+0x3fffffa000和kstack刚好相距一个页面，再依据上一个页表实验，进程栈是由高地址像低地址增长，所以，此时的fp指向的是内核栈的栈顶，同时就是backtrace所在页面的页表起始位置，usertrap再返回就要返回用户空间了，这个返回地址是不打印的。
+void backtrace(void){ // uint64 kstackpage = (uint64)myproc()-&amp;gt;kstack;  printf(&amp;#34;backtrace:\n&amp;#34;); uint64 fp = r_fp(); uint64 board = PGROUNDUP(fp); while(fp &amp;lt; board){ // if over current process kernel stack  printf(&amp;#34;%p\n&amp;#34;, *(uint64*)(fp - 8)); fp = *(uint64*)(fp - 16); } return; } 3.</description>
+    </item>
+    
+    <item>
+      <title>6.s081 lab3 pgtbl</title>
+      <link>http://c137chao.github.io/6.s081/lab3-pgtbl/</link>
+      <pubDate>Wed, 13 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/6.s081/lab3-pgtbl/</guid>
+      <description>高能提醒，这个实验非常折磨人，跟前两个实验花费的时间绝对不在一个层面上，如果花费几天的时间还没完成，也不要气馁，做完所有实验回来再看，页表实验在整个过程中也是花费时间最多，panic最多的一个，并且遇到panic完全没有头绪。所以不管怎么样，不要灰心，Fighting！
+ 官方实验指导书传送门
+补充: 后面的Q&amp;amp;A视频课里老师有讲页表实验；
+1.Print a page table  主要要完成的就是在kernel/vm.c中定义vmprint(pagetable_t), 用来打印页表，有多种方法可以实现，用多层for循环比较直观，也可以参照freewalk（CV大法好），使用递归完成，是一个热身作业。
+  You can put vmprint() in kernel/vm.c. Use the macros at the end of the file kernel/riscv.h. The function freewalk may be inspirational. Define the prototype for vmprint in kernel/defs.h so that you can call it from exec.c. Use %p in your printf calls to print out full 64-bit hex PTEs and addresses as shown in the example.</description>
     </item>
     
   </channel>

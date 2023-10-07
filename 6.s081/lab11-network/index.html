@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>6.s081 lab11 network - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on 6.s081 lab">
+		<meta property="og:title" content="6.s081 lab11 network" />
+<meta property="og:description" content="notebook on 6.s081 lab" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/6.s081/lab11-network/" /><meta property="article:section" content="6.s081" />
+<meta property="article:published_time" content="2021-02-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-02-09T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="6.s081 lab11 network">
+<meta itemprop="description" content="notebook on 6.s081 lab"><meta itemprop="datePublished" content="2021-02-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-02-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="350">
+<meta itemprop="keywords" content="Operating System," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">6.s081 lab11 network</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-02-09T00:00:00Z">February 09, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab11 network">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1中断复习">1.中断复习</a>
+      <ul>
+        <li><a href="#控制台输入read-from-uart">控制台输入（read from UART）</a></li>
+        <li><a href="#控制台输出-write-to-uart">控制台输出 (write to UART)</a></li>
+      </ul>
+    </li>
+    <li><a href="#2network">2.==NetWork==</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h1 id="lab-11---networks">lab 11 - networks</h1>
+<p>最后一个实验，看起来虽然很吓人，但其实只要把实验指导书仔细阅读就可以了，指导书里面给的步骤很细致。</p>
+<h2 id="1中断复习">1.中断复习</h2>
+<p>驱动设备都映射到内存中，比如页表实验中见过的UART0，PLIC，CLINT等。</p>
+<p>以UART为例，看驱动设备是如何工作的。
+UARTs适用于控制台交互的硬件，我们键盘的输入同坐UART硬件传递到xv6。</p>
+<p>UART有自己的内存和寄存器，寄存器的宽度为一字节。</p>
+<ul>
+<li>UART有一个缓冲区uart_tx_buf，是一个循环队列。</li>
+<li>LSR寄存器包含输入软件读取是否就绪的就绪位。</li>
+<li>软件从RHR寄存器读取字符，向THR写入字符，每次一个字节(字符)。</li>
+<li>等待字符在FIFO寄存器中，FIFO为空时清除LSR的就绪位。</li>
+</ul>
+<h3 id="控制台输入read-from-uart">控制台输入（read from UART）</h3>
+<p><code>main</code>调用<code>consoleinit</code>来初始化UART硬件，UART对接收到的每个字节的输入生成一个接收中断，对发送完的每个字节输出生成一个发送中断。</p>
+<p><code>usertrap</code>查看scause寄存器，发现中断来自外部设备，就调用<code>devinit</code>通过PLIC硬件查看哪个设备发生中断，发现是UART中断，<code>devintr</code>调用<code>uartintr</code>.</p>
+<p><code>uartintr</code>从UART硬件读取所有等待输入的字符，并将它们交给<code>consoleintr</code>；</p>
+<h3 id="控制台输出-write-to-uart">控制台输出 (write to UART)</h3>
+<p>软件通过调用<code>uartputc</code>向缓冲区写入字符，然后调用 <code>uartstart</code> 检查LSR寄存器是否就绪，向THR写入一个字符，如果一个进程向控制台写入多个字节，第一个字节又uartputc调用uartstart发送，剩余的缓冲字节由uartintr条用uartstart发送。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">usertrap</span>(<span style="color:#66d9ef">void</span>)
+{
+
+	<span style="color:#66d9ef">if</span>(r_scause() <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>){
+		<span style="color:#75715e">// system call...
+</span><span style="color:#75715e"></span>
+	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>((which_dev <span style="color:#f92672">=</span> devintr()) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>){
+		<span style="color:#75715e">// ok，interrupt
+</span><span style="color:#75715e"></span>
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>
+	}
+	<span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// give up the CPU if this is a timer interrupt.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span>(which_dev <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e">// time interrupt
+</span><span style="color:#75715e"></span>		yield();
+	
+	usertrapret();
+
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">devintr</span>()
+{
+	uint64 scause <span style="color:#f92672">=</span> r_scause();
+	<span style="color:#66d9ef">if</span>((scause <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x8000000000000000L</span>) <span style="color:#f92672">&amp;&amp;</span> (scause <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xff</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>){
+	<span style="color:#75715e">// this is a supervisor external interrupt, via PLIC.
+</span><span style="color:#75715e"></span>	
+	<span style="color:#75715e">// irq indicates which device interrupted.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">int</span> irq <span style="color:#f92672">=</span> plic_claim();
+	  
+	<span style="color:#66d9ef">if</span>(irq <span style="color:#f92672">==</span> UART0_IRQ){
+		uartintr();
+	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(irq <span style="color:#f92672">==</span> VIRTIO0_IRQ){
+		virtio_disk_intr();
+	}
+
+	<span style="color:#75715e">#ifdef LAB_NET
+</span><span style="color:#75715e"></span>	
+	<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(irq <span style="color:#f92672">==</span> E1000_IRQ){
+		e1000_intr();
+	}
+	
+	<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(irq){
+		printf(<span style="color:#e6db74">&#34;unexpected interrupt irq=%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, irq);
+	}
+
+
+	<span style="color:#75715e">// the PLIC allows each device to raise at most one
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// interrupt at a time; tell the PLIC the device is
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// now allowed to interrupt again.
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span>(irq)
+		plic_complete(irq);
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+
+	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(scause <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x8000000000000001L</span>){
+		<span style="color:#75715e">// software interrupt from a machine-mode timer interrupt,
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// forwarded by timervec in kernelvec.S.
+</span><span style="color:#75715e"></span>	
+		<span style="color:#66d9ef">if</span>(cpuid() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+			clockintr();
+		}
+		<span style="color:#75715e">// acknowledge the software interrupt by clearing
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// the SSIP bit in sip.
+</span><span style="color:#75715e"></span>		w_sip(r_sip() <span style="color:#f92672">&amp;</span> <span style="color:#f92672">~</span><span style="color:#ae81ff">2</span>);
+
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
+
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+	}
+
+}
+</code></pre></div><hr>
+<h2 id="2network">2.==NetWork==</h2>
+<p>E1000通过DMA技术访问内存，即不用通过CPU，直接访问内存，达到CPU与I/O操作之间的并发。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span>
+<span style="color:#a6e22e">e1000_transmit</span>(<span style="color:#66d9ef">struct</span> mbuf <span style="color:#f92672">*</span>m)
+{
+	acquire(<span style="color:#f92672">&amp;</span>e1000_lock);
+	<span style="color:#75715e">// printf(&#34;&gt;&gt; transmit data\n&#34;);
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> regs[E1000_TDT] <span style="color:#f92672">%</span> TX_RING_SIZE; 
+	
+	<span style="color:#75715e">// check if the the ring is overflowing
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>(tx_ring[index].status <span style="color:#f92672">&amp;</span> E1000_TXD_STAT_DD)){
+		release(<span style="color:#f92672">&amp;</span>e1000_lock);
+		<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+	}
+
+	<span style="color:#75715e">// free the last mbuf that was transmitted
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span>(tx_mbufs[index]) {
+		mbuffree(tx_mbufs[index]);
+	}
+	tx_mbufs[index] <span style="color:#f92672">=</span> m;
+
+	tx_ring[index].addr <span style="color:#f92672">=</span> (uint64)m<span style="color:#f92672">-&gt;</span>head;
+	tx_ring[index].length <span style="color:#f92672">=</span> m<span style="color:#f92672">-&gt;</span>len;
+
+	tx_ring[index].cmd <span style="color:#f92672">=</span> E1000_TXD_CMD_RS <span style="color:#f92672">|</span> E1000_TXD_CMD_EOP;
+
+	regs[E1000_TDT] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> TX_RING_SIZE;
+	release(<span style="color:#f92672">&amp;</span>e1000_lock);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>本来想再去定义一个锁，但没有使用锁，但也通过了，这一个实验晕晕乎乎的，完全照着指导书写的，给的手册也没看（其实第一眼就发现自己完全看不懂）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span>
+<span style="color:#a6e22e">e1000_recv</span>(<span style="color:#66d9ef">void</span>)
+{
+	
+	<span style="color:#75715e">// Check for packets that have arrived from the e1000
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Create and deliver an mbuf for each packet (using net_rx()).
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// printf(&#34;&gt;&gt; receive data\n&#34;);
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">1</span>) {
+		<span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> (regs[E1000_RDT] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> RX_RING_SIZE;
+		
+		<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>(rx_ring[index].status <span style="color:#f92672">&amp;</span> E1000_RXD_STAT_DD))
+		<span style="color:#66d9ef">return</span>;
+		
+		rx_mbufs[index]<span style="color:#f92672">-&gt;</span>len <span style="color:#f92672">=</span> rx_ring[index].length;
+		
+		net_rx(rx_mbufs[index]);
+		
+		rx_mbufs[index] <span style="color:#f92672">=</span> mbufalloc(<span style="color:#ae81ff">0</span>);
+		rx_ring[index].addr <span style="color:#f92672">=</span> (uint64)rx_mbufs[index]<span style="color:#f92672">-&gt;</span>head;
+		rx_ring[index].status <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+		
+		regs[E1000_RDT] <span style="color:#f92672">=</span> index;
+	}
+}
+</code></pre></div><p><img src="https://s2.loli.net/2022/03/01/YrVjcNoJPsu4tmQ.png" alt="image.png"></p>
+<p>==磨磨蹭蹭，所有实验终于完结撒花==
+<img src="https://s2.loli.net/2022/03/01/OR2xoGLtcKCFYjh.png" alt="image.png"></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/operating-system/" rel="tag">Operating System</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/6.s081/lab10-mmap/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">6.s081 lab10 mmap</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/6.s081/lab1-util/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">6.s081 lab1 util</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

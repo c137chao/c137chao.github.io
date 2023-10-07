@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>6.s081 lab7 multithreads - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on 6.s081 lab">
+		<meta property="og:title" content="6.s081 lab7 multithreads" />
+<meta property="og:description" content="notebook on 6.s081 lab" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/6.s081/lab7-multithread/" /><meta property="article:section" content="6.s081" />
+<meta property="article:published_time" content="2021-01-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-01-20T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="6.s081 lab7 multithreads">
+<meta itemprop="description" content="notebook on 6.s081 lab"><meta itemprop="datePublished" content="2021-01-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-01-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="617">
+<meta itemprop="keywords" content="Operating System," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">6.s081 lab7 multithreads</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-01-20T00:00:00Z">January 20, 2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/6.s081/" rel="category">6.s081</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/6520d45ac458853aef1079fb.jpg" alt="6.s081 lab7 multithreads">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-userthread">1. userthread</a></li>
+    <li><a href="#2use-thread">2.use thread</a></li>
+    <li><a href="#3barrier">3.barrier</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><a href="https://pdos.csail.mit.edu/6.S081/2020/labs/thread.html">官方实验指导书传送门</a></p>
+<h2 id="1-userthread">1. userthread</h2>
+<p>为xv6完善用户线程的切换，完全仿照内核线程的切换去做即可，当然实际上要比内核线程切换做的事少很多。课上讲的内容对本实验非常有帮助</p>
+<p>(1)增加线程切换时需要的上下文信息，注意thread里增加struct tcontext，不要加指针，否则需要手动去申请释放内存</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">struct</span> tcontext {
+  uint64 ra;
+  uint64 sp;
+
+  <span style="color:#75715e">// callee-saved
+</span><span style="color:#75715e"></span>  uint64 s0;
+  uint64 s1;
+  uint64 s2;
+  uint64 s3;
+  uint64 s4;
+  uint64 s5;
+  uint64 s6;
+  uint64 s7;
+  uint64 s8;
+  uint64 s9;
+  uint64 s10;
+  uint64 s11;
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">thread</span> {
+  <span style="color:#66d9ef">char</span>       stack[STACK_SIZE]; <span style="color:#75715e">/* the thread&#39;s stack */</span>
+  <span style="color:#66d9ef">int</span>        state;             <span style="color:#75715e">/* FREE, RUNNING, RUNNABLE */</span>
+  <span style="color:#66d9ef">struct</span> tcontext context;      <span style="color:#75715e">/* if you use struct tcontext*, you should alloc and dealloc by yourself */</span>
+};
+</code></pre></div><p>(2)uthread_switch这里和内核的switch是一样的，保存旧的context，加载新的context</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">  .text
+
+  <span style="color:#75715e">/*
+</span><span style="color:#75715e">         * save the old thread&#39;s registers,
+</span><span style="color:#75715e">         * restore the new thread&#39;s registers.
+</span><span style="color:#75715e">         */</span>
+
+  .globl thread_switch
+thread_switch:
+  <span style="color:#75715e">/* YOUR CODE HERE */</span>
+  sd ra, <span style="color:#ae81ff">0</span>(a0)
+    sd sp, <span style="color:#ae81ff">8</span>(a0)
+    sd s0, <span style="color:#ae81ff">16</span>(a0)
+    sd s1, <span style="color:#ae81ff">24</span>(a0)
+    sd s2, <span style="color:#ae81ff">32</span>(a0)
+    sd s3, <span style="color:#ae81ff">40</span>(a0)
+    sd s4, <span style="color:#ae81ff">48</span>(a0)
+    sd s5, <span style="color:#ae81ff">56</span>(a0)
+    sd s6, <span style="color:#ae81ff">64</span>(a0)
+    sd s7, <span style="color:#ae81ff">72</span>(a0)
+    sd s8, <span style="color:#ae81ff">80</span>(a0)
+    sd s9, <span style="color:#ae81ff">88</span>(a0)
+    sd s10, <span style="color:#ae81ff">96</span>(a0)
+    sd s11, <span style="color:#ae81ff">104</span>(a0)
+
+    ld ra, <span style="color:#ae81ff">0</span>(a1)
+    ld sp, <span style="color:#ae81ff">8</span>(a1)
+    ld s0, <span style="color:#ae81ff">16</span>(a1)
+    ld s1, <span style="color:#ae81ff">24</span>(a1)
+    ld s2, <span style="color:#ae81ff">32</span>(a1)
+    ld s3, <span style="color:#ae81ff">40</span>(a1)
+    ld s4, <span style="color:#ae81ff">48</span>(a1)
+    ld s5, <span style="color:#ae81ff">56</span>(a1)
+    ld s6, <span style="color:#ae81ff">64</span>(a1)
+    ld s7, <span style="color:#ae81ff">72</span>(a1)
+    ld s8, <span style="color:#ae81ff">80</span>(a1)
+    ld s9, <span style="color:#ae81ff">88</span>(a1)
+    ld s10, <span style="color:#ae81ff">96</span>(a1)
+    ld s11, <span style="color:#ae81ff">104</span>(a1)
+  
+  ret    <span style="color:#75715e">/* return to ra */</span>m
+</code></pre></div><p>(3)修改thread_creat 和 threat scheduler，代码已经很贴心的标记了我们要在哪里添加</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> 
+<span style="color:#a6e22e">thread_schedule</span>(<span style="color:#66d9ef">void</span>)
+  <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (current_thread <span style="color:#f92672">!=</span> next_thread) {         <span style="color:#75715e">/* switch threads?  */</span>
+    next_thread<span style="color:#f92672">-&gt;</span>state <span style="color:#f92672">=</span> RUNNING;
+    t <span style="color:#f92672">=</span> current_thread;
+    current_thread <span style="color:#f92672">=</span> next_thread;
+    <span style="color:#75715e">/* YOUR CODE HERE
+</span><span style="color:#75715e">     * Invoke thread_switch to switch from t to next_thread:
+</span><span style="color:#75715e">     * thread_switch(??, ??);
+</span><span style="color:#75715e">     */</span>
+    thread_switch((uint64)<span style="color:#f92672">&amp;</span>t<span style="color:#f92672">-&gt;</span>context, (uint64)<span style="color:#f92672">&amp;</span>current_thread<span style="color:#f92672">-&gt;</span>context);
+  } <span style="color:#66d9ef">else</span>
+    next_thread <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>将func的地址存入ra，这样在thread_switch完成后ret就可以进入到func去执行，这样thread_schedule就可以运转起来了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> 
+<span style="color:#a6e22e">thread_create</span>(<span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>func)())
+{
+  <span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">thread</span> <span style="color:#f92672">*</span>t;
+
+  <span style="color:#66d9ef">for</span> (t <span style="color:#f92672">=</span> all_thread; t <span style="color:#f92672">&lt;</span> all_thread <span style="color:#f92672">+</span> MAX_THREAD; t<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (t<span style="color:#f92672">-&gt;</span>state <span style="color:#f92672">==</span> FREE) <span style="color:#66d9ef">break</span>;
+  }
+  t<span style="color:#f92672">-&gt;</span>state <span style="color:#f92672">=</span> RUNNABLE;
+  <span style="color:#75715e">// YOUR CODE HERE
+</span><span style="color:#75715e"></span>  t<span style="color:#f92672">-&gt;</span>context.ra <span style="color:#f92672">=</span> (uint64)func;                   <span style="color:#75715e">// store addr of func to ra
+</span><span style="color:#75715e"></span>  t<span style="color:#f92672">-&gt;</span>context.sp <span style="color:#f92672">=</span> (uint64)t<span style="color:#f92672">-&gt;</span>stack <span style="color:#f92672">+</span> STACK_SIZE;  <span style="color:#75715e">// sp is top of stack
+</span><span style="color:#75715e"></span>}
+</code></pre></div><hr>
+<p>接下来的两个task就比较愉快了，不用在xv6编程，而是使用unix的pthread接口</p>
+<p>如果想了解一些基本的phtread api可以看一下ostep的currency部分</p>
+<p><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/">https://pages.cs.wisc.edu/~remzi/OSTEP/</a></p>
+<h2 id="2use-thread">2.use thread</h2>
+<p>task 2是多个线程在一个hash table上读写，这个hash table有5个buckets, 冲突的元素全部放在一个链表(bucket)里，由于没有互斥访问，所以多线程并发时访问临界区资源会造成一些问题，我们要做的是：</p>
+<ul>
+<li>让程序能在多线程的时候正确执行，通过ph_safe</li>
+<li>正确执行的基础上提高速度时期能够通过测试ph_fas</li>
+</ul>
+<p>只要修改put和get两个函数，在里面加上锁就可以了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">pthread_mutex_t lock;  
+
+<span style="color:#66d9ef">static</span> 
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">int</span> key, <span style="color:#66d9ef">int</span> value)
+{
+  <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key <span style="color:#f92672">%</span> NBUCKET;
+
+  <span style="color:#75715e">// is the key already present?
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> entry <span style="color:#f92672">*</span>e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  
+  pthread_mutex_lock(<span style="color:#f92672">&amp;</span>lock);  <span style="color:#75715e">// aquire lock
+</span><span style="color:#75715e"></span>  
+  <span style="color:#66d9ef">for</span> (e <span style="color:#f92672">=</span> table[i]; e <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>; e <span style="color:#f92672">=</span> e<span style="color:#f92672">-&gt;</span>next) {
+    <span style="color:#66d9ef">if</span> (e<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">==</span> key)
+      <span style="color:#66d9ef">break</span>;
+  }
+  <span style="color:#66d9ef">if</span>(e){
+    <span style="color:#75715e">// update the existing key.
+</span><span style="color:#75715e"></span>    e<span style="color:#f92672">-&gt;</span>value <span style="color:#f92672">=</span> value;
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#75715e">// the new is new.
+</span><span style="color:#75715e"></span>    insert(key, value, <span style="color:#f92672">&amp;</span>table[i], table[i]);
+  }
+  
+  pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>lock); <span style="color:#75715e">// release lock
+</span><span style="color:#75715e"></span>}
+
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> entry<span style="color:#f92672">*</span>
+<span style="color:#a6e22e">get</span>(<span style="color:#66d9ef">int</span> key)
+{
+  <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key <span style="color:#f92672">%</span> NBUCKET;
+
+
+  <span style="color:#66d9ef">struct</span> entry <span style="color:#f92672">*</span>e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  pthread_mutex_lock(<span style="color:#f92672">&amp;</span>lock);   <span style="color:#75715e">// aquire lock 
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> (e <span style="color:#f92672">=</span> table[i]; e <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>; e <span style="color:#f92672">=</span> e<span style="color:#f92672">-&gt;</span>next) {
+    <span style="color:#66d9ef">if</span> (e<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">==</span> key) <span style="color:#66d9ef">break</span>;
+  }
+  pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>lock); <span style="color:#75715e">// release lock
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> e;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+   pthread_mutex_init(lock, NULL);
+}
+</code></pre></div><p>但是这样每次读写都会锁住临界区，多线程完全以一种串行的方式在执行，速度完全得不到提升，官方给出了提示，为每一个bucket使用一个锁。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">pthread_mutex_t lock[NBUCKET];
+
+<span style="color:#66d9ef">static</span> 
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">put</span>(<span style="color:#66d9ef">int</span> key, <span style="color:#66d9ef">int</span> value)
+{
+  <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key <span style="color:#f92672">%</span> NBUCKET;
+
+  <span style="color:#75715e">// is the key already present?
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> entry <span style="color:#f92672">*</span>e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  
+  pthread_mutex_lock(lock <span style="color:#f92672">+</span> i);  <span style="color:#75715e">// aquire lock
+</span><span style="color:#75715e"></span>  
+  <span style="color:#66d9ef">for</span> (e <span style="color:#f92672">=</span> table[i]; e <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>; e <span style="color:#f92672">=</span> e<span style="color:#f92672">-&gt;</span>next) {
+    <span style="color:#66d9ef">if</span> (e<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">==</span> key)
+      <span style="color:#66d9ef">break</span>;
+  }
+  <span style="color:#66d9ef">if</span>(e){
+    <span style="color:#75715e">// update the existing key.
+</span><span style="color:#75715e"></span>    e<span style="color:#f92672">-&gt;</span>value <span style="color:#f92672">=</span> value;
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#75715e">// the new is new.
+</span><span style="color:#75715e"></span>    insert(key, value, <span style="color:#f92672">&amp;</span>table[i], table[i]);
+  }
+  
+  pthread_mutex_unlock(lock <span style="color:#f92672">+</span> i); <span style="color:#75715e">// release lock
+</span><span style="color:#75715e"></span>}
+
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> entry<span style="color:#f92672">*</span>
+<span style="color:#a6e22e">get</span>(<span style="color:#66d9ef">int</span> key)
+{
+  <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key <span style="color:#f92672">%</span> NBUCKET;
+
+
+  <span style="color:#66d9ef">struct</span> entry <span style="color:#f92672">*</span>e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  pthread_mutex_lock(lock <span style="color:#f92672">+</span> i);   <span style="color:#75715e">// aquire lock 
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> (e <span style="color:#f92672">=</span> table[i]; e <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>; e <span style="color:#f92672">=</span> e<span style="color:#f92672">-&gt;</span>next) {
+    <span style="color:#66d9ef">if</span> (e<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">==</span> key) <span style="color:#66d9ef">break</span>;
+  }
+  pthread_mutex_unlock(lock <span style="color:#f92672">+</span> i); <span style="color:#75715e">// release lock
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> e;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> NBUCKET; i<span style="color:#f92672">++</span>){
+     pthread_mutex_init(lock <span style="color:#f92672">+</span> i, NULL);
+  }
+}
+</code></pre></div><h2 id="3barrier">3.barrier</h2>
+<p>只要弄清楚barrier-cond和barrier-mutex是干什么的结果自然而然也就出来了，可以百度一下pthread_cond_wait的用法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> 
+<span style="color:#a6e22e">barrier</span>()
+{
+  <span style="color:#75715e">// YOUR CODE HERE
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Block until all threads have called barrier() and
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// then increment bstate.round.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  pthread_mutex_lock(<span style="color:#f92672">&amp;</span>bstate.barrier_mutex);
+  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">++</span>bstate.nthread <span style="color:#f92672">==</span> nthread){
+    bstate.nthread <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, bstate.round<span style="color:#f92672">++</span>;
+    pthread_cond_broadcast(<span style="color:#f92672">&amp;</span>bstate.barrier_cond);
+  }<span style="color:#66d9ef">else</span>{
+    pthread_cond_wait(<span style="color:#f92672">&amp;</span>bstate.barrier_cond, <span style="color:#f92672">&amp;</span>bstate.barrier_mutex);
+  }
+  pthread_mutex_unlock(<span style="color:#f92672">&amp;</span>bstate.barrier_mutex);
+}
+</code></pre></div><p><img src="MIT6.s081Operating%20System/lab%2007%20-%20multithread/image/image.png" alt=""></p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/operating-system/" rel="tag">Operating System</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/6.s081/lab6-cow/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">6.s081 lab6 copy on write</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/6.s081/lab8-lock/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">6.s081 lab8 lock</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

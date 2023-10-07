@@ -3,25 +3,40 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://c137chao.github.io/blog/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/categories/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/tags/distribute-storage/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/tags/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/categories/tinykv/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/blog/tinykv-lab2c/</loc>
+    <lastmod>2023-09-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/blog/tinykv-lab2b/</loc>
-    <lastmod>2023-09-13T00:00:00+00:00</lastmod>
+    <lastmod>2023-09-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/blog/tinykv-lab2a/</loc>
+    <lastmod>2023-09-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/categories/cs162/</loc>
+    <lastmod>2023-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/blog/cs162-proj1/</loc>
+    <lastmod>2023-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/tags/operating-system/</loc>
+    <lastmod>2023-04-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://c137chao.github.io/blog/cs61c-cpu/</loc>
     <lastmod>2022-12-21T00:00:00+00:00</lastmod>
@@ -29,16 +44,43 @@
     <loc>http://c137chao.github.io/categories/cs61%E7%B3%BB%E5%88%97/</loc>
     <lastmod>2022-12-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/categories/cs162/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <loc>http://c137chao.github.io/categories/6.s081/</loc>
+    <lastmod>2021-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/blog/cs162-proj1/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <loc>http://c137chao.github.io/6.s081/lab2-syscall/</loc>
+    <lastmod>2021-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/tags/operating-system/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <loc>http://c137chao.github.io/6.s081/</loc>
+    <lastmod>2021-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://c137chao.github.io/blog/tinykv-lab2a/</loc>
-    <lastmod>2017-08-21T00:00:00+00:00</lastmod>
+    <loc>http://c137chao.github.io/6.s081/lab1-util/</loc>
+    <lastmod>2021-12-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab11-network/</loc>
+    <lastmod>2021-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab10-mmap/</loc>
+    <lastmod>2021-02-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab9-filesys/</loc>
+    <lastmod>2021-01-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab8-lock/</loc>
+    <lastmod>2021-01-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab7-multithread/</loc>
+    <lastmod>2021-01-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab6-cow/</loc>
+    <lastmod>2021-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab5-lazy/</loc>
+    <lastmod>2021-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab4-trap/</loc>
+    <lastmod>2021-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://c137chao.github.io/6.s081/lab3-pgtbl/</loc>
+    <lastmod>2021-01-13T00:00:00+00:00</lastmod>
   </url>
 </urlset>

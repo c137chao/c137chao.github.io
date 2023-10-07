@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>tinykv lab2c snapshot - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on tinykv lab2c">
+		<meta property="og:title" content="tinykv lab2c snapshot" />
+<meta property="og:description" content="notebook on tinykv lab2c" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/blog/tinykv-lab2c/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-09-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-20T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="tinykv lab2c snapshot">
+<meta itemprop="description" content="notebook on tinykv lab2c"><meta itemprop="datePublished" content="2023-09-20T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-09-20T00:00:00+00:00" />
+<meta itemprop="wordCount" content="533">
+<meta itemprop="keywords" content="distribute storage," />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-CPU-fall21</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">tinykv lab2c snapshot</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-09-20T00:00:00Z">September 20, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab2c snapshot">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#when-snapshot">When SnapShot</a></li>
+        <li><a href="#snapshot-生成">SnapShot 生成</a></li>
+        <li><a href="#applysnapshot">ApplySnapshot</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><a href="https://github.com/talent-plan/tinykv/blob/course/doc/project2-RaftKV.md">指导书传送门</a>
+结合官方解读食用 <a href="https://cn.pingcap.com/blog/tikv-source-code-reading-10">TiKV 源码解析系列文章（十）Snapshot 的发送和接收 | PingCAP</a>
+不妨尝试调试一下 snapshot 的测试部分去理解该过程</p>
+<h3 id="when-snapshot">When SnapShot</h3>
+<p><code>peerMsgHandler</code>会定期进行RaftLogGC检查，收到 <code>PeerTickRaftLogGC</code> 以后会判断 Leader 当前日志是否可以压缩（持有一定数量的已经被apply的logEntry），如果达到需要压缩的数量会产生一个 <code>CompactLog</code> 请求去处理。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">onRaftGCLogTick</span>() {
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">schedule</span>(<span style="color:#a6e22e">PeerTickRaftLogGC</span>)
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">IsLeader</span>() {
+        <span style="color:#66d9ef">return</span>
+    }
+    <span style="color:#75715e">// if no enougth log -&gt; return
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// else compactIdx = appliedIdx - 1, why - 1 ????
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">term</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">RaftGroup</span>.<span style="color:#a6e22e">Raft</span>.<span style="color:#a6e22e">RaftLog</span>.<span style="color:#a6e22e">Term</span>(<span style="color:#a6e22e">compactIdx</span>)
+    
+    <span style="color:#75715e">// check err
+</span><span style="color:#75715e"></span>  
+    <span style="color:#75715e">// Create a compact log request and notify directly.
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">regionID</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">regionId</span>
+    <span style="color:#a6e22e">request</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">newCompactLogRequest</span>(<span style="color:#a6e22e">regionID</span>, <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">Meta</span>, <span style="color:#a6e22e">compactIdx</span>, <span style="color:#a6e22e">term</span>)
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">proposeRaftCommand</span>(<span style="color:#a6e22e">request</span>, <span style="color:#66d9ef">nil</span>)
+}
+</code></pre></div><p>CompactLog 请求会被当做一个普通的 message 交给 raft 同步，再 apply 之后 peer 会更新 truncState  然后通过 <code>gcRaftLog</code> 清理掉冗余的 raft log</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">peerMsgHandler</span>) <span style="color:#a6e22e">applyCompactLog</span>(<span style="color:#a6e22e">entry</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Entry</span>, <span style="color:#a6e22e">compLog</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">raft_cmdpb</span>.<span style="color:#a6e22e">CompactLogRequest</span>) {
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compLog</span>.<span style="color:#a6e22e">CompactIndex</span> &lt; <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">truncatedIndex</span>() {
+        <span style="color:#66d9ef">return</span>
+    }
+    <span style="color:#a6e22e">lastIncludeIndex</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compLog</span>.<span style="color:#a6e22e">CompactIndex</span>
+    <span style="color:#a6e22e">lastIncludeTerm</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">compLog</span>.<span style="color:#a6e22e">CompactTerm</span>
+  
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">applyState</span>.<span style="color:#a6e22e">TruncatedState</span>.<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">lastIncludeIndex</span>
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">applyState</span>.<span style="color:#a6e22e">TruncatedState</span>.<span style="color:#a6e22e">Term</span> = <span style="color:#a6e22e">lastIncludeTerm</span>
+  
+    <span style="color:#75715e">// becareful, don&#39;t set apply index to last include index
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">peerStorage</span>.<span style="color:#a6e22e">applyState</span>.<span style="color:#a6e22e">AppliedIndex</span> = <span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">Index</span>
+
+    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">ScheduleCompactLog</span>(<span style="color:#a6e22e">lastIncludeIndex</span>)
+}
+</code></pre></div><h3 id="snapshot-生成">SnapShot 生成</h3>
+<p>Leader 发现 Follower 的 prevLogIndex 不在自己的 log entries 中，会调用 <code>Storage.Snapshot()</code>给对方发送一个快照。 第一次调用 Snapshot 时 <code>PeerStorage.snapState</code> 处于<code>Relax State</code>, <code>peerStorage</code> 将 <code>snapState</code> 更新为 <code>generating</code> 并向 <code>Region Worker</code> 发送一个 <code>RegionTaskGen</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ps</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PeerStorage</span>) <span style="color:#a6e22e">Snapshot</span>() (<span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Snapshot</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">snapshot</span> <span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Snapshot</span>
+    <span style="color:#75715e">// seconde time call snapshot
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">snapState</span>.<span style="color:#a6e22e">StateType</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">SnapState_Generating</span> {
+        <span style="color:#75715e">// if success to get snapshpt from ps.snapState.Receiver (s := &lt;- receiver)
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// return snapshot, nil
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#75715e">// if upper application has been call snapshot over 5 time, return err
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">snapTriedCnt</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">5</span> {
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#75715e">// first time call snapshot, send a task to region worker
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;%s requesting snapshot&#34;</span>, <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">Tag</span>)
+    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">snapTriedCnt</span><span style="color:#f92672">++</span>
+    <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Snapshot</span>, <span style="color:#ae81ff">1</span>)
+    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">snapState</span> = <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">SnapState</span>{
+        <span style="color:#a6e22e">StateType</span>: <span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">SnapState_Generating</span>,
+        <span style="color:#a6e22e">Receiver</span>:  <span style="color:#a6e22e">ch</span>,
+    }
+
+    <span style="color:#75715e">// schedule snapshot generate task
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">regionSched</span> <span style="color:#f92672">&lt;-</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">runner</span>.<span style="color:#a6e22e">RegionTaskGen</span>{
+        <span style="color:#a6e22e">RegionId</span>: <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetId</span>(),
+        <span style="color:#a6e22e">Notifier</span>: <span style="color:#a6e22e">ch</span>,
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">snapshot</span>, <span style="color:#a6e22e">raft</span>.<span style="color:#a6e22e">ErrSnapshotTemporarilyUnavailable</span>
+}
+</code></pre></div><p>regionTaskHandler 的 Handle 接收到了 peerStorage 发来的任务，使用 SnapManager 产生一个 Snap，完成以后通过信道发给 PeerStorage</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// kv/raftstore/runner/region_task.go
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">regionTaskHandler</span>) <span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">worker</span>.<span style="color:#a6e22e">Task</span>) {
+    <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">t</span>.(<span style="color:#66d9ef">type</span>) {
+    <span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RegionTaskGen</span>:
+        <span style="color:#a6e22e">task</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">t</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">RegionTaskGen</span>)
+        <span style="color:#75715e">// It is safe for now to handle generating and applying snapshot concurrently,
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// but it may not when merge is implemented.
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">handleGen</span>(<span style="color:#a6e22e">task</span>.<span style="color:#a6e22e">RegionId</span>, <span style="color:#a6e22e">task</span>.<span style="color:#a6e22e">Notifier</span>)
+    <span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RegionTaskApply</span>:
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">RegionTaskDestroy</span>:
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">snapContext</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">engines</span>   <span style="color:#f92672">*</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">Engines</span>
+    <span style="color:#a6e22e">batchSize</span> <span style="color:#66d9ef">uint64</span>
+    <span style="color:#a6e22e">mgr</span>       <span style="color:#f92672">*</span><span style="color:#a6e22e">snap</span>.<span style="color:#a6e22e">SnapManager</span>
+}
+
+<span style="color:#75715e">// handleGen handles the task of generating snapshot of the Region.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">snapCtx</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">snapContext</span>) <span style="color:#a6e22e">handleGen</span>(<span style="color:#a6e22e">regionId</span> <span style="color:#66d9ef">uint64</span>, <span style="color:#a6e22e">notifier</span> <span style="color:#66d9ef">chan</span><span style="color:#f92672">&lt;-</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Snapshot</span>) {
+    <span style="color:#a6e22e">snap</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">doSnapshot</span>(<span style="color:#a6e22e">snapCtx</span>.<span style="color:#a6e22e">engines</span>, <span style="color:#a6e22e">snapCtx</span>.<span style="color:#a6e22e">mgr</span>, <span style="color:#a6e22e">regionId</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;failed to generate snapshot!!!, [regionId: %d, err : %v]&#34;</span>, <span style="color:#a6e22e">regionId</span>, <span style="color:#a6e22e">err</span>)
+        <span style="color:#a6e22e">notifier</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">nil</span>
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#a6e22e">notifier</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">snap</span>
+    }
+}
+</code></pre></div><h3 id="applysnapshot">ApplySnapshot</h3>
+<p>可以仿照 Snapshot 的调用完成 <code>PeerStorage.ApplySnapshot</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Apply the peer with given snapshot
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ps</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PeerStorage</span>) <span style="color:#a6e22e">ApplySnapshot</span>(<span style="color:#a6e22e">snapshot</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">eraftpb</span>.<span style="color:#a6e22e">Snapshot</span>, <span style="color:#a6e22e">kvWB</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>, <span style="color:#a6e22e">raftWB</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">engine_util</span>.<span style="color:#a6e22e">WriteBatch</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">ApplySnapResult</span>, <span style="color:#66d9ef">error</span>) {
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;%v begin to apply snapshot&#34;</span>, <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">Tag</span>)
+    <span style="color:#a6e22e">snapData</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">rspb</span>.<span style="color:#a6e22e">RaftSnapshotData</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">snapData</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">snapshot</span>.<span style="color:#a6e22e">Data</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+    }
+
+    <span style="color:#75715e">// Hint: things need to do here including: update peer storage state like raftState and applyState, etc,
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// and send RegionTaskApply task to region worker through ps.regionSched, also remember call ps.clearMeta
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// and ps.clearExtraData to delete stale data
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// Your Code Here (2C)
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">notify</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>)
+    <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">regionSched</span> <span style="color:#f92672">&lt;-</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">runner</span>.<span style="color:#a6e22e">RegionTaskApply</span>{
+        <span style="color:#a6e22e">RegionId</span>: <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">region</span>.<span style="color:#a6e22e">GetId</span>(),
+        <span style="color:#a6e22e">Notifier</span>: <span style="color:#a6e22e">notify</span>,
+        <span style="color:#a6e22e">SnapMeta</span>: <span style="color:#a6e22e">snapshot</span>.<span style="color:#a6e22e">Metadata</span>,
+        <span style="color:#a6e22e">StartKey</span>: <span style="color:#a6e22e">snapData</span>.<span style="color:#a6e22e">Region</span>.<span style="color:#a6e22e">StartKey</span>,
+        <span style="color:#a6e22e">EndKey</span>:   <span style="color:#a6e22e">snapData</span>.<span style="color:#a6e22e">Region</span>.<span style="color:#a6e22e">EndKey</span>,
+    }
+
+    <span style="color:#a6e22e">applySuccess</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">notify</span>
+
+    <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">applySuccess</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;snap apply failed&#34;</span>)
+    }
+
+    <span style="color:#75715e">// do something (update relative state)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>  
+
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ApplySnapResult</span>{<span style="color:#a6e22e">PrevRegion</span>: <span style="color:#a6e22e">ps</span>.<span style="color:#a6e22e">region</span>, <span style="color:#a6e22e">Region</span>: <span style="color:#a6e22e">snapData</span>.<span style="color:#a6e22e">Region</span>}, <span style="color:#66d9ef">nil</span>
+
+}
+</code></pre></div><p>需要注意，clearMeta之后因为region state信息被清理，所以需要调用
+<code>meta.WriteRegionState(kvWB, snapData.Region, rspb.PeerState_Normal)</code> 来更新 region state</p>
+<!-- raw HTML omitted -->
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/distribute-storage/" rel="tag">distribute storage</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/tinykv-lab2b/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">tinykv lab2b kvraft</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-CPU-fall21</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
