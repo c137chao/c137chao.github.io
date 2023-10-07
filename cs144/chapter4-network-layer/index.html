@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>计算机网络 第四章 网络层 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on computer network">
+		<meta property="og:title" content="计算机网络 第四章 网络层" />
+<meta property="og:description" content="notebook on computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/chapter4-network-layer/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="计算机网络 第四章 网络层">
+<meta itemprop="description" content="notebook on computer network">
+
+<meta itemprop="wordCount" content="192">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">计算机网络 第四章 网络层</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/network/" rel="category">network</a>
+	</span>
+</div></div>
+		</header>
+		
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-ipv4-datagram-格式">1. IPV4 Datagram 格式</a></li>
+        <li><a href="#2-数据报分片datagram-fragmentation">2. 数据报分片（datagram fragmentation）</a></li>
+        <li><a href="#3-ip-地址-与-子网划分">3. IP 地址 与 子网划分</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据平面与控制平面">数据平面与控制平面</a></li>
+    <li><a href="#网络层-数据平面">网络层-数据平面</a></li>
+    <li><a href="#网络层-控制平面">网络层-控制平面</a>
+      <ul>
+        <li><a href="#1-路由选择算法">1. 路由选择算法</a></li>
+        <li><a href="#2ospf-与-bgp">2.OSPF 与 BGP</a></li>
+        <li><a href="#3-icmp-网际控制报文协议">3. ICMP 网际控制报文协议</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p><img src="https://pic.imgdb.cn/item/62ea2dbf16f2c2beb11f0c5c.jpg" alt=""></p>
+<h1 id="网络层">网络层</h1>
+<p>网络层提供无连接的、尽最大努力交付的服务</p>
+<h3 id="1-ipv4-datagram-格式">1. IPV4 Datagram 格式</h3>
+<p><img src="https://pic.imgdb.cn/item/62ea30d816f2c2beb1229dd7.jpg" alt=""></p>
+<ul>
+<li>version : 网络协议版本 ipv4 or ipv6</li>
+<li>Header Length: 首部长度，通常为 20 Bytes</li>
+<li>TOS: 服务类型，如实时（网络电话）/非实时（文件传输FTP）</li>
+<li>Length: IP datagram 的总长度(包括 header length)，由于物理限制，一般不能超过 1500 Bytes</li>
+<li>Identifier, flags, fragment offset : 与数据分片有关</li>
+<li>TTL: 该 datagram 的寿命，若 TTL 减为 0，将被丢弃</li>
+<li>Protocal：上层协议（6表示TCP，17表示UDP)，是将网络层和传输层绑定到一起的粘合剂</li>
+<li>Checksum：仅仅是 hearder 的 checksum，TCP/UDP是对整个segment (header + payload)做检验</li>
+<li>Source/Destination IP Address：发送方/接收方的 IP 地址</li>
+</ul>
+<h3 id="2-数据报分片datagram-fragmentation">2. 数据报分片（datagram fragmentation）</h3>
+<p>由于链路层的限制，IP datagram 不能超过 最大传输单元（MTU)，当 IP datagram 过大，需要进行分片，所有分片拥有相同的 identifier</p>
+<h3 id="3-ip-地址-与-子网划分">3. IP 地址 与 子网划分</h3>
+<ol>
+<li>三类地址划分</li>
+<li>前缀</li>
+<li>CIDR</li>
+</ol>
+<h4 id="4-设备如何接入网络">4. 设备如何接入网络</h4>
+<ol>
+<li>DHCP 动态主机配置协议</li>
+</ol>
+<ul>
+<li>DHCP 服务器发现：新到达的主机广播一个 DHCP 发现报文</li>
+<li>DHCP 服务器提供：DHCP 回应一个 IP</li>
+<li>DHCP 请求：收到回应的IP后发送 DHCP 请求报文</li>
+<li>DHCP ACK：DHCP 服务器做出响应，分配 IP
+<img src="https://pic.imgdb.cn/item/62ee38648c61dc3b8ed88768.jpg" alt=""></li>
+</ul>
+<ol start="2">
+<li>NAT 地址转换</li>
+</ol>
+<h2 id="数据平面与控制平面">数据平面与控制平面</h2>
+<p><img src="https://pic.imgdb.cn/item/62ee2fd48c61dc3b8eb7a752.jpg" alt="">
+数据从左侧的 路由器输入端口 传入，然后查询路由表决定从哪个 输出端口 出去，经过交换结构到达输出端口。</p>
+<p>其中交换结构是数据平面的主要任务，通过硬件实现
+而路由选择是控制平面的功能，由软件来实现</p>
+<h2 id="网络层-数据平面">网络层-数据平面</h2>
+<pre><code>数据平面功能，即网络层中每台路由器的功能，数据平面唯一的任务就是决定到达路由器的 datagram 如何转发到该路由器的输出链路。
+</code></pre>
+<p><img src="https://pic.imgdb.cn/item/62ee2ed18c61dc3b8eb374ec.jpg" alt=""></p>
+<p><strong>三种交换结构</strong>
+<img src="https://pic.imgdb.cn/item/62ee32158c61dc3b8ec0d746.jpg" alt="">
+（1）经内存交换：数据从输入复制到内存中，对应的输出再从内存中提取数据，一次只能执行一个内存读写
+（2）经总线交换：一次只能有一个分组跨越总线
+（3）经互联网络交换：纵横交换机是由 2N 条总线组成的互联网络，可以达到并行</p>
+<p><img src="https://pic.imgdb.cn/item/62ee312a8c61dc3b8ebd2c81.jpg" alt="">
+datagram 通过查找转发表确定了输出端口以后，经过交换结构到达输出端口，但此时有其他 datagram 正在使用交换结构，这个分组有可能被阻塞，需要排队
+如果消息队列满了，则会出现丢包，同样的输出端口也有一个队列缓存。</p>
+<p>缓存大小的确定：
+过去：缓存数量B = 往返时延 RTT * 链路数量 C
+如今：B= RTT * C / sqrt(N)</p>
+<p><strong>packet queue 的调度问题：</strong></p>
+<ol>
+<li>
+<p>FIFO
+<img src="https://pic.imgdb.cn/item/62ee34648c61dc3b8ec9b1da.jpg" alt="">
+最简单直观的肯定是 FIFO（先来先服务 FCFS）</p>
+</li>
+<li>
+<p>优先级排队
+<img src="https://pic.imgdb.cn/item/62ee34ed8c61dc3b8ecbcc2b.jpg" alt="">
+相同优先权的队列进行 FIFO，不同优先级下，优先级高的先发送</p>
+</li>
+<li>
+<p>WFQ 循环加权公平排队
+<img src="https://pic.imgdb.cn/item/62ee35938c61dc3b8ece4a2e.jpg" alt="">
+round robin: 不同队列间循环，每个队列循环到他的时候发送最先到达的 数据
+WFQ：</p>
+</li>
+</ol>
+<h2 id="网络层-控制平面">网络层-控制平面</h2>
+<h3 id="1-路由选择算法">1. 路由选择算法</h3>
+<ul>
+<li>集中式路由选择算法：LS(Link State) 算法</li>
+<li>分布式路由选择算法：DV(Distance-Vector) 算法</li>
+</ul>
+<p>DV 算法：
+Bellman-Ford 方程：d(x, y) = min(v) { c(x, v) + d(v, y)}</p>
+<p>存在问题：选择环路（坏消息传得慢）
+解决措施：毒性逆转</p>
+<h3 id="2ospf-与-bgp">2.OSPF 与 BGP</h3>
+<p>边界网关协议 BGP</p>
+<h3 id="3-icmp-网际控制报文协议">3. ICMP 网际控制报文协议</h3>
+<p>主机和路由器彼此沟通网络层信息，最典型的用途是 差错报告</p>
+<p>ICMP 虽然体系结构在 IP 之上（ICMP 报文是承载在 IP 的 payload 中的），但通常被认为是 IP 的一部分</p>
+<p><img src="https://pic.imgdb.cn/item/62eca5ed8c61dc3b8eb0f100.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/chapter6-link-layer/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">计算机网络 第六章 链路层</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

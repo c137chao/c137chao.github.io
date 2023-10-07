@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cs144 自己动手实现tcp协议 lab1 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs144 computer network">
+		<meta property="og:title" content="cs144 自己动手实现tcp协议 lab1" />
+<meta property="og:description" content="notebook on cs144 computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/lab-1-streamreassembler/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="cs144 自己动手实现tcp协议 lab1">
+<meta itemprop="description" content="notebook on cs144 computer network">
+
+<meta itemprop="wordCount" content="430">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">cs144 自己动手实现tcp协议 lab1</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab1">
+		
+	</figure><div class="content post__content clearfix">
+			<h1 id="lab-1--streamreassembler">lab 1  StreamReassembler</h1>
+<p><a href="https://cs144.github.io/assignments/lab1.pdf">实验指导书传送门</a></p>
+<p><img src="https://pic.imgdb.cn/item/622c66285baa1a80ab895bc1.jpg" alt="image1">
+这幅图描述了TCP的基本工作原理，也是接下来四次实验我们要做的内容。</p>
+<p><strong>// 待补充</strong></p>
+<p>TCP需要将上层传下来的 packet 拆分成一个一个 segment（因为TCP依赖于他的下一层IP，而网络层的传输有物理限制，需要对datagram的大小作出约定1460 byte），拆分后的 segment 可能不能够按照原来的顺序到达目的地，也可能由于网络状况问题出现重传或者丢失。</p>
+<p>lab1 中我们需要做的就是在接收端收到这些 segment 后，将他们重组。
+虽然是lab 1，但做的过程中也遇到不少问题</p>
+<p>主要棘手的问题就是，收到的 segment 可能有很多重复的部分，并且他们又不按顺序到达。
+要考虑周全。</p>
+<p><strong>关于调试</strong>
+因为数据到达的情况复杂，一开始很难全部考虑到，可以一边看测试结果一边修改.
+细节有很多，调试也许会有所帮助。</p>
+<pre tabindex="0"><code>// int build directory
+cmake .. -DCMAKE BUILD TYPE=Debug
+make 
+
+gdb tests/想要调试的文件名
+</code></pre><p>就可以进入gdb调试了</p>
+<p><strong>实验内容</strong>
+核心就是 使用一个 map 来缓存那些未重组的 segment，根据自己的实现增且相应的成员记录。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StreamReassembler</span> {
+    <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+<span style="color:#75715e">// Your code here -- add private members as necessary.
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>map<span style="color:#f92672">&lt;</span>size_t, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> _reassemble_buffer;
+    <span style="color:#75715e">//... some other member if you need 
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>};
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">StreamReassembler<span style="color:#f92672">::</span>StreamReassembler(<span style="color:#66d9ef">const</span> size_t capacity)
+    <span style="color:#f92672">:</span>_reassemble_buffer(std<span style="color:#f92672">::</span>map<span style="color:#f92672">&lt;</span>size_t, string<span style="color:#f92672">&gt;</span>()), _expected(<span style="color:#ae81ff">0</span>), _eof_index(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>),
+     _unassembled_bytes(<span style="color:#ae81ff">0</span>), _output(capacity), _capacity(capacity)
+{}
+</code></pre></div><p>收到数据存入缓冲区的过程有点复杂，我增加一些辅助函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">// 插入缓冲区前做一轮做一些预处理，过滤掉数据与与缓冲区发生冲突（重复）的部分
+</span><span style="color:#75715e"></span>merge( size_t<span style="color:#f92672">&amp;</span> index, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> data);
+
+<span style="color:#75715e">// 预处理后，将数据插入缓冲区
+</span><span style="color:#75715e"></span>insert(size_t index, std<span style="color:#f92672">::</span>string data);
+
+<span style="color:#75715e">// 将缓冲中重组好的数据发送到 bytestream
+</span><span style="color:#75715e"></span>send_to_bytestream();
+</code></pre></div><p>重组缓冲区中的数据要保证是顺序，不重复的，每次向其中加入新的数据需要做一些预处理</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">merge:
+
+<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span>
+<span style="color:#75715e">// greater elem:          //////
+</span><span style="color:#75715e">// receive data:    ////////////////
+</span><span style="color:#75715e"></span>
+elem <span style="color:#f92672">=</span> next elem which greater than data
+<span style="color:#66d9ef">while</span> elem is valid AND data contain elem:
+    erase elem in reassembler buffer;
+    elem <span style="color:#f92672">=</span> next elem which greater than data;
+
+jump tp <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">2</span> OR <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">3</span>;
+
+<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">:</span>
+<span style="color:#75715e">// greater elem:          //////////////////
+</span><span style="color:#75715e">// receive data:  ///////////////
+</span><span style="color:#75715e"></span>
+erase the repeat part in data
+    
+<span style="color:#75715e">// greater elem:          //////////////////
+</span><span style="color:#75715e">// receive data:  ////////
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">:</span>
+<span style="color:#75715e">// greater elem:  ///////////////////////
+</span><span style="color:#75715e">// data        :  ///////////////
+</span><span style="color:#75715e"></span>
+skip data, don<span style="color:#960050;background-color:#1e0010">&#39;</span>t insert
+    
+<span style="color:#75715e">// greater elem:  ///////////////////////
+</span><span style="color:#75715e"></span>    
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> StreamReassembler<span style="color:#f92672">::</span>insert(size_t index, std<span style="color:#f92672">::</span>string data) {
+    <span style="color:#75715e">/** ignore the part which has been sended */</span>
+    <span style="color:#66d9ef">if</span>(index <span style="color:#f92672">&lt;</span> _expected) {
+        data <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(data.substr(_expected <span style="color:#f92672">-</span> index));
+        index <span style="color:#f92672">=</span> _expected;
+    }
+    
+    <span style="color:#75715e">/** maintain invariable : data in b_reassemble_buffer always sorted, unrepeated */</span>
+    <span style="color:#66d9ef">if</span>( _reassemble_buffer.empty() <span style="color:#f92672">||</span> merge(index, data) ) {
+        _unassembled_bytes <span style="color:#f92672">+=</span> data.size();
+        _reassemble_buffer.emplace(index, data);
+    }
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> StreamReassembler<span style="color:#f92672">::</span>send_to_bytestream() {
+    <span style="color:#66d9ef">auto</span> iter <span style="color:#f92672">=</span> _reassemble_buffer.begin();
+    std<span style="color:#f92672">::</span>string data;
+    std<span style="color:#f92672">::</span>size_t index;
+    
+    <span style="color:#66d9ef">while</span>(iter <span style="color:#f92672">!=</span> _reassemble_buffer.end() <span style="color:#f92672">&amp;&amp;</span> iter<span style="color:#f92672">-&gt;</span>first <span style="color:#f92672">&lt;=</span> _expected) {   
+        data <span style="color:#f92672">=</span> iter<span style="color:#f92672">-&gt;</span>second;   
+        index <span style="color:#f92672">=</span> iter<span style="color:#f92672">-&gt;</span>first;
+    
+        <span style="color:#75715e">/* if not a repeated segment, send it to ByteStream */</span>
+        <span style="color:#66d9ef">if</span>(index <span style="color:#f92672">+</span> data.size() <span style="color:#f92672">&gt;</span> _expected) {
+    
+            <span style="color:#75715e">/* over remaining capacity, trunction the back of data  */</span>
+            <span style="color:#66d9ef">if</span>(data.size() <span style="color:#f92672">&gt;</span> _output.remaining_capacity()) {
+                 data <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(data.substr(<span style="color:#ae81ff">0</span>, _output.remaining_capacity()));
+            }
+
+            <span style="color:#75715e">/** write data to ByteStream, then update info */</span>
+            _output.write(data);
+            _expected <span style="color:#f92672">+=</span> data.size();
+            _unassembled_bytes <span style="color:#f92672">-=</span> data.size();
+        }
+    
+        <span style="color:#75715e">/** info of iter has been send, delete it */</span>
+        <span style="color:#66d9ef">auto</span> temp <span style="color:#f92672">=</span> iter;
+        <span style="color:#f92672">++</span>iter;
+        _reassemble_buffer.erase(temp);
+    }
+}
+
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">//! \details This function accepts a substring (aka a segment) of bytes,
+</span><span style="color:#75715e">//! possibly out-of-order, from the logical stream, and assembles any newly
+</span><span style="color:#75715e">//! contiguous substrings and writes them into the output stream in order.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> 
+StreamReassembler<span style="color:#f92672">::</span>push_substring(<span style="color:#66d9ef">const</span> string <span style="color:#f92672">&amp;</span>data, <span style="color:#66d9ef">const</span> size_t index, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">bool</span> eof) {
+    <span style="color:#66d9ef">if</span>(eof){
+        _eof_index <span style="color:#f92672">=</span> data.size() <span style="color:#f92672">+</span> index;
+    } 
+    <span style="color:#66d9ef">if</span>(index <span style="color:#f92672">+</span> data.size() <span style="color:#f92672">&gt;</span> _expected ) {
+        insert(index, data);
+        send_to_bytestream();
+    }
+
+    <span style="color:#66d9ef">if</span>(_expected <span style="color:#f92672">==</span> _eof_index) {
+        _output.end_input();
+    }
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">size_t StreamReassembler<span style="color:#f92672">::</span>unassembled_bytes() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _unassembled_bytes; }
+
+<span style="color:#66d9ef">bool</span> StreamReassembler<span style="color:#f92672">::</span>empty() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _unassembled_bytes <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>; }
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/62305b2d5baa1a80ab5f1dff.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/lab-2-tcp-receiver/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab2</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/lab-0-networking-warmup/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab0</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

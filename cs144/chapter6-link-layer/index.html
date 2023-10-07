@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>计算机网络 第六章 链路层 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on computer network">
+		<meta property="og:title" content="计算机网络 第六章 链路层" />
+<meta property="og:description" content="notebook on computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/chapter6-link-layer/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="计算机网络 第六章 链路层">
+<meta itemprop="description" content="notebook on computer network">
+
+<meta itemprop="wordCount" content="96">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">计算机网络 第六章 链路层</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/network/" rel="category">network</a>
+	</span>
+</div></div>
+		</header>
+		
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#1-链路层提供的服务">1. 链路层提供的服务</a></li>
+        <li><a href="#2-多路访问协议">2 多路访问协议</a></li>
+        <li><a href="#点对点协议-ppp">点对点协议 PPP</a></li>
+        <li><a href="#广播信道的多路访问协议">广播信道的多路访问协议：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h4 id="基本术语">基本术语：</h4>
+<p><strong>Node</strong>: 运行链路层协议的任何设备均称为Node
+<strong>Link</strong>:   相邻节点间的通信信道成为 链路 Link</p>
+<p><img src="https://pic.imgdb.cn/item/62ece7fe8c61dc3b8eb756be.jpg" alt=""></p>
+<h3 id="1-链路层提供的服务">1. 链路层提供的服务</h3>
+<ul>
+<li>成帧（framing)：加首加尾</li>
+<li>链路接入：MAC 媒体访问控制协议</li>
+<li>可靠交付：</li>
+<li>差错检测和纠正：奇偶校验， CRC 循环冗余校验</li>
+</ul>
+<p><strong>差错检测</strong>
+（1）奇偶校验码
+<img src="https://pic.imgdb.cn/item/62ece7ad8c61dc3b8eb64a3f.jpg" alt=""></p>
+<p>（2）CRC循环冗余校验
+<img src="https://pic.imgdb.cn/item/62ece8258c61dc3b8eb7d013.jpg" alt=""></p>
+<h3 id="2-多路访问协议">2 多路访问协议</h3>
+<p>链路层有两种网络链路：点对点链路 和 广播链路
+<strong>点对点链路</strong>由单个发送方和单个接收方组成</p>
+<h3 id="点对点协议-ppp">点对点协议 PPP</h3>
+<p>帧格式：
+<img src="https://pic.imgdb.cn/item/62ed27908c61dc3b8eb3df71.jpg" alt=""></p>
+<ul>
+<li>标志字段 F= 0x7E （01111110，表示帧的开始）</li>
+<li>地址字段 A= 0xFF 用于指定那个站正在处理，0xFF（所有站）</li>
+<li>控制字段 C：PPP中没有使用 通常为 0x03，</li>
+<li>协议字段</li>
+</ul>
+<p>填充方式：
+零比特填充(5 个连续的 1 填入一个 0)</p>
+<h3 id="广播信道的多路访问协议">广播信道的多路访问协议：</h3>
+<p>（1）信道划分协议（channel partitioning protocal）
+（2）随机接入协议（random access protocal）
+（3）轮转令牌协议（taking-turns protocal）</p>
+<h4 id="信道划分协议">信道划分协议</h4>
+<p><img src="https://pic.imgdb.cn/item/62ecfa4d8c61dc3b8ef5f40b.jpg" alt=""></p>
+<p>（1）时分多路复用 TDM
+TDM 将时间华为分为时间帧，并进一步把每个时间帧分为 N 个时隙（slot)，每个节点分得一个时隙
+<img src="https://pic.imgdb.cn/item/62ecebc18c61dc3b8ec48252.jpg" alt="">
+（2）频分多路复用 FDM
+与 TDM 类似，不过 FDM 是根据波段分配
+![[Pasted image 20220805180758.png]]
+（3）码分多址 CDMA
+CDMA 对每个结点分配一种不同的编码，CDMA 抗干扰性好，曾在军用系统中使用，现在广泛用于于民用，如蜂窝电话。</p>
+<h4 id="随机接入协议">随机接入协议</h4>
+<p>（1）时隙 ALOHA</p>
+<ul>
+<li>所有帧都是固定长度 L Bytes</li>
+<li>事件被分成时隙，每个时隙正好可以传输一个帧</li>
+<li>节点只在实习开始的时候传输帧</li>
+<li>如果一个时隙中只有一个发送方，则发送成功，否则发生碰撞，则以概率P在下一个时隙中重传
+<img src="https://pic.imgdb.cn/item/62ecef148c61dc3b8ed0d8e2.jpg" alt="">
+（2）载波侦听多路访问（CSMA）</li>
+<li>说话之前先听</li>
+<li>如果检测到碰撞，则停止发送</li>
+</ul>
+<p>（3）具有碰撞检测的载波侦听多路访问（CSMA/CD）
++</p>
+<p>发生碰撞如何处理</p>
+<h4 id="轮转协议">轮转协议</h4>
+<p>（1）轮询协议
+（2）令牌传递协议</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/chapter4-network-layer/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">计算机网络 第四章 网络层</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/chapter3-transmission-layer/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">计算机网络 第三章 传输层</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

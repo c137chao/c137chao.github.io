@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cs61s on Summer Blog Space</title>
+    <link>http://c137chao.github.io/cs61/</link>
+    <description>Recent content in Cs61s on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="http://c137chao.github.io/cs61/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CS61B-实现一个简易的git</title>
+      <link>http://c137chao.github.io/cs61/cs61b-gitlet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs61/cs61b-gitlet/</guid>
+      <description>Design ppt
+ 视频里的描述非常有用
+ 1. 功能描述 我们本地的目录称为 Working Directory，而创建的 .gitlet 目录成文gitlet Repo
+1.1 init java gitlet.Main init init 创建.gitlet目录以及我们自己定义的需要用到的文件和目录，我的初始结构如下
+.gitlet |__refs | |__info | |__head of master | |__head of others... | | |__tags | |__remote | |__objects | |__00 | |__... | |__ff | |__commits | |__init commits | |__other commits | |__Head (current branch head) | |__stage (Stage Area) | |__ ... 1.2 add [file path] java gitlet.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>计算机网络 第三章 传输层 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on computer network">
+		<meta property="og:title" content="计算机网络 第三章 传输层" />
+<meta property="og:description" content="notebook on computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/chapter3-transmission-layer/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="计算机网络 第三章 传输层">
+<meta itemprop="description" content="notebook on computer network">
+
+<meta itemprop="wordCount" content="333">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">计算机网络 第三章 传输层</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/network/" rel="category">network</a>
+	</span>
+</div></div>
+		</header>
+		
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-多路复用多路分解">1. 多路复用/多路分解</a></li>
+    <li><a href="#2-udp">2 UDP</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p>transport layer 为不同主机的进程提供 <strong>逻辑通信</strong></p>
+<p><img src="https://pic.imgdb.cn/item/62e90ed416f2c2beb11e3e82.jpg" alt=""></p>
+<p><strong>TCP</strong>: Transmission Control Protocol
+• reliable, in-order delivery
+• congestion control
+• flow control
+• connection setup</p>
+<p><strong>UDP</strong>: User Datagram Protocol
+• unreliable, unordered delivery
+• no-frills extension of “best-effort” IP</p>
+<!-- raw HTML omitted -->
+<h2 id="1-多路复用多路分解">1. 多路复用/多路分解</h2>
+<p>通过套接字，将同一主机上的不同进程准确交付</p>
+<p><img src="https://pic.imgdb.cn/item/62e91b9b16f2c2beb12d5fe1.jpg" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> socket
+
+HOSt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data.pr4e.com&#39;</span>  <span style="color:#75715e"># it will be translated to ip add through DNS</span>
+PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">80</span>               <span style="color:#75715e"># HTTP port number</span>
+
+mysock <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM) <span style="color:#75715e"># create a socket</span>
+mysock<span style="color:#f92672">.</span>connect((HOST, PORT))                               <span style="color:#75715e"># request connection</span>
+
+cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;GET http://data.pr4e.com/romeo.txt HTTP/1.0</span><span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode() <span style="color:#75715e"># HTTP proxy</span>
+
+mysock<span style="color:#f92672">.</span>send(cmd) 
+
+<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>: 
+    data <span style="color:#f92672">=</span> mysock<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">512</span>) 
+    <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>: 
+        <span style="color:#66d9ef">break</span> 
+    print(data<span style="color:#f92672">.</span>decode()<span style="color:#960050;background-color:#1e0010">，</span> end <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>) <span style="color:#75715e">#data is binary，decode trans binary to string</span>
+    
+mysock<span style="color:#f92672">.</span>close()
+</code></pre></div><!-- raw HTML omitted -->
+<h2 id="2-udp">2 UDP</h2>
+<p>UDP =  <em>IP提供的服务</em> + <em>多路复用/分用</em> + <em>差错校验</em></p>
+<p>优势：</p>
+<ul>
+<li>不需要建立连接，发送更加及时</li>
+<li>无需建立连接，更快速</li>
+<li>不需要维护连接的状态（拥塞控制参数、序号、确认号、重传计时器等等）</li>
+<li>分组首部开销小（TCP 首部 20 Bytes，UDP首部只有8 Bytes)</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>没有拥塞控制导致网络拥塞，出现高丢包率，最后甚至会挤垮 已经建立的 TCP 链接</li>
+</ul>
+<p>UDP 的应用</p>
+<ul>
+<li>streaming multimedia apps (loss tolerant, rate sensitive)</li>
+<li>DNS</li>
+<li>SNMP</li>
+<li>HTTP/3</li>
+</ul>
+<h4 id="udp-header">UDP header</h4>
+<p><img src="https://pic.imgdb.cn/item/62e91db816f2c2beb12f98df.jpg" alt=""></p>
+<!-- raw HTML omitted -->
+<p><strong>UDP 校验和</strong>
+example: 发送 <code>1110 0110 0110 0110</code> 和 <code>1101 0101 0101 0101</code></p>
+<p><img src="https://pic.imgdb.cn/item/62e91e1c16f2c2beb1300380.jpg" alt="">
+出现溢出，将溢出的 1 进行回卷</p>
+<p><img src="https://pic.imgdb.cn/item/62e91e8d16f2c2beb13080bc.jpg" alt=""></p>
+<p>最后 checksum 和原本的数据相加应该是 all ones</p>
+<!-- raw HTML omitted -->
+<p><img src="https://pic.imgdb.cn/item/62e91c6216f2c2beb12e31df.jpg" alt=""></p>
+<h4 id="tcp-基本概念">TCP 基本概念</h4>
+<p>TCP 是一 <strong>面向连接的(三次握手和四次挥手)</strong>，具有拥塞控制（快重传、慢开始）和 流量控制（滑动窗口）的可靠传输（不重复、不丢失、不失序）协议。</p>
+<p>TCP 提供全双工通信（双方都可以接发数据），提供点对点（Point to Point）连接。</p>
+<p>由于下层网络服务的物理限制，一个 segment 大小受到约束，由 MMS (Maximum Segment Size) 决定 TCP segment 的最大长度，通常 1460 Bytes  (因为底层 以太网 和 PPP链路层     限制 最大传输单元 MTU 是 1500 Bytes，去掉 IP header 20 Bytes 和 TCP header 20 Bytes)</p>
+<!-- raw HTML omitted -->
+<h4 id="tcp-header">TCP header</h4>
+<p><img src="https://pic.imgdb.cn/item/625e2cb1239250f7c5d9dedf.jpg" alt=""></p>
+<p>TCP 将数据看成一个 无结构的、有序的字节流</p>
+<!-- raw HTML omitted -->
+<p><strong>2.后退N帧 (Go-Back-N,  GBN)</strong></p>
+<p><img src="https://pic.imgdb.cn/item/62e929d716f2c2beb13db302.jpg" alt="">
+[GBN 动画演示](<a href="https://media.pearsoncmg.com/aw/ecs_kurose_compnetwork_7/cw/content/interactiveanimations/go-back-n-protocol/index.html">Go-Back Protocol (pearsoncmg.com)</a>)</p>
+<p>分组序号的比特数是 k，则该序号范围是 [0, 2^k - 1]，窗口一旦满了则不在发送数据，发生超时后重传窗口最开始的数据
+采用<strong>累计确认制度，发送方收到 ack(n)，则表示接收方已经收到了 n，下一个期待收到 n+1</strong>。
+(note : 实际 tcp 的实现中，ack(n) 表示 期待收到 n)</p>
+<p>GBN 会丢弃所有失序分组，即使正确收到了 seq(n+1), seq(n+2), &hellip; 但只要没有收到 seq(n)，后面的都会被丢弃，优点是简单，不需要缓存和重组失序的分组，缺点很明显，存在大量无意义的重传，浪费网络资源。
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><strong>3.选择重传 (Selective Repeat, SR)</strong></p>
+<p>发送方只需要重传出错的分组而避免了不必要的重传。</p>
+<p><img src="https://pic.imgdb.cn/item/62e92e9816f2c2beb1436f3b.jpg" alt="">
+<a href="https://media.pearsoncmg.com/aw/ecs_kurose_compnetwork_7/cw/content/interactiveanimations/selective-repeat-protocol/index.html">SR 动画演示</a>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>TCP 的 FSM
+<img src="https://pic.imgdb.cn/item/6264ded7239250f7c5d99642.jpg" alt=""></p>
+<!-- raw HTML omitted -->
+<p><strong>建立连接：三次握手</strong>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<p>SYN 洪泛攻击：
+Client 发送大量的建立连接请求但都不完成三次握手的最后一步，使得 Server 处于一种“半连接”的状态，一直等待 Client 的第三次握手，直至超时关闭连接。Client 使用大量的 SYN 请求来消耗 Server 资源。如今通过一种 SYN cookie 的方式进行防御。</p>
+<p><strong>释放连接：四次挥手</strong>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><img src="https://pic.imgdb.cn/item/62e9e07116f2c2beb1c55664.jpg" alt=""></p>
+<!-- raw HTML omitted -->
+<p><strong>拥塞控制方法</strong></p>
+<ol>
+<li>端到端的拥塞控制（TCP 采用的拥塞控制方法）</li>
+<li>网络辅助的拥塞控制 (路由器向发送方反馈拥塞信息)</li>
+</ol>
+<p><strong>TCP 拥塞控制算法（1988 Jacobson）</strong>
+除了接收窗口大小 rwnd ，TCP sender 还维护一个 拥塞窗口 cwnd
+TCP sender 发送数据的窗口 &lt;= min {rwnd, cwnd}，通过调节 cwnd 的值来调节发送速率</p>
+<p>TCP sender 如何感知网络出现拥塞？
+网络出现丢包则认为网络拥塞，丢包此处定义为：出现超时或者收到3个重复的ACK</p>
+<p>控制原则：</p>
+<ul>
+<li>一个丢失的 segment 意味着拥塞，此时 TCP sender应当降低发送速率</li>
+<li>顺利收到一个对先前未确认 segment 确认到达时，增加发送方速率</li>
+<li>带宽探测，通过增加发送速率探测 拥塞开始出现的速率，从该速率后退，进而再次开始探测、</li>
+</ul>
+<p>1.慢启动（slow start)</p>
+<p>2.拥塞避免</p>
+<p>3.快速恢复</p>
+<p><img src="https://pic.imgdb.cn/item/62e9ef9316f2c2beb1d6299c.jpg" alt="">
+图中，初始 ssthresh = 8，开始进行慢开始，窗口大小增长到 8 个MSS 以后进入拥塞避免状态，窗口增长到 12 个 MSS，如果发生超时，则将 cwnd 大小设置为 1，ssthresh 设置为原来的一半，再次进入慢开始状态，如果收到三个重复的 ack，则将 cwnd 设置为原来的一半（cwnd 从 12 变为 6)，进入快重传。</p>
+<p><img src="https://pic.imgdb.cn/item/62e9efd416f2c2beb1d67039.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/chapter6-link-layer/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">计算机网络 第六章 链路层</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/lab-4-tcp-connection/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab4</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

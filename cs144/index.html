@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Cs144s - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Cs144s" />
+<meta property="og:description" content="Summer&#39;s Personal blog about everything" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/" />
+
+
+		<meta itemprop="name" content="Cs144s">
+<meta itemprop="description" content="Summer&#39;s Personal blog about everything">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="alternate" type="application/rss+xml" href="/cs144/index.xml" title="Summer Blog Space">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Cs144s</h1>
+	</header><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/cs144/lab-0-networking-warmup/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab0">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/cs144/lab-0-networking-warmup/" rel="bookmark">
+			cs144 自己动手实现tcp协议 lab0
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		lab 0 : Networking warmup 2.1 Fetch a Web page http://cs144.keithw.org/hello
+第一个练习就是跟着指导书使用telnet获取页面 照着实验指导书做就行了，注意连接过一会儿就会自动关闭，所以需要一点手速。 敲完命令按两次回车(有一个空行)
+ talent 目标网址  &gt; telnet cs144.keithw.org http Trying 104.196.238.229... Connected to cs144.keithw.org. Escape character is '^]'.  发送 http 报文  GET /hello HTTP/1.1 Host: cs144.keithw.org Connection: close  结果  HTTP/1.1 200 OK Date: Wed, 02 Mar 2022 06:07:39 GMT Server: Apache Last-Modified: Thu, 13 Dec 2018 15:45:29 GMT ETag: &quot;e-57ce93446cb64&quot; Accept-Ranges: bytes Content-Length: 14 Connection: close Content-Type: text/plain Hello, CS144!
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/cs144/lab-1-streamreassembler/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab1">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/cs144/lab-1-streamreassembler/" rel="bookmark">
+			cs144 自己动手实现tcp协议 lab1
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		lab 1 StreamReassembler 实验指导书传送门
+这幅图描述了TCP的基本工作原理，也是接下来四次实验我们要做的内容。
+// 待补充
+TCP需要将上层传下来的 packet 拆分成一个一个 segment（因为TCP依赖于他的下一层IP，而网络层的传输有物理限制，需要对datagram的大小作出约定1460 byte），拆分后的 segment 可能不能够按照原来的顺序到达目的地，也可能由于网络状况问题出现重传或者丢失。
+lab1 中我们需要做的就是在接收端收到这些 segment 后，将他们重组。 虽然是lab 1，但做的过程中也遇到不少问题
+主要棘手的问题就是，收到的 segment 可能有很多重复的部分，并且他们又不按顺序到达。 要考虑周全。
+关于调试 因为数据到达的情况复杂，一开始很难全部考虑到，可以一边看测试结果一边修改. 细节有很多，调试也许会有所帮助。
+// int build directory cmake .. -DCMAKE BUILD TYPE=Debug make gdb tests/想要调试的文件名 就可以进入gdb调试了
+实验内容 核心就是 使用一个 map 来缓存那些未重组的 segment，根据自己的实现增且相应的成员记录。
+class StreamReassembler { private: // Your code here -- add private members as necessary.  std::map&lt;size_t, std::string&gt; _reassemble_buffer; //... some other member if you need public: // .
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/cs144/lab-2-tcp-receiver/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab2">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/cs144/lab-2-tcp-receiver/" rel="bookmark">
+			cs144 自己动手实现tcp协议 lab2
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		若 make 报错
+LIBPCAP linked by target &quot;tcp_parser&quot; in directory /home/zc/2022/sponge/tests linked by target &quot;tcp_parser&quot; in directory /home/zc/2022/sponge/tests 解决办法 sudo apt-get install libpcap-dev
+热身 开始有两个热身，上个实验 reassemble_stream 收到的数据全是从 0 （absolute seqno）开始的，并且 序号是使用一个64位数字去表示的，现在要做两件事：
+  把absolute seq （64b start with 0）转换成 seq （32b，从一个随机的 isn 开始） WrappingInt32 wrap(uint64 t absolute_seq, WrappingInt32 isn)
+  恰好反过来，将 32 位的 seq 转化为 64 位的 absolute seq `unwrap(WrappingInt32 seq, WrappingInt32 isn, uint64 t checkpoint)
+  有四个测试是针对 wrap 和 unwrap 的 通过了这四个再往下进行。
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/cs144/lab-3-tcp-sender/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab3">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/cs144/lab-3-tcp-sender/" rel="bookmark">
+			cs144 自己动手实现tcp协议 lab3
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		TCP Sender 到 lab 3为止，现在 tcp 的工作流程是：
+ 上层应用通过 发送/接收窗口（ByteStream）与TCP进行数据交换。 发送方应用层应用将数据（message）有序写入bytestream tcp 发送端从 ByteStream 读取数据将其封装为 segment 经过底层网络发送至接收方 由于底层网络不保证数据能够可靠到达，发送方需要对丢失的数据重传，接收方需要对接收到的数据确认和重组 tcp 接收端将重组完成的数据写入到ByteStream 被上层应用读走。  剩下的就是面向测试编程
+lab3 中我们所关心的几个点 发送方需要根据接收方发送来的 ack_no 和 windows size 来决定是否可以抛弃以前的数据以及还能发送多少数据。 对于重传，使用 alarm 函数发生时钟中断，来调用 tick
+signal(SIGALRM, tick); alarm(clock); 关于 alarm，回顾CSAPP异常处理 或者 6.s081 的 lab 4:alarm。
+状态图是开启代码思路的关键
+namespace TCPSenderStateSummary { const std::string ERROR = &#34;error (connection was reset)&#34;; const std::string CLOSED = &#34;waiting for stream to begin (no SYN sent)&#34;; const std::string SYN_SENT = &#34;stream started but nothing acknowledged&#34;; const std::string SYN_ACKED = &#34;stream ongoing&#34;; const std::string FIN_SENT = &#34;stream finished (FIN sent) but not fully acknowledged&#34;; const std::string FIN_ACKED = &#34;stream finished and fully acknowledged&#34;; } string TCPState::state_summary(const TCPSender &amp;sender) { if (sender.
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/cs144/lab-4-tcp-connection/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab4">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/cs144/lab-4-tcp-connection/" rel="bookmark">
+			cs144 自己动手实现tcp协议 lab4
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		lab 4 TCP 完全体 到现在 tcp 需要的所有组件已经完成  //! \struct TCPHeader //! ~~~{.txt} //! 0 1 2 3 //! 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //! | Source Port | Destination Port | //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //! | Sequence Number | //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //!
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/2</span>
+	<a class="pagination__item pagination__item--next btn" href="/cs144/page/2/">»</a>
+</div>
+
+			</div>
+			
+<aside class="sidebar sidebar--left"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/6.s081/">6.s081</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/cs144/">cs144</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/cs162/">cs162</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/cs61%E7%B3%BB%E5%88%97/">CS61系列</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/network/">network</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/tinykv/">tinykv</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/c137chao" target="_blank">
+				<svg class="widget-social__link-icon icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:c137_zhuochao@outlook.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>c137_zhuochao@outlook.com</span>
+			</a>
+		</div>
+
+		
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Wechat"  rel="noopener noreferrer" href="https://pic.imgdb.cn/item/651e6fcec458853aef2c36a6.jpg" target="_blank">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="Wechat", fill="#ffffff">
+<path d="M21.9 22.2c-.1 0-.2 0-.2-.1l-2.9-1.5c-1 .4-2.1.5-3.2.5-4.4 0-8-2.9-8-6.4 0-3.5 3.6-6.4 8-6.4s8 2.9 8 6.4c0 1.7-.9 3.3-2.4 4.5l1.1 2.1c.1.2.1.4-.1.6 0 .3-.1.3-.3.3zm-3-2.6c.1 0 .2 0 .2.1l1.7.9-.6-1.1c-.1-.2 0-.5.2-.6 1.5-1 2.3-2.5 2.3-4 0-3-3.2-5.4-7-5.4-3.9 0-7 2.4-7 5.4 0 3 3.1 5.4 7 5.4 1.1 0 2.1-.2 3.1-.5-.1-.2 0-.2.1-.2z"></path><path d="M2.4 19c-.1 0-.3 0-.4-.1-.2-.2-.2-.4-.1-.6l1.4-2.8c-1.9-1.5-3-3.6-3-5.7 0-4.4 4.5-8 10-8s10 3.6 10 8v.1c0 .2-.1.3-.2.4-.2.1-.3.1-.5 0-1.2-.6-2.6-1-4-1-3.9 0-7 2.4-7 5.4 0 .7.2 1.4.5 2.1.1.2.1.4 0 .5-.1.2-.3.2-.5.2-.8-.1-1.6-.3-2.3-.5l-3.7 2h-.2zm8-16.2c-5 0-9 3.1-9 7 0 2 1.1 3.8 3 5.2.2.1.3.4.2.6l-.9 1.8L6 16.1c.2-.1.3-.1.4-.1.5.2 1 .3 1.4.4-.2-.5-.3-1.1-.3-1.6 0-3.5 3.6-6.4 8-6.4 1.3 0 2.5.2 3.7.7-.3-3.5-4.2-6.3-8.8-6.3z"></path><path d="M7.2 7.9c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8s.8.3.8.8c0 .4-.4.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2c-.1-.1-.1-.2-.2-.2zM13.5 7.9c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8.5 0 .8.4.8.8s-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2-.1-.2-.2-.2zM13.1 14.6c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8s.8.4.8.8c.1.4-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2 0 .2.4.2.4 0s-.1-.2-.2-.2zM18.1 14.6c-.5 0-.8-.4-.8-.8 0-.5.4-.8.8-.8.5 0 .8.4.8.8s-.3.8-.8.8zm0-1c-.1 0-.2.1-.2.2s.1.2.2.2.2-.1.2-.2-.1-.2-.2-.2z"></path></svg>
+				<span>&ensp;Wechat</span>
+			</a>
+		</div>
+		
+		
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script></body>
+</html>

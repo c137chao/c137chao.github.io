@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cs144 自己动手实现tcp协议 lab0 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs144 computer network">
+		<meta property="og:title" content="cs144 自己动手实现tcp协议 lab0" />
+<meta property="og:description" content="notebook on cs144 computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/lab-0-networking-warmup/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="cs144 自己动手实现tcp协议 lab0">
+<meta itemprop="description" content="notebook on cs144 computer network">
+
+<meta itemprop="wordCount" content="780">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">cs144 自己动手实现tcp协议 lab0</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab0">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#21-fetch-a-web-page">2.1 Fetch a Web page</a></li>
+        <li><a href="#22-send-yourself-an-email">2.2 Send yourself an email</a></li>
+        <li><a href="#23-listening-and-connecting">2.3 Listening and connecting</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-writing-a-network-program-using-an-os-stream-socket">3 Writing a network program using an OS stream socket</a></li>
+    <li><a href="#4-an-in-memory-reliable-byte-stream">4 An in-memory reliable byte stream</a></li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h1 id="lab-0--networking-warmup">lab 0 : Networking warmup</h1>
+<h3 id="21-fetch-a-web-page">2.1 Fetch a Web page</h3>
+<p><a href="http://cs144.keithw.org/hello">http://cs144.keithw.org/hello</a></p>
+<p>第一个练习就是跟着指导书使用telnet获取页面
+照着实验指导书做就行了，注意连接过一会儿就会自动关闭，所以需要一点手速。
+敲完命令按两次回车(有一个空行)</p>
+<ul>
+<li>talent 目标网址</li>
+</ul>
+<pre tabindex="0"><code>&gt; telnet cs144.keithw.org http
+Trying 104.196.238.229...
+Connected to cs144.keithw.org.
+Escape character is '^]'.
+</code></pre><ul>
+<li>发送 http 报文</li>
+</ul>
+<pre tabindex="0"><code>GET /hello HTTP/1.1
+Host: cs144.keithw.org
+Connection: close
+</code></pre><ul>
+<li>结果</li>
+</ul>
+<pre tabindex="0"><code>HTTP/1.1 200 OK
+Date: Wed, 02 Mar 2022 06:07:39 GMT
+Server: Apache
+Last-Modified: Thu, 13 Dec 2018 15:45:29 GMT
+ETag: &quot;e-57ce93446cb64&quot;
+Accept-Ranges: bytes
+Content-Length: 14
+Connection: close
+Content-Type: text/plain
+
+Hello, CS144!
+Connection closed by foreign host.
+</code></pre><p><strong>assignment</strong>（页面的路径变了其他都一样，）</p>
+<pre tabindex="0"><code>telnet cs144.keithw.org http
+Trying 104.196.238.229...
+Connected to cs144.keithw.org.
+Escape character is '^]'.
+
+GET /lab0/sunetid HTTP/1.1
+Host: cs144.keithw.org
+Connection: close
+
+HTTP/1.1 200 OK
+Date: Wed, 02 Mar 2022 06:34:04 GMT
+Server: Apache
+X-You-Said-Your-SunetID-Was: sunetid
+X-Your-Code-Is: 158313
+Content-length: 111
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/plain
+
+Hello! You told us that your SUNet ID was &quot;sunetid&quot;. Please see the HTTP headers (above) for your secret code.
+Connection closed by foreign host.
+</code></pre><h3 id="22-send-yourself-an-email">2.2 Send yourself an email</h3>
+<p>因为咱没有斯坦福的学生邮箱，所以去网上看了其他大佬的记录，可以用smtp.163.com或者smtp.qq.com，然后需要登陆到自己的邮箱设置开启smtp，会得到一个授权码。
+<img src="https://s2.loli.net/2022/03/02/OSF6iQVjX9JdIRa.png" alt="image.png"></p>
+<p>以163邮箱为例
+<code>telnet smtp.163.com smtp</code>
+得到如下结果</p>
+<pre tabindex="0"><code>Trying 220.181.12.15...
+Connected to smtp.163.com.
+Escape character is '^]'.
+</code></pre><p>`HELO 163.com'</p>
+<pre tabindex="0"><code>250 OK
+</code></pre><p>登陆自己的邮箱<code>auth login</code></p>
+<pre tabindex="0"><code>auth login
+334 dXNlcm5hbWU6
+</code></pre><p>先输入邮箱账号，然后输入授权码，账号和授权码都需要经过base64编码，去百度在线base64编码就可以
+<img src="https://s2.loli.net/2022/03/02/193hlWfdXb4BYNO.png" alt="image.png"></p>
+<p>这样邮箱就登陆成功，可以发邮件了。</p>
+<pre tabindex="0"><code class="language-talnet" data-lang="talnet">// ......
+235 Authentication successful
+mail from: &lt;c137_zhuochao@163.com&gt;
+250 Mail OK
+rcpt to: &lt;c137_zhuochao@163.com&gt;
+250 Mail OK
+data
+354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
+from : c137_zhuochao@163.com
+to : c137_zhuochao@163.com
+subject: Hello from CS144 Lab 0!
+
+Hello, do you receive my smtp test?
+.
+250 Mail OK queued as smtp13,EcCowADX0bCdlR9iLB7HFg--.2241S2 1646237372
+quit
+221 Bye
+Connection closed by foreign host.
+</code></pre><p>可以看到自己的邮箱里确实收到了这封邮件
+<img src="https://s2.loli.net/2022/03/03/vZ5gjJoxRd6EuNc.png" alt="image.png"></p>
+<h3 id="23-listening-and-connecting">2.3 Listening and connecting</h3>
+<p>一个最简易的 echo 服务器，Client 与 Server 建立一个 tcp 连接，Server 将收到的所有消息打印到屏幕。
+<img src="https://pic.imgdb.cn/item/6220e27e5baa1a80abf41a83.jpg" alt=""></p>
+<h2 id="3-writing-a-network-program-using-an-os-stream-socket">3 Writing a network program using an OS stream socket</h2>
+<p>配置实验环境和C++的规范略过</p>
+<p><strong>(1)阅读官方给的文档</strong>
+<a href="https://cs144.github.io/doc/lab0/class_file_descriptor.html">FileDescriptor</a>, <a href="https://cs144.github.io/doc/lab0/class_socket.html">Socket</a>, <a href="https://cs144.github.io/doc/lab0/class_t_c_p_socket.html">TCPSocket</a>,  <a href="https://cs144.github.io/doc/lab0/class_address.html">Address</a>.
+重点就是 Socket 和 Address 这两个class，当然也可以看自己本地的源文件。</p>
+<p><a href="https://cs144.github.io/doc/lab0/class_t_c_p_socket.html">TCPSocket</a>还很贴心的给了一段demo。看过以后就知道实验该怎么写了。</p>
+<p>注意换行要用”\r\n“，单单用”\n&quot;是不行的。</p>
+<p><strong>(2)实现</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">get_URL</span>(<span style="color:#66d9ef">const</span> string <span style="color:#f92672">&amp;</span>host, <span style="color:#66d9ef">const</span> string <span style="color:#f92672">&amp;</span>path) {
+	<span style="color:#75715e">// Your code here.
+</span><span style="color:#75715e"></span>	TCPSocket mysocket;
+
+	<span style="color:#75715e">// You will need to connect to the &#34;http&#34; service on
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// the computer whose name is in the &#34;host&#34; string,
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// then request the URL path given in the &#34;path&#34; string.
+</span><span style="color:#75715e"></span>
+	<span style="color:#75715e">// http is port 80 , Address(host, service) or Address(ip, port)
+</span><span style="color:#75715e"></span>	mysocket.connect(Address(host, <span style="color:#e6db74">&#34;http&#34;</span>));
+
+	string request <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;GET &#34;</span> <span style="color:#f92672">+</span> path <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; HTTP/1.1</span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;Host: &#34;</span> <span style="color:#f92672">+</span> host <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\r\n</span><span style="color:#e6db74">Connection: close</span><span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;</span>;
+
+	mysocket.write(request);
+	<span style="color:#75715e">// Then you&#39;ll need to print out everything the server sends back,
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// (not just one call to read() -- everything) until you reach
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// the &#34;eof&#34; (end of file).
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>mysocket.eof()) {
+		std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> mysocket.read();
+	}
+	mysocket.close();
+
+	<span style="color:#75715e">// cerr &lt;&lt; &#34;Function called: get_URL(&#34; &lt;&lt; host &lt;&lt; &#34;, &#34; &lt;&lt; path &lt;&lt; &#34;).\n&#34;;
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// cerr &lt;&lt; &#34;Warning: get_URL() has not been implemented yet.\n&#34;;
+</span><span style="color:#75715e"></span>
+}
+</code></pre></div><p><strong>测试</strong>
+<img src="https://s2.loli.net/2022/03/02/uf4aWRG8de7CtNp.png" alt="image.png"></p>
+<h2 id="4-an-in-memory-reliable-byte-stream">4 An in-memory reliable byte stream</h2>
+<p>lab 0 的主要部分
+实现字节流传输 ，Byte在input一端写，在output一端读，听着有点像管道，更简单理解就是在一个队列里入enqueue(write data) 和 dequeue (read data)，并且队列大小固定.</p>
+<p>自己写了一个循环队列，更加推荐用STL的queue，如果想要一个更加高效的循环队列，在实现的时候使用底层有 SIMD 和 unroll 优化封装的函数，并且尽量避免使用取模之类的运算。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">my_queue</span>{
+	std<span style="color:#f92672">::</span>string _data;
+
+	size_t _capacity;
+	size_t _write;
+	size_t _read;
+
+	my_queue(size_t cap)
+		<span style="color:#f92672">:</span> _data(std<span style="color:#f92672">::</span>string(cap <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;0&#39;</span>)), _capacity(cap <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>), _write(<span style="color:#ae81ff">0</span>), _read(<span style="color:#ae81ff">0</span>) {}
+
+	<span style="color:#75715e">// if queue is empty, return true
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">empty</span>() <span style="color:#66d9ef">const</span>;
+	<span style="color:#75715e">// if queue if full, return true
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">full</span>() <span style="color:#66d9ef">const</span>;
+	<span style="color:#75715e">// return elem count of queue
+</span><span style="color:#75715e"></span>	size_t <span style="color:#a6e22e">size</span>() <span style="color:#66d9ef">const</span>;
+	<span style="color:#75715e">// return total capcity of queue
+</span><span style="color:#75715e"></span>	size_t <span style="color:#a6e22e">capacity</span>() <span style="color:#66d9ef">const</span>;
+
+	<span style="color:#75715e">// push a char to the back of queue
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">push</span>(<span style="color:#66d9ef">char</span> c);
+
+	<span style="color:#75715e">// pop a char from the front of queue
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pop</span>();
+	<span style="color:#75715e">// pop n char
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">pop</span>(<span style="color:#66d9ef">const</span> size_t n);
+
+    <span style="color:#75715e">// get top char from front of queue
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">char</span> <span style="color:#a6e22e">top</span>();
+	std<span style="color:#f92672">::</span>string top (<span style="color:#66d9ef">const</span> size_t n);
+};
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ByteStream</span> {
+<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+    <span style="color:#75715e">// Your code here -- add private members as necessary.
+</span><span style="color:#75715e"></span>    my_queue slide_window;
+    std<span style="color:#f92672">::</span>size_t _capacity;
+    std<span style="color:#f92672">::</span>size_t _bytes_written;
+    std<span style="color:#f92672">::</span>size_t _bytes_read;
+    <span style="color:#66d9ef">bool</span> _end_input;
+    <span style="color:#66d9ef">bool</span> _end_output;
+<span style="color:#75715e">// ....
+</span><span style="color:#75715e"></span>};
+
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">ByteStream<span style="color:#f92672">::</span>ByteStream(<span style="color:#66d9ef">const</span> size_t capacity)
+    <span style="color:#f92672">:</span> slide_window(my_queue(capacity)), _capacity(capacity), _bytes_written(<span style="color:#ae81ff">0</span>),
+      _bytes_read(<span style="color:#ae81ff">0</span>), _end_input(false), _end_output(false), _error(false)
+{ }
+
+size_t ByteStream<span style="color:#f92672">::</span>write(<span style="color:#66d9ef">const</span> string <span style="color:#f92672">&amp;</span>data) {
+    <span style="color:#66d9ef">if</span>(_end_input) {
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+    }
+    size_t idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#66d9ef">while</span>(idx <span style="color:#f92672">&lt;</span> data.size() <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#f92672">!</span>slide_window.full()) ) {
+        slide_window.push(data[idx<span style="color:#f92672">++</span>]);
+    }
+    _bytes_written <span style="color:#f92672">+=</span> idx;
+    <span style="color:#66d9ef">return</span> idx;
+
+}
+
+<span style="color:#75715e">//! \param[in] len bytes will be copied from the output side of the buffer
+</span><span style="color:#75715e"></span>string ByteStream<span style="color:#f92672">::</span>peek_output(<span style="color:#66d9ef">const</span> size_t len) <span style="color:#66d9ef">const</span> {
+
+    <span style="color:#66d9ef">const</span> size_t sz <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(len, slide_window.size());
+    <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>move(slide_window.top(sz));
+
+}
+
+<span style="color:#75715e">//! \param[in] len bytes will be removed from the output side of the buffer
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> ByteStream<span style="color:#f92672">::</span>pop_output(<span style="color:#66d9ef">const</span> size_t len) {
+    <span style="color:#66d9ef">const</span> size_t sz <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(len, slide_window.size());
+    slide_window.pop(sz);
+    _bytes_read <span style="color:#f92672">+=</span> sz;
+}
+  
+<span style="color:#75715e">//! Read (i.e., copy and then pop) the next &#34;len&#34; bytes of the stream
+</span><span style="color:#75715e">//! \param[in] len bytes will be popped and returned
+</span><span style="color:#75715e">//! \returns a string
+</span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>string ByteStream<span style="color:#f92672">::</span>read(<span style="color:#66d9ef">const</span> size_t len) {
+    <span style="color:#66d9ef">if</span>(_end_output) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">string</span>();
+    }
+    string ret <span style="color:#f92672">=</span> peek_output(len);
+    pop_output(len);
+    <span style="color:#66d9ef">return</span> ret;
+}
+
+<span style="color:#66d9ef">void</span> ByteStream<span style="color:#f92672">::</span>end_input() { _end_input <span style="color:#f92672">=</span> true; }
+
+<span style="color:#66d9ef">bool</span> ByteStream<span style="color:#f92672">::</span>input_ended() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _end_input;  }
+  
+size_t ByteStream<span style="color:#f92672">::</span>buffer_size() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> slide_window.size(); }
+ 
+<span style="color:#66d9ef">bool</span> ByteStream<span style="color:#f92672">::</span>buffer_empty() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> slide_window.empty(); }
+
+<span style="color:#66d9ef">bool</span> ByteStream<span style="color:#f92672">::</span>eof() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _end_input <span style="color:#f92672">&amp;&amp;</span> buffer_empty(); }
+
+size_t ByteStream<span style="color:#f92672">::</span>bytes_written() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _bytes_written; }
+
+size_t ByteStream<span style="color:#f92672">::</span>bytes_read() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> _bytes_read; }
+
+size_t ByteStream<span style="color:#f92672">::</span>remaining_capacity() <span style="color:#66d9ef">const</span> { 
+    <span style="color:#66d9ef">return</span> _capacity <span style="color:#f92672">-</span> slide_window.size();
+}
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/6220de9d5baa1a80abf02866.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/lab-1-streamreassembler/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab1</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

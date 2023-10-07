@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>network on Summer Blog Space</title>
+    <link>http://c137chao.github.io/categories/network/</link>
+    <description>Recent content in network on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="http://c137chao.github.io/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算机网络 第三章 传输层</title>
+      <link>http://c137chao.github.io/cs144/chapter3-transmission-layer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/chapter3-transmission-layer/</guid>
+      <description>transport layer 为不同主机的进程提供 逻辑通信
+TCP: Transmission Control Protocol • reliable, in-order delivery • congestion control • flow control • connection setup
+UDP: User Datagram Protocol • unreliable, unordered delivery • no-frills extension of “best-effort” IP
+1. 多路复用/多路分解 通过套接字，将同一主机上的不同进程准确交付
+import socket HOSt = &amp;#39;data.pr4e.com&amp;#39; # it will be translated to ip add through DNS PORT = 80 # HTTP port number mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create a socket mysock.connect((HOST, PORT)) # request connection cmd = &amp;#39;GET http://data.</description>
+    </item>
+    
+    <item>
+      <title>计算机网络 第六章 链路层</title>
+      <link>http://c137chao.github.io/cs144/chapter6-link-layer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/chapter6-link-layer/</guid>
+      <description>基本术语： Node: 运行链路层协议的任何设备均称为Node Link: 相邻节点间的通信信道成为 链路 Link
+1. 链路层提供的服务  成帧（framing)：加首加尾 链路接入：MAC 媒体访问控制协议 可靠交付： 差错检测和纠正：奇偶校验， CRC 循环冗余校验  差错检测 （1）奇偶校验码 （2）CRC循环冗余校验 2 多路访问协议 链路层有两种网络链路：点对点链路 和 广播链路 点对点链路由单个发送方和单个接收方组成
+点对点协议 PPP 帧格式：  标志字段 F= 0x7E （01111110，表示帧的开始） 地址字段 A= 0xFF 用于指定那个站正在处理，0xFF（所有站） 控制字段 C：PPP中没有使用 通常为 0x03， 协议字段  填充方式： 零比特填充(5 个连续的 1 填入一个 0)
+广播信道的多路访问协议： （1）信道划分协议（channel partitioning protocal） （2）随机接入协议（random access protocal） （3）轮转令牌协议（taking-turns protocal）
+信道划分协议 （1）时分多路复用 TDM TDM 将时间华为分为时间帧，并进一步把每个时间帧分为 N 个时隙（slot)，每个节点分得一个时隙 （2）频分多路复用 FDM 与 TDM 类似，不过 FDM 是根据波段分配 !</description>
+    </item>
+    
+    <item>
+      <title>计算机网络 第四章 网络层</title>
+      <link>http://c137chao.github.io/cs144/chapter4-network-layer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/chapter4-network-layer/</guid>
+      <description>网络层 网络层提供无连接的、尽最大努力交付的服务
+1. IPV4 Datagram 格式  version : 网络协议版本 ipv4 or ipv6 Header Length: 首部长度，通常为 20 Bytes TOS: 服务类型，如实时（网络电话）/非实时（文件传输FTP） Length: IP datagram 的总长度(包括 header length)，由于物理限制，一般不能超过 1500 Bytes Identifier, flags, fragment offset : 与数据分片有关 TTL: 该 datagram 的寿命，若 TTL 减为 0，将被丢弃 Protocal：上层协议（6表示TCP，17表示UDP)，是将网络层和传输层绑定到一起的粘合剂 Checksum：仅仅是 hearder 的 checksum，TCP/UDP是对整个segment (header + payload)做检验 Source/Destination IP Address：发送方/接收方的 IP 地址  2. 数据报分片（datagram fragmentation） 由于链路层的限制，IP datagram 不能超过 最大传输单元（MTU)，当 IP datagram 过大，需要进行分片，所有分片拥有相同的 identifier
+3. IP 地址 与 子网划分  三类地址划分 前缀 CIDR  4.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cs144 自己动手实现tcp协议 lab3 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs144 computer network">
+		<meta property="og:title" content="cs144 自己动手实现tcp协议 lab3" />
+<meta property="og:description" content="notebook on cs144 computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/lab-3-tcp-sender/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="cs144 自己动手实现tcp协议 lab3">
+<meta itemprop="description" content="notebook on cs144 computer network">
+
+<meta itemprop="wordCount" content="180">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">cs144 自己动手实现tcp协议 lab3</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab3">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#lab3-中我们所关心的几个点">lab3 中我们所关心的几个点</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h1 id="tcp-sender">TCP Sender</h1>
+<p><img src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt=""></p>
+<p>到 lab 3为止，现在 tcp 的工作流程是：</p>
+<ul>
+<li>上层应用通过 发送/接收窗口（ByteStream）与TCP进行数据交换。</li>
+<li>发送方应用层应用将数据（message）有序写入bytestream</li>
+<li>tcp 发送端从 ByteStream 读取数据将其封装为 segment 经过底层网络发送至接收方</li>
+<li>由于底层网络不保证数据能够可靠到达，发送方需要对丢失的数据重传，接收方需要对接收到的数据确认和重组</li>
+<li>tcp 接收端将重组完成的数据写入到ByteStream 被上层应用读走。</li>
+</ul>
+<p>剩下的就是面向测试编程</p>
+<h3 id="lab3-中我们所关心的几个点">lab3 中我们所关心的几个点</h3>
+<p><img src="https://pic.imgdb.cn/item/625e2cb1239250f7c5d9dedf.jpg" alt="">
+发送方需要根据接收方发送来的 ack_no 和 windows size 来决定是否可以抛弃以前的数据以及还能发送多少数据。
+对于重传，使用 alarm 函数发生时钟中断，来调用 tick</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">    signal(SIGALRM, tick);
+    alarm(clock);
+</code></pre></div><p>关于 alarm，回顾CSAPP异常处理 或者 6.s081 的 lab 4:alarm。</p>
+<p><img src="https://pic.imgdb.cn/item/625e8218239250f7c5b0fc09.jpg" alt=""></p>
+<p>状态图是开启代码思路的关键</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">namespace</span> TCPSenderStateSummary {
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string ERROR <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;error (connection was reset)&#34;</span>;
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string CLOSED <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;waiting for stream to begin (no SYN sent)&#34;</span>;
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string SYN_SENT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;stream started but nothing acknowledged&#34;</span>;
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string SYN_ACKED <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;stream ongoing&#34;</span>;
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string FIN_SENT <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;stream finished (FIN sent) but not fully acknowledged&#34;</span>;
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string FIN_ACKED <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;stream finished and fully acknowledged&#34;</span>;
+}
+
+
+string TCPState<span style="color:#f92672">::</span>state_summary(<span style="color:#66d9ef">const</span> TCPSender <span style="color:#f92672">&amp;</span>sender) {
+    <span style="color:#66d9ef">if</span> (sender.stream_in().error()) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>ERROR;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (sender.next_seqno_absolute() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>CLOSED;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (sender.next_seqno_absolute() <span style="color:#f92672">==</span> sender.bytes_in_flight()) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>SYN_SENT;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (not sender.stream_in().eof()) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>SYN_ACKED;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (sender.next_seqno_absolute() <span style="color:#f92672">&lt;</span> sender.stream_in().bytes_written() <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>SYN_ACKED;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (sender.bytes_in_flight()) {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>FIN_SENT;
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> TCPSenderStateSummary<span style="color:#f92672">::</span>FIN_ACKED;
+    }
+}
+
+</code></pre></div><p>定义好自己需要的变量。
+我一般的做法开始会把所有状态用枚举类型表示出来，去模拟不同状态的行为和转换，这样 debug 也比较方便，后面可以选择调整、优化一下代码结构。</p>
+<p>一点自问自答：window size 就是 bytestream 的剩余容量， SYN 和 FIN 是标记，不会写入到字节流去，所以他们本来是不占据窗口的，但是如果不去占据 seq number，原本的状态判断就会失效。</p>
+<p><img src="https://pic.imgdb.cn/item/62615f57239250f7c5bb2376.jpg" alt=""></p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/lab-4-tcp-connection/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab4</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/lab-2-tcp-receiver/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab2</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

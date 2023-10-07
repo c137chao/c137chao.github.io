@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cs144 自己动手实现tcp协议 lab4 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs144 computer network">
+		<meta property="og:title" content="cs144 自己动手实现tcp协议 lab4" />
+<meta property="og:description" content="notebook on cs144 computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/lab-4-tcp-connection/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="cs144 自己动手实现tcp协议 lab4">
+<meta itemprop="description" content="notebook on cs144 computer network">
+
+<meta itemprop="wordCount" content="703">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">cs144 自己动手实现tcp协议 lab4</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab4">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#2实验中踩过的一些坑">2.实验中踩过的一些坑</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<h1 id="lab-4-tcp-完全体">lab 4 TCP 完全体</h1>
+<p>到现在 tcp 需要的所有组件已经完成
+<img src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt=""></p>
+<pre tabindex="0"><code>    //! \struct TCPHeader
+    //! ~~~{.txt}
+    //!   0                   1                   2                   3
+    //!   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |          Source Port          |       Destination Port        |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |                        Sequence Number                        |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |                    Acknowledgment Number                      |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |  Data |           |U|A|P|R|S|F|                               |
+    //!  | Offset| Reserved  |R|C|S|S|Y|I|            Window             |
+    //!  |       |           |G|K|H|T|N|N|                               |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |           Checksum            |         Urgent Pointer        |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |                    Options                    |    Padding    |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //!  |                             data                              |
+    //!  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</code></pre><p>seq number 和 ack number  是被随机化的，发送发和接收方本地会保存一个 isn 号，用于将 收到的随机化 seq number 转化为 absolute seq number 放到 reassemble buffer 中去。</p>
+<p>（或者反之把 byte stream 中读到的 abs seq number 打包（wrap）成 random seq number到 tcp header 中去）。</p>
+<p>lab 4 文档的细节蛮多的，尤其是 4 和 5，有大量实验相关的解释和提醒我们小心一些坑，比如头tcp header 中 window 只有 16 位，而 receiver 的 window size 返回一个 64 位的值，要判断放在 header 里是不是越界&hellip;&hellip;。</p>
+<pre tabindex="0"><code>    enum class State {
+        LISTEN = 0,   //!&lt; Listening for a peer to connect
+        SYN_RCVD,     //!&lt; Got the peer's SYN
+        SYN_SENT,     //!&lt; Sent a SYN to initiate a connection
+        ESTABLISHED,  //!&lt; Three-way handshake complete
+        CLOSE_WAIT,   //!&lt; Remote side has sent a FIN, connection is half-open
+        LAST_ACK,     //!&lt; Local side sent a FIN from CLOSE_WAIT, waiting for ACK
+        FIN_WAIT_1,   //!&lt; Sent a FIN to the remote side, not yet ACK'd
+        FIN_WAIT_2,   //!&lt; Received an ACK for previously-sent FIN
+        CLOSING,      //!&lt; Received a FIN just after we sent one
+        TIME_WAIT,    //!&lt; Both sides have sent FIN and ACK'd, waiting for 2 MSL
+        CLOSED,       //!&lt; A connection that has terminated normally
+        RESET,        //!&lt; A connection that terminated abnormally
+    };
+</code></pre><p>实际的建立连接关闭连接操作都由底层的 receiver 和 sender 来实现，我们只要控制他们发送和接收 segment，并且设置 segment header，底层有可能出现问题，而且底层的问题很难察觉。</p>
+<p>状态图展示了整个过程。
+<img src="https://pic.imgdb.cn/item/6264ded7239250f7c5d99642.jpg" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> TCPConnection<span style="color:#f92672">::</span>segment_received(<span style="color:#66d9ef">const</span> TCPSegment <span style="color:#f92672">&amp;</span>seg) {
+    <span style="color:#75715e">// connection has been unclear shut down
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>active()) {
+        <span style="color:#66d9ef">return</span>;  
+    }
+    
+    <span style="color:#75715e">// receive reset segment
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (seg.header().rst) {
+        kill_connection();
+        <span style="color:#66d9ef">return</span>;
+    }
+    
+    _time_since_last_segment_received <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+    <span style="color:#75715e">// if ack, update sender windows info and throw received retrans queue
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (seg.header().ack <span style="color:#f92672">==</span> true) {
+        _sender.ack_received(seg.header().ackno, seg.header().win);
+    }
+    <span style="color:#75715e">// receiver process segment
+</span><span style="color:#75715e"></span>    _receiver.segment_received(seg);  
+
+    <span style="color:#75715e">// if doesn&#39;t set connection, do nothing(don&#39;t give any response)
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (TCPState<span style="color:#f92672">::</span>state_summary(_receiver) <span style="color:#f92672">==</span> TCPReceiverStateSummary<span style="color:#f92672">::</span>LISTEN) {
+        <span style="color:#66d9ef">return</span>; 
+    }
+
+    try_clean_shutdown();
+
+    _sender.fill_window();
+   
+    <span style="color:#75715e">// 交付给底层处理即可，我们只要判断是不是要产生一个空段来回复对方
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (seg.length_in_sequence_space() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+    <span style="color:#75715e">// syn or fin segment, without payload (not pure ack)
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (_sender.segments_out().empty()){
+            _sender.send_empty_segment();
+        }
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">// pure ack or ask connection is still ative, give resonse
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (_receiver.ackno().has_value() 
+            and seg.header().seqno <span style="color:#f92672">==</span> _receiver.ackno().value() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) {
+            
+            _sender.send_empty_segment();      
+        }
+    }
+
+    fetch_segment();
+
+    try_clean_shutdown();
+
+}
+</code></pre></div><p>debug : 
+将 etc/cflags.cmake 中的 <code>set (CMAKE_CXX_FLAGS_DEBUG &quot;${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -Og&quot;)</code>
+改为 <code>set (CMAKE_CXX_FLAGS_DEBUG &quot;${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -g&quot;)</code>
+这样编译器就不会优化我们的代码，更方便调试。</p>
+<h4 id="关于-_linger_after_streams和-active">关于 _linger_after_streams和 active</h4>
+<p>首先关闭有两种情况，active close 和 passive close，假设我们为 Host A，建立连接的另一方为 Host B</p>
+<p><strong>active_cloase</strong>:</p>
+<pre tabindex="0"><code>A 主动发送 FIN，收到 B 的 ACK 和 FIN 以后，发送 ACK 给 B, 但此时 A 不能断开连接，因为 A 不知道 B 收没收到自己的 ACK，所以 A 会等待一段时间，如果没有发生重传，就认为 B 已经收到，此时连接变为 “Done&quot;, active() 返回 false
+
+如果双方同时发送了 fin，那么需要双方回复了确认帧以后需要都等待一段时间才能关闭连接
+</code></pre><p><strong>passive_cloase</strong>:</p>
+<pre tabindex="0"><code>A 被动收到 FIN，像 B 的 ACK 和 FIN 以后，等待 B 的 ACK, 收到以后便可以断开连接。
+</code></pre><h3 id="2实验中踩过的一些坑">2.实验中踩过的一些坑</h3>
+<p>1.重传
+<img src="https://pic.imgdb.cn/item/62668e69239250f7c5a2a5f3.jpg" alt="">
+比如我的 fsm_passive_close 出现这段问题</p>
+<p>原因是我只在重传了一个数据后才会把 累计重传 时间清空。</p>
+<p>但由于此时我重传队列为空，没有需要重传的 segment, 故而没有重置 累积重传时间，导致重传了额外的数据。</p>
+<p><strong>2.接收方不应该接受超出窗口大小以外的数据</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> TCPReceiver<span style="color:#f92672">::</span>segment_received(<span style="color:#66d9ef">const</span> TCPSegment <span style="color:#f92672">&amp;</span>seg) {
+    <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (abs_seq <span style="color:#f92672">&gt;=</span> abs_ack <span style="color:#f92672">+</span> window_size()) {
+        <span style="color:#66d9ef">return</span>;
+    }
+    <span style="color:#75715e">// ......
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><strong>3.udp关闭超时问题</strong></p>
+<p>以下这段代码的问题反复困扰了我几天，一直timeout，但感觉连接过程又没什么问题，找不到问题在哪里。
+最后发现，应该使用 <strong>_cfg.rt_timeout</strong>，而不是 <strong>_cfg.TIMEOUT_DFLT</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">void</span> TCPConnection<span style="color:#f92672">::</span>clean_shutdown() {
+    <span style="color:#66d9ef">if</span> (inbound_stream().input_ended()) { <span style="color:#75715e">// receiver has been ended
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// cerr &lt;&lt; &#34;&gt;&gt; : inbound_stream has reach eof\n&#34;;
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (TCPState<span style="color:#f92672">::</span>state_summary(_sender) <span style="color:#f92672">==</span> TCPSenderStateSummary<span style="color:#f92672">::</span>SYN_ACKED) {
+            _linger_after_streams_finish <span style="color:#f92672">=</span> false;
+            
+        } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (TCPState<span style="color:#f92672">::</span>state_summary(_sender) <span style="color:#f92672">==</span> 
+                        TCPSenderStateSummary<span style="color:#f92672">::</span>FIN_ACKED) {
+            <span style="color:#66d9ef">if</span> (not _linger_after_streams_finish 
+                    or _time_since_last_segment_received <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> _cfg.rt_timeout) {
+                _actived <span style="color:#f92672">=</span> false;
+            }
+
+        }
+    }
+}
+</code></pre></div><p><strong>4. TCPSender::fill_window() 中一个bug</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">while</span> (condition)
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> read_size <span style="color:#f92672">=</span> window_size <span style="color:#f92672">-</span> bytes_in_flight();
+
+    <span style="color:#75715e">// if write ended, check should we set fin flag
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(_stream.input_ended() <span style="color:#f92672">&amp;&amp;</span> read_size <span style="color:#f92672">&gt;</span> _stream.buffer_size()) {
+        segment.header().fin <span style="color:#f92672">=</span> true;
+        _state <span style="color:#f92672">=</span> FIN_SENT;
+        read_size<span style="color:#f92672">--</span>;
+    }
+    read_size <span style="color:#f92672">=</span> min(read_size, TCPConfig<span style="color:#f92672">::</span>MAX_PAYLOAD_SIZE);
+
+    string payload <span style="color:#f92672">=</span> _stream.read(read_size);
+    segment.payload() <span style="color:#f92672">=</span> Buffer(std<span style="color:#f92672">::</span>move(payload));
+    <span style="color:#75715e">// ....
+</span><span style="color:#75715e"></span>    
+</code></pre></div><p>这段代码会导致 128k_8k 有关的测试无法发送 fin，并且会一直卡住死循环（也就是虽然 slide window 还有空间，但写入 fin 的 if 判断一直没进去）
+改成 如下就可以正常通过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">while</span> (condition) {
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> read_size <span style="color:#f92672">=</span> 
+        min(TCPConfig<span style="color:#f92672">::</span>MAX_PAYLOAD_SIZE, window_size <span style="color:#f92672">-</span> bytes_in_flight());
+        
+    string payload <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(_stream.read(read_size));
+    
+    <span style="color:#66d9ef">if</span> (_stream.eof() <span style="color:#f92672">&amp;&amp;</span> window_size <span style="color:#f92672">-</span> bytes_in_flight() <span style="color:#f92672">&gt;</span> payload.size()) {
+        segment.header().fin <span style="color:#f92672">=</span> true;
+        _state <span style="color:#f92672">=</span> FIN_SENT;
+    }
+    
+    segment.payload() <span style="color:#f92672">=</span> Buffer(std<span style="color:#f92672">::</span>move(payload));
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><img src="https://pic.imgdb.cn/item/626e45df239250f7c544e7f1.jpg" alt=""></p>
+<p>优化建议：
+原本ByteStream用的自己写循环队列，速度只有0.4Gbit/s，换成了 STL 的 deque 之后速度的到了巨大提升，所以我感觉提高速度的关键在于尽可能减少 string 之间无意义的复制。
+可以尝试像 TCPSegment 里的 Payload 那样做，存放 string 智能指针，并且取子串也不需要真的对string 取修改，只要修改string 的起始位置和结束位置的偏移即可</p>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/chapter3-transmission-layer/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">计算机网络 第三章 传输层</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/lab-3-tcp-sender/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab3</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>

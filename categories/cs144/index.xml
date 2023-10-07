@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cs144 on Summer Blog Space</title>
+    <link>http://c137chao.github.io/categories/cs144/</link>
+    <description>Recent content in cs144 on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="http://c137chao.github.io/categories/cs144/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cs144 自己动手实现tcp协议 lab0</title>
+      <link>http://c137chao.github.io/cs144/lab-0-networking-warmup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/lab-0-networking-warmup/</guid>
+      <description>lab 0 : Networking warmup 2.1 Fetch a Web page http://cs144.keithw.org/hello
+第一个练习就是跟着指导书使用telnet获取页面 照着实验指导书做就行了，注意连接过一会儿就会自动关闭，所以需要一点手速。 敲完命令按两次回车(有一个空行)
+ talent 目标网址  &amp;gt; telnet cs144.keithw.org http Trying 104.196.238.229... Connected to cs144.keithw.org. Escape character is &#39;^]&#39;.  发送 http 报文  GET /hello HTTP/1.1 Host: cs144.keithw.org Connection: close  结果  HTTP/1.1 200 OK Date: Wed, 02 Mar 2022 06:07:39 GMT Server: Apache Last-Modified: Thu, 13 Dec 2018 15:45:29 GMT ETag: &amp;quot;e-57ce93446cb64&amp;quot; Accept-Ranges: bytes Content-Length: 14 Connection: close Content-Type: text/plain Hello, CS144!</description>
+    </item>
+    
+    <item>
+      <title>cs144 自己动手实现tcp协议 lab1</title>
+      <link>http://c137chao.github.io/cs144/lab-1-streamreassembler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/lab-1-streamreassembler/</guid>
+      <description>lab 1 StreamReassembler 实验指导书传送门
+这幅图描述了TCP的基本工作原理，也是接下来四次实验我们要做的内容。
+// 待补充
+TCP需要将上层传下来的 packet 拆分成一个一个 segment（因为TCP依赖于他的下一层IP，而网络层的传输有物理限制，需要对datagram的大小作出约定1460 byte），拆分后的 segment 可能不能够按照原来的顺序到达目的地，也可能由于网络状况问题出现重传或者丢失。
+lab1 中我们需要做的就是在接收端收到这些 segment 后，将他们重组。 虽然是lab 1，但做的过程中也遇到不少问题
+主要棘手的问题就是，收到的 segment 可能有很多重复的部分，并且他们又不按顺序到达。 要考虑周全。
+关于调试 因为数据到达的情况复杂，一开始很难全部考虑到，可以一边看测试结果一边修改. 细节有很多，调试也许会有所帮助。
+// int build directory cmake .. -DCMAKE BUILD TYPE=Debug make gdb tests/想要调试的文件名 就可以进入gdb调试了
+实验内容 核心就是 使用一个 map 来缓存那些未重组的 segment，根据自己的实现增且相应的成员记录。
+class StreamReassembler { private: // Your code here -- add private members as necessary.  std::map&amp;lt;size_t, std::string&amp;gt; _reassemble_buffer; //... some other member if you need public: // .</description>
+    </item>
+    
+    <item>
+      <title>cs144 自己动手实现tcp协议 lab2</title>
+      <link>http://c137chao.github.io/cs144/lab-2-tcp-receiver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/lab-2-tcp-receiver/</guid>
+      <description>若 make 报错
+LIBPCAP linked by target &amp;quot;tcp_parser&amp;quot; in directory /home/zc/2022/sponge/tests linked by target &amp;quot;tcp_parser&amp;quot; in directory /home/zc/2022/sponge/tests 解决办法 sudo apt-get install libpcap-dev
+热身 开始有两个热身，上个实验 reassemble_stream 收到的数据全是从 0 （absolute seqno）开始的，并且 序号是使用一个64位数字去表示的，现在要做两件事：
+  把absolute seq （64b start with 0）转换成 seq （32b，从一个随机的 isn 开始） WrappingInt32 wrap(uint64 t absolute_seq, WrappingInt32 isn)
+  恰好反过来，将 32 位的 seq 转化为 64 位的 absolute seq `unwrap(WrappingInt32 seq, WrappingInt32 isn, uint64 t checkpoint)
+  有四个测试是针对 wrap 和 unwrap 的 通过了这四个再往下进行。</description>
+    </item>
+    
+    <item>
+      <title>cs144 自己动手实现tcp协议 lab3</title>
+      <link>http://c137chao.github.io/cs144/lab-3-tcp-sender/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/lab-3-tcp-sender/</guid>
+      <description>TCP Sender 到 lab 3为止，现在 tcp 的工作流程是：
+ 上层应用通过 发送/接收窗口（ByteStream）与TCP进行数据交换。 发送方应用层应用将数据（message）有序写入bytestream tcp 发送端从 ByteStream 读取数据将其封装为 segment 经过底层网络发送至接收方 由于底层网络不保证数据能够可靠到达，发送方需要对丢失的数据重传，接收方需要对接收到的数据确认和重组 tcp 接收端将重组完成的数据写入到ByteStream 被上层应用读走。  剩下的就是面向测试编程
+lab3 中我们所关心的几个点 发送方需要根据接收方发送来的 ack_no 和 windows size 来决定是否可以抛弃以前的数据以及还能发送多少数据。 对于重传，使用 alarm 函数发生时钟中断，来调用 tick
+signal(SIGALRM, tick); alarm(clock); 关于 alarm，回顾CSAPP异常处理 或者 6.s081 的 lab 4:alarm。
+状态图是开启代码思路的关键
+namespace TCPSenderStateSummary { const std::string ERROR = &amp;#34;error (connection was reset)&amp;#34;; const std::string CLOSED = &amp;#34;waiting for stream to begin (no SYN sent)&amp;#34;; const std::string SYN_SENT = &amp;#34;stream started but nothing acknowledged&amp;#34;; const std::string SYN_ACKED = &amp;#34;stream ongoing&amp;#34;; const std::string FIN_SENT = &amp;#34;stream finished (FIN sent) but not fully acknowledged&amp;#34;; const std::string FIN_ACKED = &amp;#34;stream finished and fully acknowledged&amp;#34;; } string TCPState::state_summary(const TCPSender &amp;amp;sender) { if (sender.</description>
+    </item>
+    
+    <item>
+      <title>cs144 自己动手实现tcp协议 lab4</title>
+      <link>http://c137chao.github.io/cs144/lab-4-tcp-connection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/cs144/lab-4-tcp-connection/</guid>
+      <description>lab 4 TCP 完全体 到现在 tcp 需要的所有组件已经完成  //! \struct TCPHeader //! ~~~{.txt} //! 0 1 2 3 //! 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //! | Source Port | Destination Port | //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //! | Sequence Number | //! +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ //!</description>
+    </item>
+    
+  </channel>
+</rss>

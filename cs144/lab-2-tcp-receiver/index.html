@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cs144 自己动手实现tcp协议 lab2 - Summer Blog Space</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="notebook on cs144 computer network">
+		<meta property="og:title" content="cs144 自己动手实现tcp协议 lab2" />
+<meta property="og:description" content="notebook on cs144 computer network" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://c137chao.github.io/cs144/lab-2-tcp-receiver/" /><meta property="article:section" content="cs144" />
+
+
+
+
+		<meta itemprop="name" content="cs144 自己动手实现tcp协议 lab2">
+<meta itemprop="description" content="notebook on cs144 computer network">
+
+<meta itemprop="wordCount" content="244">
+<meta itemprop="keywords" content="" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/" title="summer" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">summer</div>
+					<div class="logo__tagline">summer blog space</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs162-proj1/">
+				
+				<span class="menu__text">CS162 Project1 Userprograme</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/cs61/cs61b-gitlet/">
+				
+				<span class="menu__text">CS61B-实现一个简易的git</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/cs61c-cpu/">
+				
+				<span class="menu__text">CS61C-简易的二级流水risv-v CPU</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2a/">
+				
+				<span class="menu__text">tinykv lab2a raft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2b/">
+				
+				<span class="menu__text">tinykv lab2b kvraft</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab2c/">
+				
+				<span class="menu__text">tinykv lab2c snapshot</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">cs144 自己动手实现tcp协议 lab2</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/cs144/" rel="category">cs144</a>
+	</span>
+</div></div>
+		</header>
+		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/625e2a50239250f7c5d4ea06.jpg" alt="cs144 自己动手实现tcp协议 lab2">
+		
+	</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#热身">热身</a></li>
+        <li><a href="#实验本体">实验本体</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div><div class="content post__content clearfix">
+			<p>若 make 报错</p>
+<pre tabindex="0"><code>LIBPCAP
+    linked by target &quot;tcp_parser&quot; in directory /home/zc/2022/sponge/tests
+    linked by target &quot;tcp_parser&quot; in directory /home/zc/2022/sponge/tests
+</code></pre><p>解决办法 <code>sudo apt-get install libpcap-dev</code></p>
+<h3 id="热身">热身</h3>
+<p>开始有两个热身，上个实验 reassemble_stream 收到的数据全是从 0 （absolute seqno）开始的，并且 序号是使用一个64位数字去表示的，现在要做两件事：</p>
+<p><img src="https://pic.imgdb.cn/item/6246554527f86abb2ac1adb7.jpg" alt=""></p>
+<ol>
+<li>
+<p>把absolute seq （64b start with 0）转换成 seq （32b，从一个随机的 isn 开始）
+<code>WrappingInt32 wrap(uint64 t absolute_seq, WrappingInt32 isn)</code></p>
+</li>
+<li>
+<p>恰好反过来，将 32 位的 seq 转化为 64 位的 absolute seq
+`unwrap(WrappingInt32 seq, WrappingInt32 isn, uint64 t checkpoint)</p>
+</li>
+</ol>
+<p>有四个测试是针对 wrap 和 unwrap 的
+<img src="https://pic.imgdb.cn/item/6245a41b27f86abb2ac188da.jpg" alt=""></p>
+<p>通过了这四个再往下进行。</p>
+<h3 id="实验本体">实验本体</h3>
+<p><img src="https://pic.imgdb.cn/item/624571e627f86abb2a58bc34.jpg" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">// tcp_state.cc
+</span><span style="color:#75715e"></span>string TCPState<span style="color:#f92672">::</span>state_summary(<span style="color:#66d9ef">const</span> TCPReceiver <span style="color:#f92672">&amp;</span>receiver) {
+    <span style="color:#66d9ef">if</span> (receiver.stream_out().error()) {
+        <span style="color:#66d9ef">return</span> TCPReceiverStateSummary<span style="color:#f92672">::</span>ERROR;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (not receiver.ackno().has_value()) {
+        <span style="color:#66d9ef">return</span> TCPReceiverStateSummary<span style="color:#f92672">::</span>LISTEN;
+    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (receiver.stream_out().input_ended()) {
+        <span style="color:#66d9ef">return</span> TCPReceiverStateSummary<span style="color:#f92672">::</span>FIN_RECV; }
+    <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> TCPReceiverStateSummary<span style="color:#f92672">::</span>SYN_RECV;
+    }
+}
+</code></pre></div><p>最开始 receiver 处于 LISTEN 状态，等待客户端发来的 连接请求，此时 ackno() 返回 nullopt (C++17)。</p>
+<p>直到收到 SYN 连接请求，receiver 的状态由 LISTEN 转化为 SYN_RECE，可以收发数据，每次收到 tcp 的 segment，将 seg.payload().copy() 写入 re_assembler</p>
+<p>收到 FIN 后，当 reassembeler 将数据全部写入完成后，调用end_input() （lab1中做的)，不再接受数据。</p>
+<p>理解了 receiver 的工作过程，大体框架就有了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++">    <span style="color:#66d9ef">if</span> (state is LISTEN) {
+        <span style="color:#66d9ef">if</span>(received_segment is not SYN) {
+            byte_stream error<span style="color:#960050;background-color:#1e0010">：</span>
+            abondon the segment, then <span style="color:#66d9ef">return</span>
+        }
+        receiver state trans to SYN_RECE
+    }
+    <span style="color:#75715e">// here state is SYB_RECE
+</span><span style="color:#75715e"></span>    trans seqno in TCP segment header to stream index
+    
+    push the data to reassembler, at stream_index, with eof is FIN in header
+</code></pre></div><p>开始还判断了 hearder 中的 FIN，但发现好像没什么用</p>
+<p>然后 ack no</p>
+<pre tabindex="0"><code>// if SYN_RECE : ack_no is SYN + bytes has be writen;
+// if FIN_RECE : ack_no is SYN + bytes has be writen + FIN;
+</code></pre><p><img src="https://pic.imgdb.cn/item/62465bca27f86abb2acbcaa8.jpg" alt=""></p>
+<p><strong>一些注意</strong>：</p>
+<ul>
+<li>收到的 segment 有可能同时携带 SYN 和 FIN</li>
+<li>SYN 和 FIN 不占用 stream_index 的下标，但占用 ackno</li>
+<li>收到 FIN 不等于会立即关闭，要等到缓冲区里的数据全部重组完成写入到 bytestream 中去，所以通过 ByteStream::input_ended() 来判断是否处于 FIN_RECE</li>
+<li>前面写 B的一些小问题在这里发现做出了一些修正</li>
+</ul>
+
+		</div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Summer avatar" src="https://pic.imgdb.cn/item/651e2920c458853aef0fc060.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Summer</span>
+	</div>
+	<div class="authorbox__description">
+		newbie programer
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/cs144/lab-3-tcp-sender/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab3</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/cs144/lab-1-streamreassembler/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">cs144 自己动手实现tcp协议 lab1</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs61c-cpu/">CS61C-简易的二级流水risv-v CPU</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2023 Summer.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
