@@ -56,13 +56,26 @@ In P0, we know system executes user prog through process_execute called by user 
     </item>
     
     <item>
-      <title>CS61C-CPU-fall21</title>
+      <title>CS61C-简易的二级流水risv-v CPU</title>
       <link>http://c137chao.github.io/blog/cs61c-cpu/</link>
       <pubDate>Wed, 21 Dec 2022 00:00:00 +0000</pubDate>
       
       <guid>http://c137chao.github.io/blog/cs61c-cpu/</guid>
       <description>友情提示： 尽量做 fa22或者之后的版本，不要做fa21（fa22提供了更多的测试） 如果像我一样做了fa21，可以clone fa22的然后把需要的测试copy过来，或者自己写测试 Part 1 完成 part1 之前先完成 lab5
 1.1. ALU    Input Name Bit Width Description     A 32 Data to use for Input A in the ALU operation   B 32 Data to use for Input B in the ALU operation   ALUSel 4 Selects which operation the ALU should perform       Output Name Bit Width Description     ALUResult 32 Result of the ALU operation    Below is the list of ALU operations for you to implement, along with their associated ALUSel values.</description>
+    </item>
+    
+    <item>
+      <title>CS61B-实现一个简易的git</title>
+      <link>http://c137chao.github.io/blog/cs61b-gitlet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/cs61b-gitlet/</guid>
+      <description>Design ppt
+ 视频里的描述非常有用
+ 1. 功能描述 我们本地的目录称为 Working Directory，而创建的 .gitlet 目录成文gitlet Repo
+1.1 init java gitlet.Main init init 创建.gitlet目录以及我们自己定义的需要用到的文件和目录，我的初始结构如下
+.gitlet |__refs | |__info | |__head of master | |__head of others... | | |__tags | |__remote | |__objects | |__00 | |__... | |__ff | |__commits | |__init commits | |__other commits | |__Head (current branch head) | |__stage (Stage Area) | |__ ... 1.2 add [file path] java gitlet.</description>
     </item>
     
   </channel>
