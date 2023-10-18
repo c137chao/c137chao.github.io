@@ -65,5 +65,19 @@ In P0, we know system executes user prog through process_execute called by user 
 1.1. ALU    Input Name Bit Width Description     A 32 Data to use for Input A in the ALU operation   B 32 Data to use for Input B in the ALU operation   ALUSel 4 Selects which operation the ALU should perform       Output Name Bit Width Description     ALUResult 32 Result of the ALU operation    Below is the list of ALU operations for you to implement, along with their associated ALUSel values.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>http://c137chao.github.io/blog/axglyph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/axglyph/</guid>
+      <description>AxGlyph 初次使用记录 1. 界面介绍  Common-Defined params title: &amp;ldquo;Axglyph 学习记录&amp;rdquo; date: &amp;ldquo;2023-10-18&amp;rdquo;
+categories:
+ &amp;ldquo;研究生从不研究&amp;rdquo;  tags: - &amp;ldquo;Test&amp;rdquo; - &amp;ldquo;Another test&amp;rdquo; menu: main # Optional, add page to a menu. Options: main, side, footer
+Theme-Defined params thumbnail: &amp;ldquo;https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg&amp;quot; # Thumbnail image
+lead: &amp;ldquo;Example lead - highlighted near the title&amp;rdquo; # Lead text comments: false # Enable Disqus comments for specific page
+authorbox: true # Enable authorbox for specific page pager: true # Enable pager navigation (prev/next) for specific page toc: true # Enable Table of Contents for specific page mathjax: true # Enable MathJax for specific page sidebar: &amp;ldquo;right&amp;rdquo; # Enable sidebar (on the right side) per page widgets: # Enable sidebar widgets in given order per page</description>
+    </item>
+    
   </channel>
 </rss>
