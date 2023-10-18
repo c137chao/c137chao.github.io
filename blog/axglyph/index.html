@@ -4,31 +4,33 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title> - Summer Blog Space</title>
+	<title>Axglyph 学习记录 - Summer Blog Space</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
 	<meta name="description" content="">
-		<meta property="og:title" content="" />
-<meta property="og:description" content="AxGlyph 初次使用记录 1. 界面介绍  Common-Defined params title: &ldquo;Axglyph 学习记录&rdquo; date: &ldquo;2023-10-18&rdquo;
-categories:
- &ldquo;研究生从不研究&rdquo;  tags: - &ldquo;Test&rdquo; - &ldquo;Another test&rdquo; menu: main # Optional, add page to a menu. Options: main, side, footer
-Theme-Defined params thumbnail: &ldquo;https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg&quot; # Thumbnail image
-lead: &ldquo;Example lead - highlighted near the title&rdquo; # Lead text comments: false # Enable Disqus comments for specific page
-authorbox: true # Enable authorbox for specific page pager: true # Enable pager navigation (prev/next) for specific page toc: true # Enable Table of Contents for specific page mathjax: true # Enable MathJax for specific page sidebar: &ldquo;right&rdquo; # Enable sidebar (on the right side) per page widgets: # Enable sidebar widgets in given order per page" />
+		<meta property="og:title" content="Axglyph 学习记录" />
+<meta property="og:description" content="AxGlyph 初次使用记录 1. 界面介绍 2. 绘制图形 2.1绘制直线 2.2 绘制曲线 2.3 填充渐变色 先找到油气桶图标选择要填充的区域
+然后再右侧区域设置填充的图案和颜色
+这里选择渐变色，也可以按照需要选择阴影填充，填充图案上方的调色盘可以选择填充的颜色
+2.4 把直线设置成虚线 鼠标左键单击直线把直线改成虚线
+2.5 填充阴影 上方的阴影填充我先则用一个三角形，中间填充斜线阴影，边缘改为透明
+2.5.1 绘制三角形 2.5.2 旋转并调整到合适位置 2.5.2 填充 把边缘设置为透明
+填充阴影" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://c137chao.github.io/blog/axglyph/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2023-10-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-10-18T00:00:00+00:00" />
 
 
-
-
-		<meta itemprop="name" content="">
-<meta itemprop="description" content="AxGlyph 初次使用记录 1. 界面介绍  Common-Defined params title: &ldquo;Axglyph 学习记录&rdquo; date: &ldquo;2023-10-18&rdquo;
-categories:
- &ldquo;研究生从不研究&rdquo;  tags: - &ldquo;Test&rdquo; - &ldquo;Another test&rdquo; menu: main # Optional, add page to a menu. Options: main, side, footer
-Theme-Defined params thumbnail: &ldquo;https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg&quot; # Thumbnail image
-lead: &ldquo;Example lead - highlighted near the title&rdquo; # Lead text comments: false # Enable Disqus comments for specific page
-authorbox: true # Enable authorbox for specific page pager: true # Enable pager navigation (prev/next) for specific page toc: true # Enable Table of Contents for specific page mathjax: true # Enable MathJax for specific page sidebar: &ldquo;right&rdquo; # Enable sidebar (on the right side) per page widgets: # Enable sidebar widgets in given order per page">
-
-<meta itemprop="wordCount" content="143">
+		<meta itemprop="name" content="Axglyph 学习记录">
+<meta itemprop="description" content="AxGlyph 初次使用记录 1. 界面介绍 2. 绘制图形 2.1绘制直线 2.2 绘制曲线 2.3 填充渐变色 先找到油气桶图标选择要填充的区域
+然后再右侧区域设置填充的图案和颜色
+这里选择渐变色，也可以按照需要选择阴影填充，填充图案上方的调色盘可以选择填充的颜色
+2.4 把直线设置成虚线 鼠标左键单击直线把直线改成虚线
+2.5 填充阴影 上方的阴影填充我先则用一个三角形，中间填充斜线阴影，边缘改为透明
+2.5.1 绘制三角形 2.5.2 旋转并调整到合适位置 2.5.2 填充 把边缘设置为透明
+填充阴影"><meta itemprop="datePublished" content="2023-10-18T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-10-18T00:00:00+00:00" />
+<meta itemprop="wordCount" content="28">
 <meta itemprop="keywords" content="" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -62,6 +64,13 @@ authorbox: true # Enable authorbox for specific page pager: true # Enable pager 
 		<span class="menu__btn-title" tabindex="-1">Menu</span>
 	</button>
 	<ul class="menu__list">
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/axglyph/">
+				
+				<span class="menu__text">Axglyph 学习记录</span>
+				
+			</a>
+		</li>
 		<li class="menu__item">
 			<a class="menu__link" href="/blog/cs162-proj1/">
 				
@@ -115,21 +124,27 @@ authorbox: true # Enable authorbox for specific page pager: true # Enable pager 
 <main class="main" role="main">
 	<article class="post">
 		<header class="post__header">
-			<h1 class="post__title"></h1>
+			<h1 class="post__title">Axglyph 学习记录</h1>
 			<div class="post__meta meta"><div class="meta__item-author meta__item">
 	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2023-10-18T00:00:00Z">October 18, 2023</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BB%8E%E4%B8%8D%E7%A0%94%E7%A9%B6/" rel="category">研究生从不研究</a>
+	</span>
 </div></div>
 		</header>
 		
+	<figure class="post__thumbnail thumbnail">
+		
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg" alt="Axglyph 学习记录">
+		
+	</figure>
 <div class="post__toc toc">
 	<div class="toc__title">Page content</div>
 	<div class="toc__menu">
 		<nav id="TableOfContents">
   <ul>
     <li><a href="#1-界面介绍">1. 界面介绍</a></li>
-  </ul>
-
-  <ul>
     <li><a href="#2-绘制图形">2. 绘制图形</a>
       <ul>
         <li></li>
@@ -142,35 +157,6 @@ authorbox: true # Enable authorbox for specific page pager: true # Enable pager 
 			<h1 id="axglyph-初次使用记录">AxGlyph 初次使用记录</h1>
 <p><img src="https://pic.imgdb.cn/item/652fbebac458853aef5060f1.jpg" alt=""></p>
 <h2 id="1-界面介绍">1. 界面介绍</h2>
-<hr>
-<h1 id="common-defined-params">Common-Defined params</h1>
-<p>title: &ldquo;Axglyph 学习记录&rdquo;
-date: &ldquo;2023-10-18&rdquo;</p>
-<!-- raw HTML omitted -->
-<p>categories:</p>
-<ul>
-<li>&ldquo;研究生从不研究&rdquo;</li>
-</ul>
-<h1 id="tags">tags:</h1>
-<h1 id="--test">- &ldquo;Test&rdquo;</h1>
-<h1 id="--another-test">- &ldquo;Another test&rdquo;</h1>
-<p>menu: main # Optional, add page to a menu. Options: main, side, footer</p>
-<h1 id="theme-defined-params">Theme-Defined params</h1>
-<p>thumbnail: &ldquo;<a href="https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg%22">https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg&quot;</a> # Thumbnail image</p>
-<h1 id="lead-example-lead---highlighted-near-the-title--lead-text">lead: &ldquo;Example lead - highlighted near the title&rdquo; # Lead text</h1>
-<p>comments: false # Enable Disqus comments for specific page</p>
-<h1 id="authorbox-true--enable-authorbox-for-specific-page">authorbox: true # Enable authorbox for specific page</h1>
-<p>pager: true # Enable pager navigation (prev/next) for specific page
-toc: true # Enable Table of Contents for specific page
-mathjax: true # Enable MathJax for specific page
-sidebar: &ldquo;right&rdquo; # Enable sidebar (on the right side) per page
-widgets: # Enable sidebar widgets in given order per page</p>
-<ul>
-<li>&ldquo;search&rdquo;</li>
-<li>&ldquo;recent&rdquo;</li>
-<li>&ldquo;taglist&rdquo;</li>
-</ul>
-<hr>
 <p><img src="https://pic.imgdb.cn/item/652fc1b9c458853aef58909e.jpg" alt=""></p>
 <h2 id="2-绘制图形">2. 绘制图形</h2>
 <h4 id="21绘制直线">2.1绘制直线</h4>
@@ -215,17 +201,45 @@ widgets: # Enable sidebar widgets in given order per page</p>
 </div>
 
 <nav class="pager flex">
-	<div class="pager__item pager__item--next">
-		<a class="pager__link" href="/blog/cs61c-cpu/" rel="next">
-			<span class="pager__subtitle">Next&thinsp;»</span>
-			<p class="pager__title">CS61C-简易的二级流水risv-v CPU</p>
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/tinykv-lab2c/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">tinykv lab2c snapshot</p>
 		</a>
 	</div>
 </nav>
 
 
 			</div>
-			
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://www.bing.com/">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH…" value="" name="q" aria-label="SEARCH…">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="http://c137chao.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/axglyph/">Axglyph 学习记录</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2c/">tinykv lab2c snapshot</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2b/">tinykv lab2b kvraft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/tinykv-lab2a/">tinykv lab2a raft</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/cs162-proj1/">CS162 Project1 Userprograme</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/distribute-storage/" title="distribute storage">distribute storage</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/operating-system/" title="Operating System">Operating System</a>
+	</div>
+</div>
+</aside>
 		</div>
 		<footer class="footer">
 	<div class="container footer__container flex">
@@ -238,5 +252,7 @@ widgets: # Enable sidebar widgets in given order per page</p>
 </footer>
 	</div>
 <script async defer src="/js/menu.js"></script>
-<script src="/js/custom.js"></script></body>
+<script src="/js/custom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
 </html>

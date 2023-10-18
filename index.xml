@@ -6,7 +6,22 @@
     <description>Recent content on Summer Blog Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 20 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Axglyph 学习记录</title>
+      <link>http://c137chao.github.io/blog/axglyph/</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/axglyph/</guid>
+      <description>AxGlyph 初次使用记录 1. 界面介绍 2. 绘制图形 2.1绘制直线 2.2 绘制曲线 2.3 填充渐变色 先找到油气桶图标选择要填充的区域
+然后再右侧区域设置填充的图案和颜色
+这里选择渐变色，也可以按照需要选择阴影填充，填充图案上方的调色盘可以选择填充的颜色
+2.4 把直线设置成虚线 鼠标左键单击直线把直线改成虚线
+2.5 填充阴影 上方的阴影填充我先则用一个三角形，中间填充斜线阴影，边缘改为透明
+2.5.1 绘制三角形 2.5.2 旋转并调整到合适位置 2.5.2 填充 把边缘设置为透明
+填充阴影</description>
+    </item>
+    
     <item>
       <title>tinykv lab2c snapshot</title>
       <link>http://c137chao.github.io/blog/tinykv-lab2c/</link>
@@ -218,20 +233,6 @@ void backtrace(void){ // uint64 kstackpage = (uint64)myproc()-&amp;gt;kstack;  p
 补充: 后面的Q&amp;amp;A视频课里老师有讲页表实验；
 1.Print a page table  主要要完成的就是在kernel/vm.c中定义vmprint(pagetable_t), 用来打印页表，有多种方法可以实现，用多层for循环比较直观，也可以参照freewalk（CV大法好），使用递归完成，是一个热身作业。
   You can put vmprint() in kernel/vm.c. Use the macros at the end of the file kernel/riscv.h. The function freewalk may be inspirational. Define the prototype for vmprint in kernel/defs.h so that you can call it from exec.c. Use %p in your printf calls to print out full 64-bit hex PTEs and addresses as shown in the example.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>http://c137chao.github.io/blog/axglyph/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://c137chao.github.io/blog/axglyph/</guid>
-      <description>AxGlyph 初次使用记录 1. 界面介绍  Common-Defined params title: &amp;ldquo;Axglyph 学习记录&amp;rdquo; date: &amp;ldquo;2023-10-18&amp;rdquo;
-categories:
- &amp;ldquo;研究生从不研究&amp;rdquo;  tags: - &amp;ldquo;Test&amp;rdquo; - &amp;ldquo;Another test&amp;rdquo; menu: main # Optional, add page to a menu. Options: main, side, footer
-Theme-Defined params thumbnail: &amp;ldquo;https://pic.imgdb.cn/item/652fc77ec458853aef6967b5.jpg&amp;quot; # Thumbnail image
-lead: &amp;ldquo;Example lead - highlighted near the title&amp;rdquo; # Lead text comments: false # Enable Disqus comments for specific page
-authorbox: true # Enable authorbox for specific page pager: true # Enable pager navigation (prev/next) for specific page toc: true # Enable Table of Contents for specific page mathjax: true # Enable MathJax for specific page sidebar: &amp;ldquo;right&amp;rdquo; # Enable sidebar (on the right side) per page widgets: # Enable sidebar widgets in given order per page</description>
     </item>
     
     <item>

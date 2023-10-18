@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>研究生从不研究 on Summer Blog Space</title>
+    <link>http://c137chao.github.io/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BB%8E%E4%B8%8D%E7%A0%94%E7%A9%B6/</link>
+    <description>Recent content in 研究生从不研究 on Summer Blog Space</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://c137chao.github.io/categories/%E7%A0%94%E7%A9%B6%E7%94%9F%E4%BB%8E%E4%B8%8D%E7%A0%94%E7%A9%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Axglyph 学习记录</title>
+      <link>http://c137chao.github.io/blog/axglyph/</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/axglyph/</guid>
+      <description>AxGlyph 初次使用记录 1. 界面介绍 2. 绘制图形 2.1绘制直线 2.2 绘制曲线 2.3 填充渐变色 先找到油气桶图标选择要填充的区域
+然后再右侧区域设置填充的图案和颜色
+这里选择渐变色，也可以按照需要选择阴影填充，填充图案上方的调色盘可以选择填充的颜色
+2.4 把直线设置成虚线 鼠标左键单击直线把直线改成虚线
+2.5 填充阴影 上方的阴影填充我先则用一个三角形，中间填充斜线阴影，边缘改为透明
+2.5.1 绘制三角形 2.5.2 旋转并调整到合适位置 2.5.2 填充 把边缘设置为透明
+填充阴影</description>
+    </item>
+    
+  </channel>
+</rss>
