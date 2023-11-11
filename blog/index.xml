@@ -80,5 +80,17 @@ In P0, we know system executes user prog through process_execute called by user 
 1.1. ALU    Input Name Bit Width Description     A 32 Data to use for Input A in the ALU operation   B 32 Data to use for Input B in the ALU operation   ALUSel 4 Selects which operation the ALU should perform       Output Name Bit Width Description     ALUResult 32 Result of the ALU operation    Below is the list of ALU operations for you to implement, along with their associated ALUSel values.</description>
     </item>
     
+    <item>
+      <title>tinykv lab3</title>
+      <link>http://c137chao.github.io/blog/tinykv-lab3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://c137chao.github.io/blog/tinykv-lab3/</guid>
+      <description>3A纯纯的面向测试编程，基本要求阅读指导书即可 3B需要多阅读代码，主要在于明确confChange和SplitRegion的整个流程 3C跟着指导书的步骤完成，再通过测试调试即可
+1. TransferLead Note:
+ MsgTransferLeader 是需要 CallBack 的，在把这条请求 propose 到 Raft 节点之后就可以 CallBack，因为 TransferLead 是不会 apply 的 TransferLead 如果发现对方not Up-to-date，就会 sendAppend 给对方，这种情况下，可以在收到对方的 AppendResponse 以后判断一下对方是否是我的 LeadTransFee，如果是并且对方已经确认了我的所有 Log Entry 就发送一条 MsgTimeOutNow 给对方，还有很多其他策略，主要利用好 LeadTranFee 如果 Leader 刚收到 TransferLead 给其他 raft 节点之后又收到重新将 Leader 转移给自己，直接将自己的 Term 加2即可，这样对方会因为任期小于自己而选举失败，没有必要让 Leader 也重新发起投票 LeaderTranfer 的时候不会接受任何日志，完成3C可以知道如果某个Store上面的Region太多，负载比较大，如果把该 Store 上的某个Region的Leader移动到其他负载较小的Store上去，中间可能带有 TransferLead 操作，而这时候因为原本Leader所在的Store处理请求的压力已经很大了，所以应该优先完成 LeaderTransfer  2.ConfChange 关于 ConfChangePending
+Only one conf change may be pending (in the log, but not yet applied) at a time.</description>
+    </item>
+    
   </channel>
 </rss>

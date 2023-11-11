@@ -98,6 +98,13 @@
 				
 			</a>
 		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/blog/tinykv-lab3/">
+				
+				<span class="menu__text">tinykv lab3</span>
+				
+			</a>
+		</li>
 	</ul>
 </nav>
 
@@ -131,6 +138,31 @@
 	<div class="content list__excerpt post__content clearfix">
 		友情提示： 尽量做 fa22或者之后的版本，不要做fa21（fa22提供了更多的测试） 如果像我一样做了fa21，可以clone fa22的然后把需要的测试copy过来，或者自己写测试 Part 1 完成 part1 之前先完成 lab5
 1.1. ALU    Input Name Bit Width Description     A 32 Data to use for Input A in the ALU operation   B 32 Data to use for Input B in the ALU operation   ALUSel 4 Selects which operation the ALU should perform       Output Name Bit Width Description     ALUResult 32 Result of the ALU operation    Below is the list of ALU operations for you to implement, along with their associated ALUSel values.
+	</div>
+</article><article class="list__item post">
+	
+	<figure class="list__thumbnail thumbnail">
+		<a class="thumbnail__link" href="/blog/tinykv-lab3/">
+		<img class="thumbnail__image" src="https://pic.imgdb.cn/item/651e367fc458853aef14c50c.jpg" alt="tinykv lab3">
+		</a>
+	</figure>
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/blog/tinykv-lab3/" rel="bookmark">
+			tinykv lab3
+			</a>
+		</h2>
+		<div class="list__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Summer</span>
+</div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/tinykv/" rel="category">tinykv</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		3A纯纯的面向测试编程，基本要求阅读指导书即可 3B需要多阅读代码，主要在于明确confChange和SplitRegion的整个流程 3C跟着指导书的步骤完成，再通过测试调试即可
+1. TransferLead Note:
+ MsgTransferLeader 是需要 CallBack 的，在把这条请求 propose 到 Raft 节点之后就可以 CallBack，因为 TransferLead 是不会 apply 的 TransferLead 如果发现对方not Up-to-date，就会 sendAppend 给对方，这种情况下，可以在收到对方的 AppendResponse 以后判断一下对方是否是我的 LeadTransFee，如果是并且对方已经确认了我的所有 Log Entry 就发送一条 MsgTimeOutNow 给对方，还有很多其他策略，主要利用好 LeadTranFee 如果 Leader 刚收到 TransferLead 给其他 raft 节点之后又收到重新将 Leader 转移给自己，直接将自己的 Term 加2即可，这样对方会因为任期小于自己而选举失败，没有必要让 Leader 也重新发起投票 LeaderTranfer 的时候不会接受任何日志，完成3C可以知道如果某个Store上面的Region太多，负载比较大，如果把该 Store 上的某个Region的Leader移动到其他负载较小的Store上去，中间可能带有 TransferLead 操作，而这时候因为原本Leader所在的Store处理请求的压力已经很大了，所以应该优先完成 LeaderTransfer  2.ConfChange 关于 ConfChangePending
+Only one conf change may be pending (in the log, but not yet applied) at a time.
 	</div>
 </article>
 </main>
